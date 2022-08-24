@@ -1,11 +1,12 @@
 <?php
 
-use App\Http\Controllers\DashboarController;
 use App\Http\Controllers\KategoriController;
-use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\PostController;
+use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\TagController;
+use App\Http\Controllers\DashboarController;
+use App\Http\Controllers\PostController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
@@ -31,6 +32,11 @@ Route::resource('/kategoris',KategoriController::class);
 
 Route::get('/tai', function () {
     return view('tags/tags_user',[
+        "title" => "Tag"
+    ]);
+});
+Route::get('/coba', function () {
+    return view('auth/register',[
         "title" => "Tag"
     ]);
 });
@@ -70,11 +76,17 @@ Route::get('/posts', [PostController::class,'index']
 Route::resource('/tags',TagController::class);
 
 // tag
-Route::get('/login',[LoginController::class, 'index'])->name('login')->middleware('guest') ;
-Route::POST('/login',[LoginController::class, 'authenticate']);
-Route::POST('/logout',[LoginController::class, 'logout']);
+Route::get('login',[LoginController::class, 'index'])->name('login')->middleware('guest') ;
+Route::POST('login',[LoginController::class, 'authenticate']);
+Route::POST('logout',[LoginController::class, 'logout']);
 
 Route::get('/register',[RegisterController::class, 'index'])->middleware('guest');
 Route::POST('/register',[RegisterController::class, 'store']);
 
-Route::get('/dashboard',[DashboarController::class, 'index'])->middleware('auth');
+Route::group(['middleware' => ['auth']], function(){
+    Route::get('/dashboard',[DashboarController::class, 'index']);
+});
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

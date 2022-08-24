@@ -17,6 +17,7 @@ class KategoriController extends Controller
     {
         return view('kategoris/admin',[
             'kategoris'=>Kategori::orderBy('id','desc')->get(),
+            'title'=> 'Kategori'
         ]);
     }
 

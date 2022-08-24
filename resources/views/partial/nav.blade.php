@@ -9,13 +9,13 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link navbar-brand {{ ($title === "Home")? 'active':'' }}" aria-current="page" href="/">Home</a>
+            <a class="nav-link navbar-brand " aria-current="page" href="/">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link navbar-brand {{ ($title === "Kategori")? 'active':'' }}" aria-current="page" href="/kategori">Kategori</a>
+            <a class="nav-link navbar-brand " aria-current="page" href="/kategori">Kategori</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link navbar-brand {{ ($title === "Tag")? 'active':'' }}" aria-current="page" href="/tag">Tag</a>
+            <a class="nav-link navbar-brand" aria-current="page" href="/tag">Tag</a>
           </li>
         </ul>
         <form class="d-flex">
@@ -24,24 +24,39 @@
           <button class="btn btn-outline-info" type="submit">Search</button>
          
         </form>
-        @auth
+        @guest
+        @if (Route::has('login'))
+            
+                <a class="nav-link" class="btn btn-outline-primary" href="{{ route('login') }}">{{ __('Login') }}</a>
+           
+        @endif
 
-        <li>
-         <form action="/logout" method="POST">
-         @csrf
-         <button type="submit" class="nav-link btn-outline-danger "><i class="bi bi-box-arrow-right"></i>Logout</button>
-         </form>
-        </li>
+        @if (Route::has('register'))
+            
+                <a class="nav-link" class="btn btn-outline-success" href="{{ route('register') }}">{{ __('Register') }}</a>
+            
+        @endif
+    @else
        
-       
-         @else
-         <ul class="navbar-nav ms-auto">
-           <li class="nav-item active">
-            <a href="/login" class="nav-link btn-outline-info"><i class="bi bi-box-arrow-in-right"></i>Login</a>
-           </li>
-           </ul>
-           @endauth
+            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                {{ Auth::user()->name }}
+            </a>
+
+            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="{{ route('logout') }}"
+                   onclick="event.preventDefault();
+                                 document.getElementById('logout-form').submit();">
+                    {{ __('Logout') }}
+                </a>
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                    @csrf
+                </form>
+            </div>
         
+    @endguest
+
+       
       </div>
     </div>
   </nav>
