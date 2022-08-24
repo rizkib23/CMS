@@ -8,6 +8,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
+                    <h1 class="h3 mb-2 text-gray-800">Kategori</h1>
                     <div class="row">
                         <div class="col-md-6">
                             <form action="" method="GET">
@@ -21,16 +22,16 @@
                                 </div>
                             </form>
                         </div>
-                        <div class="col-md-6">
-                            <a href="/dashboard/kategori/create" class="btn btn-primary float-right" role="button">
-                                Tambah
-                                <i class="fas fa-plus-square"></i>
-                            </a>
-                        </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="card-body">
+            <div class="card-body">
+                <div class="col-md-6">
+                    <a href="/dashboard/kategori/create" class="btn btn-primary float-right" role="button">
+                        Tambah
+                        <i class="fas fa-plus-square"></i>
+                    </a>
                     <table class="table table-bordered">
                         <thead>
                             <tr class="text-center">
