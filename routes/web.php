@@ -27,7 +27,7 @@ Route::get('/', function () {
     ]);
 });
 
-Route::resource('/kategoris',KategoriController::class);
+Route::resource('/kategori',KategoriController::class);
 
 Route::get('/tai', function () {
     return view('tags/tags_user',[

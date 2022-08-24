@@ -15,9 +15,8 @@ class KategoriController extends Controller
      */
     public function index()
     {
-        return view('kategoris/admin',[
-            'kategoris'=>Kategori::orderBy('id','desc')->get(),
-        ]);
+        $kategoris = kategori::all();
+        return view('kategori.admin', compact('kategoris'));
     }
 
     /**
@@ -27,7 +26,7 @@ class KategoriController extends Controller
      */
     public function create()
     {
-        //
+        return view('kategori.create');
     }
 
     /**
@@ -38,7 +37,12 @@ class KategoriController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $kategori = Kategori::create([
+            'name' => $request->name,
+            'slug' => $request->name,
+        ]);
+
+        return redirect()->route('kategori.admin')->with('success', 'Kategori Berhasil Ditambahkan!');
     }
 
     /**
@@ -49,7 +53,7 @@ class KategoriController extends Controller
      */
     public function show($id)
     {
-        //
+        
     }
 
     /**
@@ -60,7 +64,8 @@ class KategoriController extends Controller
      */
     public function edit($id)
     {
-        //
+        $kategoris = kategori::find($id);
+        return view('kategori.edit', compact('kategoris'));
     }
 
     /**
@@ -72,7 +77,8 @@ class KategoriController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        kategori::find($id)->update(['name'=>$request->name]);
+        return redirect('/kategori')->with('success', 'Kategori Berhasil Diupdate!');
     }
 
     /**
@@ -83,6 +89,7 @@ class KategoriController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $kategori->delete();
+        return redirect('/kategori')->with('success', 'Kategori Berhasil Dihapus!');
     }
 }
