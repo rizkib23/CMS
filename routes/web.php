@@ -78,3 +78,7 @@ Route::get('/register',[RegisterController::class, 'index'])->middleware('guest'
 Route::POST('/register',[RegisterController::class, 'store']);
 
 Route::get('/dashboard',[DashboarController::class, 'index'])->middleware('auth');
+
+Route::group(['prefix' => 'filemanager'], function () {
+    \UniSharp\LaravelFilemanager\Lfm::routes();
+});

@@ -3,12 +3,12 @@
 @section('title')
 @endsection
 @section('content')
-    <!-- section:content -->
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">
-                    <h1 class="h3 mb-2 text-gray-800">Kategori</h1>
+<!-- section:content -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h1 class="h3 mb-2 text-gray-800">Kategori</h1>
                     <div class="row">
                         <div class="col-md-6">
                             <form action="" method="GET">
@@ -24,14 +24,14 @@
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="card-body">
-                <div class="col-md-6">
-                    <a href="/dashboard/kategori/create" class="btn btn-primary float-right" role="button">
-                        Tambah
-                        <i class="fas fa-plus-square"></i>
-                    </a>
+                
+                <div class="card-body">
+                    <div class="col-md-3">
+                        <a href="/dashboard/kategori/create" class="btn btn-md btn-primary" style="margin-bottom: 10px">
+                            Tambah
+                            <i class="fas fa-plus-square"></i>
+                        </a>
+                    </div>
                     <table class="table table-bordered">
                         <thead>
                             <tr class="text-center">
@@ -57,10 +57,6 @@
                                     </td>
                                     <td class="text-center">
                                         <div>
-                                            <!-- detail -->
-                                            <a href="#" class="btn btn-sm btn-primary" role="button">
-                                                <i class="fas fa-eye"></i>
-                                            </a>
                                             <!-- edit -->
                                             <a href="{{ route('kategori.edit', $kategori->id) }}"
                                                 class="btn btn-sm btn-info" role="button">

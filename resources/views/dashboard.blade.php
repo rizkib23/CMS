@@ -1,4 +1,4 @@
-@extends('layots/dashboard')
+@extends('layouts.dashboard')
 @section('breadcrumbs')
 Hello 
 @endsection

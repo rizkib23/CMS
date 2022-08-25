@@ -16,15 +16,32 @@
                    <label for="input_kategori_name" class="font-weight-bold">
                       Nama
                    </label>
-                   <input id="input_kategori_name" name="name" type="text" value="{{ $kategoris->name }}" class="form-control" />
+                   <input id="input_kategori_name" name="name" type="text" value="{{ old('name', $kategoris->name) }}" class="form-control" />
                 </div>
                 <!-- slug -->
                 <div class="form-group">
                    <label for="input_kategori_slug" class="font-weight-bold">
                       Slug
                    </label>
-                   <input id="input_kategori_slug" name="slug" type="text" value="{{ $kategoris->slug }}" class="form-control" readonly/>
+                   <input id="input_kategori_slug" name="slug" type="text" value="{{ old('slug',$kategoris->slug) }}" class="form-control" readonly/>
                 </div>
+                <!-- thumbnail -->
+                <div class="form-group">
+                  <label for="input_kategori_thumbnail" class="font-weight-bold">
+                      Thumbnail
+                  </label>
+                  <div class="input-group">
+                      <div class="input-group-prepend">
+                          <button id="button_kategori_thumbnail" data-input="input_kategori_thumbnail"
+                              data-preview="holder" class="btn btn-primary" type="file" >
+                              Browse
+                          </button>
+                      </div>
+                      <input id="input_kategori_thumbnail" name="thumbnail" type="text" value="{{ old('thumbnail', $kategoris->thumbnail) }}" class="form-control" placeholder="Thumbnail Kategori" readonly />
+                  </div>
+                  <div id="holder">
+                  </div>
+              </div>
                 <div class="float-right">
                 	<a class="btn btn-warning px-4" href="{{ route('kategori.index') }}">Kembali</a>
                 	<button type="submit" class="btn btn-primary px-4">Simpan</button>
@@ -49,6 +66,9 @@
  let name = $(this).val();
  $('#input_kategori_slug').val(generateSlug(name));
  });
+
+ //  event:input thumbnail
+ $('#button_kategori_thumbnail').filemanager('image');
     });
  
  </script>
