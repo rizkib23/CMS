@@ -21,6 +21,7 @@ class KategoriController extends Controller
         ]);
     }
 
+
     /**
      * Show the form for creating a new resource.
      *
@@ -28,7 +29,7 @@ class KategoriController extends Controller
      */
     public function create()
     {
-        //
+        return view('kategoris.create');
     }
 
     /**
@@ -39,7 +40,13 @@ class KategoriController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $kategoris = Kategori::create([
+            'name' => $request->name,
+            'slug' => $request->name,
+            'thumbnail' => $request->thumbnail,
+        ]);
+
+        return redirect()->route('kategoris.index')->with('success', 'Kategori Berhasil Ditambahkan!');
     }
 
     /**
@@ -61,7 +68,8 @@ class KategoriController extends Controller
      */
     public function edit($id)
     {
-        //
+        $kategoris = Kategori::find($id);
+        return view('kategoris.edit', compact('kategoris'));
     }
 
     /**
@@ -73,7 +81,12 @@ class KategoriController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        Kategori::find($id)->update([
+            'name'=>$request->name,
+            'slug' => $request->slug,
+            'thumbnail' => $request->thumbnail,
+        ]);
+        return redirect('/kategoris')->with('success', 'Kategori Berhasil Diupdate!');
     }
 
     /**
@@ -84,6 +97,7 @@ class KategoriController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Kategori::find($id)->delete();
+        return redirect('/kategoris');
     }
 }

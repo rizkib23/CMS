@@ -1,13 +1,18 @@
 <?php
 
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\DashboarController;
+use App\Http\Controllers\KtgrUserController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use UniSharp\LaravelFilemanager\Lfm;
+use Spatie\Permission\Models\Role;
+
 
 
 
@@ -22,71 +27,40 @@ use Illuminate\Support\Facades\Route;
 |
 */
 // user interface
+Route::resource('/home',HomeController::class);
+
 Route::get('/', function () {
-    return view('home', [
+    return view('home',[
         "title" => "Home"
     ]);
 });
 
-Route::resource('/kategoris',KategoriController::class);
-
-Route::get('/tai', function () {
-    return view('tags/tags_user',[
-        "title" => "Tag"
-    ]);
-});
-Route::get('/coba', function () {
-    return view('auth/register',[
+Route::get('/tes', function () {
+    return view('tags/user',[
         "title" => "Tag"
     ]);
 });
 
-// Route::get('/login', function () {
-//     return view('login/login1',[
-//         "title" => "Login"
-//     ]);
-// });
-
-// Route::get('/daftar', function () {
-//     return view('login/formulir',[
-//         "title" => "Login"
-//     ]);
-// });
+Route::get('/kategori', [KtgrUserController::class,'index']
+    
+);
 
 // post
 Route::get('/posts', [PostController::class,'index']
     
 );
 
-// Route::get('/posts', [PostController::class,'show']
-    
-// );
 
-// admin interface
-// Route::get('/dashboard', function () {
-//     return view('layouts/dashboard',[
-//         "title" => "Dashboard"
-//     ]);
-// });
-
-// tags
-// Route::get('/tag',[TagController::class, 'index']);
-// Route::POST('/tag',[TagController::class, 'store']);
-// Route::put('/tag/{id}', [TagController::class,'update']);
-Route::resource('/tags',TagController::class);
-
-// tag
-Route::get('login',[LoginController::class, 'index'])->name('login')->middleware('guest') ;
-Route::POST('login',[LoginController::class, 'authenticate']);
-Route::POST('logout',[LoginController::class, 'logout']);
-
-Route::get('/register',[RegisterController::class, 'index'])->middleware('guest');
-Route::POST('/register',[RegisterController::class, 'store']);
-
-Route::group(['middleware' => ['auth']], function(){
+Route::group(['middleware' => ['auth', 'role:admin']], function(){
     Route::get('/dashboard',[DashboarController::class, 'index']);
+    Route::resource('/kategoris',KategoriController::class);
+    Route::resource('/tags',TagController::class);
+
 });
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::group(['prefix' => 'filemanager'], function () {
+    \UniSharp\LaravelFilemanager\Lfm::routes();
+}); 
+

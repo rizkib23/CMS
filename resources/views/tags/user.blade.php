@@ -7,4 +7,5 @@
    </div>
     <h1 class="text-white mt-4 mb-4 text-center">Tag</h1>
 </div>
+
 @endsection
