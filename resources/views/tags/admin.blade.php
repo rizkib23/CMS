@@ -45,7 +45,7 @@
                                             <i class="fas fa-edit"></i>
                                         </a>
                                         <!-- delete -->
-                                        <button type="submit" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#logoutModal">
+                                        <button type="submit" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#hapusTags">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </div>
@@ -63,7 +63,7 @@
 @endsection
 
 <!-- Logout Modal-->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div class="modal fade" id="hapusTags" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
 aria-hidden="true">
 <div class="modal-dialog" role="document">
     <div class="modal-content">

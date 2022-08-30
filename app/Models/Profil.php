@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Profil extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'no_tlp', 'jenis_kelamin', 'user_id'
+    ];
+   
 }

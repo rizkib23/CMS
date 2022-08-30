@@ -12,9 +12,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use UniSharp\LaravelFilemanager\Lfm;
 use Spatie\Permission\Models\Role;
-
-
-
+use App\Http\Controllers\ProfilController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,10 +56,11 @@ Route::group(['middleware' => ['auth', 'role:admin']], function(){
     Route::resource('/tags',TagController::class);
 
 });
-
+Route::resource('/profil',ProfilController::class);
 Auth::routes();
 
 Route::group(['prefix' => 'filemanager'], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
 }); 
 
+Route::post('/register', [UserController::class, 'store']);

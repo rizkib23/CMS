@@ -18,6 +18,7 @@ class CreateProfilsTable extends Migration
             $table->foreignId('user_id')->constrained('users');
             $table->integer('no_tlp');
             $table->enum('jenis_kelamin', ['Laki-laki', 'Perempuan']);
+            $table->string('foto');
             $table->timestamps();
 
         });

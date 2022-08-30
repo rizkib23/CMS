@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\Profil;
-use App\Http\Requests\StoreProfilRequest;
-use App\Http\Requests\UpdateProfilRequest;
-use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
-class ProfilController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,9 +16,10 @@ class ProfilController extends Controller
      */
     public function index()
     {
-        
-        return view('profil');
+        User::all();
+        return view('auth/login');
     }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -28,33 +27,45 @@ class ProfilController extends Controller
      */
     public function create()
     {
-        //  
+        return redirect('auth/register');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreProfilRequest  $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreProfilRequest $request)
+    public function store(Request $request)
     {
-        $profils = Profil::create([
+        // dd($request->all());
+        $request -> validate([
+            'name' => 'required|max:255',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:5|max:255|confirmed',  
+        ]);
+        
+     // $validateData['password'] = bcrypt($validateData['password']);
+     $request['password'] = Hash::make($request['password']); 
+
+     $user= User::create($request->all()); 
+     //  profil input
+     $profil=  Profil::create([
             'no_tlp' => $request->no_tlp,
             'jenis_kelamin' => $request->jenis_kelamin,
             'foto' => $request->foto,
-        ]);
-
-        return redirect()->route('profil');
+            'user_id' =>  $user->id,
+     ]);    
+      return view('auth/login');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Profil  $profil
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Profil $profil)
+    public function show($id)
     {
         //
     }
@@ -62,10 +73,10 @@ class ProfilController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Profil  $profil
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Profil $profil)
+    public function edit($id)
     {
         //
     }
@@ -73,11 +84,11 @@ class ProfilController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateProfilRequest  $request
-     * @param  \App\Models\Profil  $profil
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateProfilRequest $request, Profil $profil)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -85,10 +96,10 @@ class ProfilController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Profil  $profil
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Profil $profil)
+    public function destroy($id)
     {
         //
     }
