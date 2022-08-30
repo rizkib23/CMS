@@ -37,10 +37,11 @@ class KategoriController extends Controller
      */
     public function store(Request $request)
     {
+        $fileName = $request->file('thumbnail')->storeAs('thumbnails',time() . ".". $request->file('thumbnail')->getClientOriginalExtension(), 'public');
         $kategori = Kategori::create([
             'name' => $request->name,
             'slug' => $request->slug,
-            'thumbnail' => $request->thumbnail,
+            'thumbnail' => $fileName,
         ]);
         Alert::success('Success', 'Kategori Berhasil Ditambahkan!');
         return redirect()->route('kategori.index');
@@ -54,7 +55,8 @@ class KategoriController extends Controller
      */
     public function show($id)
     {
-        
+        $kategoris = kategori::find($id);
+        return view('dashboard.kategori.edit', compact('kategoris'));
     }
 
     /**
@@ -78,13 +80,19 @@ class KategoriController extends Controller
      */
     public function update(Request $request, $id)
     {
-        kategori::find($id)->update([
-            'name'=>$request->name,
+        $fileName = $kategori->thumbnail;
+        if ($request->hasFile('thumbnail')) {
+            
+            Storage::delete(['public/'. $kategori->thumbnail]);
+            $fileName = $request->file('thumbnail')->storeAs('thumbnails',time() . ".". $request->file('thumbnail')->getClientOriginalExtension(), 'public');
+        }
+        $kategori->update([
+            'name' => $request->name,
             'slug' => $request->slug,
-            'thumbnail'=>$request->thumbnail,
+            'thumbnail' => $fileName,
         ]);
         Alert::success('Success', 'Kategori Berhasil Diupdate!');
-        return redirect('/kategori');
+        return redirect('/dashboard/kategori');
     }
 
     /**

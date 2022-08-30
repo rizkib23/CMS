@@ -8,7 +8,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('kategori.store') }}" method="POST">
+                    <form action="{{ route('kategori.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <!-- title -->
                         <div class="form-group">
@@ -28,21 +28,8 @@
                         </div>
                         <!-- thumbnail -->
                         <div class="form-group">
-                            <label for="input_kategori_thumbnail" class="font-weight-bold">
-                                Thumbnail
-                            </label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <button id="button_kategori_thumbnail" data-input="input_kategori_thumbnail"
-                                        data-preview="holder" class="btn btn-primary" type="file">
-                                        Browse
-                                    </button>
-                                </div>
-                                <input id="input_kategori_thumbnail" name="thumbnail" type="text"
-                                    class="form-control" placeholder="Thumbnail Kategori" readonly />
-                            </div>
-                            <div id="holder">
-                            </div>
+                            <label for="thumbnail">Thumbnail</label>
+                                <input class="form-control" type="file" id="thumbnail" name="thumbnail" readonly />
                         </div>
                         <div class="float-right">
                             <a class="btn btn-warning px-4" href="{{ route('kategori.index') }}">Kembali</a>
@@ -81,8 +68,6 @@
                     $('#input_kategori_slug').val(generateSlug(name));
                 });
                 
-               //  event:input thumbnail
-                $('#button_kategori_thumbnail').filemanager('image');
             });
         </script>
     @endpush

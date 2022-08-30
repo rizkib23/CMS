@@ -23,25 +23,14 @@
                    <label for="input_kategori_slug" class="font-weight-bold">
                       Slug
                    </label>
-                   <input id="input_kategori_slug" name="slug" type="text" value="{{ old('slug',$kategoris->slug) }}" class="form-control" readonly/>
-                </div>
+                   <input id="input_kategori_slug" name="slug" type="text" value="{{ old('slug', $kategoris->slug) }}" class="form-control" readonly/>
+                  </div>
                 <!-- thumbnail -->
                 <div class="form-group">
-                  <label for="input_kategori_thumbnail" class="font-weight-bold">
-                      Thumbnail
-                  </label>
-                  <div class="input-group">
-                      <div class="input-group-prepend">
-                          <button id="button_kategori_thumbnail" data-input="input_kategori_thumbnail"
-                              data-preview="holder" class="btn btn-primary" type="file" >
-                              Browse
-                          </button>
-                      </div>
-                      <input id="input_kategori_thumbnail" name="thumbnail" type="text" value="{{ old('thumbnail', $kategoris->thumbnail) }}" class="form-control" placeholder="Thumbnail Kategori" readonly />
-                  </div>
-                  <div id="holder">
-                  </div>
+                  <label for="thumbnail">Thumbnail</label>
+                      <input class="form-control" type="file" id="thumbnail" name="thumbnail" value="{{ old('thumbnail', $kategoris->thumbnail) }}" readonly />
               </div>
+            
                 <div class="float-right">
                 	<a class="btn btn-warning px-4" href="{{ route('kategori.index') }}">Kembali</a>
                 	<button type="submit" class="btn btn-primary px-4">Simpan</button>
@@ -51,6 +40,16 @@
        </div>
     </div>
  </div>
+ @push('css-external')
+        <link rel="stylesheet" href="{{ asset('../vendor/select2/css/select2.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('../vendor/select2/css/select2-bootstrap4.min.css') }}">
+    @endpush
+
+    @push('javascript-external')
+        <script src="{{ asset('../vendor/select2/js/select2.full.min.js') }}"></script>
+        {{-- filemanager --}}
+        <script src="{{ asset('../vendor/laravel-filemanager/js/stand-alone-button.js') }}"></script>
+    @endpush
  @push('javascript-internal')
  <script>
     $(function() {
