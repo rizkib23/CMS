@@ -34,8 +34,10 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/tes', function () {
-    return view('tags/user',[
+Route::resource('/kategori',KategoriController::class);
+
+Route::get('/tai', function () {
+    return view('tags/tags_user',[
         "title" => "Tag"
     ]);
 });
@@ -64,3 +66,9 @@ Route::group(['prefix' => 'filemanager'], function () {
 }); 
 
 Route::post('/register', [UserController::class, 'store']);
+
+Route::get('/dashboard',[DashboarController::class, 'index'])->middleware('auth');
+
+Route::group(['prefix' => 'filemanager'], function () {
+    \UniSharp\LaravelFilemanager\Lfm::routes();
+});

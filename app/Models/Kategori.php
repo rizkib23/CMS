@@ -8,7 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Kategori extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'name', 'slug', 'thumbnail'
     ];
+
+    public function posts()
+    {
+        return $this->hasMany(post::class);
+    }
 }

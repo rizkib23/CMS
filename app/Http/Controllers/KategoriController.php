@@ -40,13 +40,14 @@ class KategoriController extends Controller
      */
     public function store(Request $request)
     {
-        $kategoris = Kategori::create([
+        $fileName = $request->file('thumbnail')->storeAs('thumbnails',time() . ".". $request->file('thumbnail')->getClientOriginalExtension(), 'public');
+        $kategori = Kategori::create([
             'name' => $request->name,
-            'slug' => $request->name,
-            'thumbnail' => $request->thumbnail,
+            'slug' => $request->slug,
+            'thumbnail' => $fileName,
         ]);
-
-        return redirect()->route('kategoris.index')->with('success', 'Kategori Berhasil Ditambahkan!');
+        Alert::success('Success', 'Kategori Berhasil Ditambahkan!');
+        return redirect()->route('kategori.index');
     }
 
     /**
@@ -57,7 +58,8 @@ class KategoriController extends Controller
      */
     public function show($id)
     {
-        //
+        $kategoris = kategori::find($id);
+        return view('dashboard.kategori.edit', compact('kategoris'));
     }
 
     /**
@@ -81,12 +83,19 @@ class KategoriController extends Controller
      */
     public function update(Request $request, $id)
     {
-        Kategori::find($id)->update([
-            'name'=>$request->name,
+        $fileName = $kategori->thumbnail;
+        if ($request->hasFile('thumbnail')) {
+            
+            Storage::delete(['public/'. $kategori->thumbnail]);
+            $fileName = $request->file('thumbnail')->storeAs('thumbnails',time() . ".". $request->file('thumbnail')->getClientOriginalExtension(), 'public');
+        }
+        $kategori->update([
+            'name' => $request->name,
             'slug' => $request->slug,
-            'thumbnail' => $request->thumbnail,
+            'thumbnail' => $fileName,
         ]);
-        return redirect('/kategoris')->with('success', 'Kategori Berhasil Diupdate!');
+        Alert::success('Success', 'Kategori Berhasil Diupdate!');
+        return redirect('/dashboard/kategori');
     }
 
     /**
@@ -97,7 +106,8 @@ class KategoriController extends Controller
      */
     public function destroy($id)
     {
-        Kategori::find($id)->delete();
+        $kategori->delete();
+        Alert::success('Success', 'Kategori Berhasil Dihapus!');
         return redirect('/kategoris');
     }
 }
