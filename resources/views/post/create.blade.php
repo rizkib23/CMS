@@ -20,14 +20,14 @@
                                     <input id="input_post_judul" name="judul" type="text" class="form-control"
                                         placeholder="Masukkan Judul Post" />
                                 </div>
-                                <!-- slug -->
+                                {{-- <!-- slug -->
                                 <div class="form-group">
                                     <label for="input_post_slug" class="font-weight-bold">
                                         Slug
                                     </label>
                                     <input id="input_post_slug" name="slug" type="text" class="form-control"
                                         placeholder="Slug Post" readonly />
-                                </div>
+                                </div> --}}
                                 <!-- thumbnail -->
                                 <div class="form-group">
                                     <label for="thumbnail">Thumbnail</label>
@@ -125,11 +125,10 @@
                         .replace(/-+/g, '-').replace(/^-|-$/g, "");
                 }
                 // event:input name kategori
-                $('#input_post_judul').change(function() {
+                $('#input_kategori_name').change(function() {
                     let name = $(this).val();
-                    $('#input_post_slug').val(generateSlug(name));
+                    $('#input_kategori_slug').val(generateSlug(name));
                 });
-
                 // TextEditor TinyMCE5
                 $("#input_post_content").tinymce({
                     relative_urls: false,

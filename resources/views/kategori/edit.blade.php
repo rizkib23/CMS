@@ -1,46 +1,46 @@
 @extends('dashboard.layouts.main')
 
-@section('title')   
+@section('title')
 @endsection
 
 @section('content')
-<div class="row">
-    <div class="col-md-12">
-       <div class="card">
-          <div class="card-body">
-             <form action="{{ route('kategori.update', $kategoris->id) }}" method="POST">
-               @method('put')
-               @csrf
-                <!-- title -->
-                <div class="form-group">
-                   <label for="input_kategori_name" class="font-weight-bold">
-                      Nama
-                   </label>
-                   <input id="input_kategori_name" name="name" type="text" value="{{ old('name', $kategoris->name) }}" class="form-control" />
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <form action="{{ route('kategori.update', $kategoris->id) }}" method="POST">
+                        @method('put')
+                        @csrf
+                        <!-- title -->
+                        <div class="form-group">
+                            <label for="input_kategori_name" class="font-weight-bold">
+                                Nama
+                            </label>
+                            <input id="input_kategori_name" name="name" type="text"
+                                value="{{ old('name', $kategoris->name) }}" class="form-control" />
+                        </div>
+                        <!-- thumbnail -->
+                        <div class="form-group">
+                            <label for="thumbnail">Thumbnail</label>
+                            @if ($kategoris->thumbnail)
+                                <img class="img-fluid img-thumbnail mb-2 col-sm-2 d-block"
+                                    src="{{ asset('storage/' . $kategoris->thumbnail) }}" />
+                            @else
+                                <img class="img-preview img-fluid mb-3 col-sm-5 d-block" width="200px">
+                            @endif
+                            <input class="form-control" type="file" id="thumbnail" name="thumbnail" readonly />
+                        </div>
+
+                        <div class="float-right">
+                            <a class="btn btn-warning px-4" href="{{ route('kategori.index') }}">Kembali</a>
+                            <button type="submit" class="btn btn-primary px-4">Simpan</button>
+                        </div>
+                    </form>
                 </div>
-                <!-- slug -->
-                <div class="form-group">
-                   <label for="input_kategori_slug" class="font-weight-bold">
-                      Slug
-                   </label>
-                   <input id="input_kategori_slug" name="slug" type="text" value="{{ old('slug', $kategoris->slug) }}" class="form-control" readonly/>
-                  </div>
-                <!-- thumbnail -->
-                <div class="form-group">
-                  <label for="thumbnail">Thumbnail</label>
-                      <input class="form-control" type="file" id="thumbnail" name="thumbnail" value="{{ old('thumbnail', $kategoris->thumbnail) }}" readonly />
-              </div>
-            
-                <div class="float-right">
-                	<a class="btn btn-warning px-4" href="{{ route('kategori.index') }}">Kembali</a>
-                	<button type="submit" class="btn btn-primary px-4">Simpan</button>
-                </div>                
-             </form>
-          </div>
-       </div>
+            </div>
+        </div>
     </div>
- </div>
- @push('css-external')
+    @push('css-external')
         <link rel="stylesheet" href="{{ asset('../vendor/select2/css/select2.min.css') }}">
         <link rel="stylesheet" href="{{ asset('../vendor/select2/css/select2-bootstrap4.min.css') }}">
     @endpush
@@ -50,26 +50,35 @@
         {{-- filemanager --}}
         <script src="{{ asset('../vendor/laravel-filemanager/js/stand-alone-button.js') }}"></script>
     @endpush
- @push('javascript-internal')
- <script>
-    $(function() {
-       // generateSlug 
-       function generateSlug(value){
-      return value.trim()
-       .toLowerCase()
-       .replace(/[^a-z\d-]/gi, '-')
-       .replace(/-+/g, '-').replace(/^-|-$/g, "");
- }
- // event:input name kategori
- $('#input_kategori_name').change(function() {
- let name = $(this).val();
- $('#input_kategori_slug').val(generateSlug(name));
- });
+    @push('javascript-internal')
+        <script>
+            $(function() {
+                // generateSlug 
+                function generateSlug(value) {
+                    return value.trim()
+                        .toLowerCase()
+                        .replace(/[^a-z\d-]/gi, '-')
+                        .replace(/-+/g, '-').replace(/^-|-$/g, "");
+                }
+                // event:input name kategori
+                $('#input_kategori_name').change(function() {
+                    let name = $(this).val();
+                    $('#input_kategori_slug').val(generateSlug(name));
+                });
+            });
+            function previewImage() {
+               const thumbnail = document.querrySelector(#thumbnail);
+               const imgPreview = document.querrySelector('.img-preview');
 
- //  event:input thumbnail
- $('#button_kategori_thumbnail').filemanager('image');
-    });
- 
- </script>
- @endpush
+               imgPreview.style.display = 'block';
+
+               const oFReader = new FileReader();
+               oFReader.readAsDataURL(thumbnail.files[0]);
+
+               oFReader.onload = function(oFREvent) {
+                  imgPreview.src = oFREvent.target.result;
+               }
+            }
+        </script>
+    @endpush
 @endsection

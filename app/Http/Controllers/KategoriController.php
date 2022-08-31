@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Kategori;
-
+use Illuminate\Support\Str;
 
 class KategoriController extends Controller
 {
@@ -37,14 +37,17 @@ class KategoriController extends Controller
      */
     public function store(Request $request)
     {
-        $fileName = $request->file('thumbnail')->storeAs('thumbnails',time() . ".". $request->file('thumbnail')->getClientOriginalExtension(), 'public');
+        $fileName = $request->file('thumbnail')
+        ->storeAs(
+            $this->path,
+            time() . ".". $request->file('thumbnail')->getClientOriginalExtension(), 'public');
         $kategori = Kategori::create([
             'name' => $request->name,
-            'slug' => $request->slug,
+            'slug' => Str::slug($request->name, '-'),
             'thumbnail' => $fileName,
         ]);
         Alert::success('Success', 'Kategori Berhasil Ditambahkan!');
-        return redirect()->route('kategori.index');
+        return redirect()->route('kategori.admin');
     }
 
     /**
@@ -82,17 +85,16 @@ class KategoriController extends Controller
     {
         $fileName = $kategori->thumbnail;
         if ($request->hasFile('thumbnail')) {
-            
-            Storage::delete(['public/'. $kategori->thumbnail]);
             $fileName = $request->file('thumbnail')->storeAs('thumbnails',time() . ".". $request->file('thumbnail')->getClientOriginalExtension(), 'public');
+            Storage::delete(['public/'. $kategori->thumbnail]);
         }
         $kategori->update([
             'name' => $request->name,
-            'slug' => $request->slug,
+            'slug' => Str::slug($request->name),
             'thumbnail' => $fileName,
         ]);
         Alert::success('Success', 'Kategori Berhasil Diupdate!');
-        return redirect('/dashboard/kategori');
+        return redirect('kategori.admin');
     }
 
     /**
