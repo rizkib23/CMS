@@ -15,13 +15,10 @@
                     <h2 class="my-1">
                         {{ $kategoris->name }}
                     </h2>
-                    <!-- slug -->
+                    {{-- <!-- slug -->
                     <p class="text-justify">
-                        {{ $kategoris->slug }}
-                    </p>
-                    <div class="text-center">
-                    <a class="btn btn-primary text-center" href="/kategoris">Kembali</a>
-                    </div>
+                        {{ $kategori->slug }}
+                    </p> --}}
                 </div>
             </div>
         </div>
