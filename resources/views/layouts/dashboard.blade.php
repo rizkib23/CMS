@@ -11,6 +11,7 @@
    <link rel="stylesheet" href="{{ asset('css/sb-admin-2.min.css') }}">
    {{-- css:external --}}
    <link rel="stylesheet" href="{{ asset('css/jquery.dataTables.min.css') }}">
+   <link rel="stylesheet" href="{{ asset('dist/boostrap.css') }}">
    @stack('css-external')
    
 </head>

@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('Register') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="/register">
+                    <form method="POST" action="{{ route('register') }}">
                         @csrf
 
                         <div class="row mb-3">
@@ -58,33 +58,6 @@
 
                             <div class="col-md-6">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">No Hp</label>
-
-                            <div class="col-md-6">
-                                <input type="number" class="form-control" name="no_tlp" required>
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">Jenis Kelamin</label>
-
-                            <div class="col-md-6">
-                                <div class="form-control">
-                                    <input type="radio" name="jenis_kelamin" required value="Laki-laki">Laki-laki
-                                    <input type="radio" name="jenis_kelamin" required value="Permpuan">Perempuan
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">Foto</label>
-
-                            <div class="col-md-6">
-                                <input type="file" class="form-control" name="foto" required>
                             </div>
                         </div>
                         

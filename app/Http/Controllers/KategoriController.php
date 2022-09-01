@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Kategori;
-
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 class KategoriController extends Controller
 {
+    private $path = 'thumbnail';
     /**
      * Display a listing of the resource.
      *
@@ -15,9 +18,9 @@ class KategoriController extends Controller
      */
     public function index()
     {
-        return view('kategoris/admin',[
-            'kategoris'=>Kategori::orderBy('id','desc')->get(),
-            'title'=> 'Kategori'
+        return view('kategori/admin', [
+            'kategoris' => Kategori::orderBy('id', 'desc')->get(),
+            'title' => 'Kategori'
         ]);
     }
 
@@ -29,7 +32,7 @@ class KategoriController extends Controller
      */
     public function create()
     {
-        return view('kategoris.create');
+        return view('kategori.create');
     }
 
     /**
@@ -40,14 +43,18 @@ class KategoriController extends Controller
      */
     public function store(Request $request)
     {
-        $fileName = $request->file('thumbnail')->storeAs('thumbnails',time() . ".". $request->file('thumbnail')->getClientOriginalExtension(), 'public');
+        $fileName = $request->file('thumbnail')
+            ->storeAs(
+                $this->path,
+                time() . "." . $request->file('thumbnail')->getClientOriginalExtension(),
+                'public'
+            );
         $kategori = Kategori::create([
             'name' => $request->name,
-            'slug' => $request->slug,
+            'slug' => Str::slug($request->name, '-'),
             'thumbnail' => $fileName,
         ]);
-        Alert::success('Success', 'Kategori Berhasil Ditambahkan!');
-        return redirect()->route('kategori.index');
+        return redirect()->route('kategoris.index');
     }
 
     /**
@@ -59,7 +66,7 @@ class KategoriController extends Controller
     public function show($id)
     {
         $kategoris = kategori::find($id);
-        return view('dashboard.kategori.edit', compact('kategoris'));
+        return view('kategori.detail', compact('kategoris'));
     }
 
     /**
@@ -71,7 +78,7 @@ class KategoriController extends Controller
     public function edit($id)
     {
         $kategoris = Kategori::find($id);
-        return view('kategoris.edit', compact('kategoris'));
+        return view('kategori.edit', compact('kategoris'));
     }
 
     /**
@@ -81,33 +88,33 @@ class KategoriController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Kategori $kategori)
     {
         $fileName = $kategori->thumbnail;
         if ($request->hasFile('thumbnail')) {
-            
-            Storage::delete(['public/'. $kategori->thumbnail]);
-            $fileName = $request->file('thumbnail')->storeAs('thumbnails',time() . ".". $request->file('thumbnail')->getClientOriginalExtension(), 'public');
+            $fileName = $request->file('thumbnail')->storeAs('thumbnails', time() . "." . $request->file('thumbnail')->getClientOriginalExtension(), 'public');
+            Storage::delete(['public/' . $kategori->thumbnail]);
         }
         $kategori->update([
             'name' => $request->name,
-            'slug' => $request->slug,
+            'slug' => Str::slug($request->name),
             'thumbnail' => $fileName,
         ]);
-        Alert::success('Success', 'Kategori Berhasil Diupdate!');
-        return redirect('/dashboard/kategori');
+        return redirect('/kategoris');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Kategori  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Kategori $kategori)
     {
-        $kategori->delete();
-        Alert::success('Success', 'Kategori Berhasil Dihapus!');
+        if ($kategori->thumbnail) {
+            File::delete('thumbnail', $kategori->thumbnail);
+        }
+        Kategori::destroy($kategori->id);
         return redirect('/kategoris');
     }
 }

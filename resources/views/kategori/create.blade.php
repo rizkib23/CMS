@@ -1,14 +1,18 @@
-@extends('dashboard.layouts.main')
+@extends('../layouts/dashboard')
 
 @section('title')
 @endsection
 
 @section('content')
+<div class="container mt-4">
     <div class="row">
-        <div class="col-md-12">
-            <div class="card">
+       <div class="col-12">
+          <div class="card">
+                <div class="card-header text-center">
+                    <h1> Tambah Kategori Baru </h1> 
+                </div>
                 <div class="card-body">
-                    <form action="{{ route('kategori.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('kategoris.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <!-- title -->
                         <div class="form-group">
@@ -28,18 +32,26 @@
                         </div>
                         <!-- thumbnail -->
                         <div class="form-group">
-                            <label for="thumbnail">Thumbnail</label>
+                            <label for="thumbnail" class="font-weight-bold">Thumbnail</label>
+                        
+                            
                                 <input class="form-control" type="file" id="thumbnail" name="thumbnail" readonly />
                         </div>
+                       
+                        
                         <div class="float-right">
-                            <a class="btn btn-warning px-4" href="{{ route('kategori.index') }}">Kembali</a>
+
+                            <a class="btn btn-warning px-4" href="/kategoris">Kembali</a>
                             <button type="submit" class="btn btn-primary px-4">Simpan</button>
+                            <button type="reset" class="btn btn-danger px-4">Reset</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+</div>
+
 
     @push('css-external')
         <link rel="stylesheet" href="{{ asset('../vendor/select2/css/select2.min.css') }}">

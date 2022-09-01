@@ -18,7 +18,6 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/login.css">
     {{-- end --}}
     <script src="dist/js/bootstrap.min.js"></script>
     <title>O-coding</title>

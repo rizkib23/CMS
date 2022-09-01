@@ -26,48 +26,34 @@ use App\Http\Controllers\UserController;
 |
 */
 // user interface
-Route::resource('/home',HomeController::class);
+Route::resource('/home', HomeController::class);
 
 Route::get('/', function () {
-    return view('home',[
-        "title" => "Home"
-    ]);
+    return view(
+        'home',
+        [
+            "title" => "Home"
+        ]
+
+    );
 });
 
-Route::resource('/kategori',KategoriController::class);
-
-Route::get('/tai', function () {
-    return view('tags/tags_user',[
-        "title" => "Tag"
-    ]);
-});
-
-Route::get('/kategori', [KtgrUserController::class,'index']
-    
-);
-
+Route::resource('/kategori', KtgrUserController::class,);
 // post
-Route::get('/posts', [PostController::class,'index']
-    
-);
 
 
-Route::group(['middleware' => ['auth', 'role:admin']], function(){
-    Route::get('/dashboard',[DashboarController::class, 'index']);
-    Route::resource('/kategoris',KategoriController::class);
-    Route::resource('/tags',TagController::class);
 
+Route::group(['middleware' => ['auth', 'role:admin']], function () {
+    Route::resource('/dashboard', DashboarController::class,);
+    Route::resource('/kategoris', KategoriController::class);
+    Route::resource('/tags', TagController::class);
 });
-Route::resource('/profil',ProfilController::class);
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::resource('/profil', ProfilController::class);
+    Route::resource('/post', PostController::class);
+});
 Auth::routes();
-
-Route::group(['prefix' => 'filemanager'], function () {
-    \UniSharp\LaravelFilemanager\Lfm::routes();
-}); 
-
-Route::post('/register', [UserController::class, 'store']);
-
-Route::get('/dashboard',[DashboarController::class, 'index'])->middleware('auth');
 
 Route::group(['prefix' => 'filemanager'], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();

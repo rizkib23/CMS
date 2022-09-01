@@ -1,31 +1,21 @@
-@extends('dashboard.layouts.main')
+@extends('../layouts/dashboard')
 
 @section('title')
 @endsection
 @section('content')
-<div class="container-fluid">
-    <!-- section:content -->
+<div class="container mt-5">
     <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">
-                    <h1 class="h3 mb-2 text-gray-800">Kategori</h1>
-                </div>
-            </div>
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Data Kategori</h6>
-                </div>
-                <br>
-                <div class="col-md-3">
-                    <a href="/dashboard/kategori/create" class="btn btn-md btn-primary" style="margin-bottom: 10px">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header text-center">
+            <h1> Kategori </h1>
+          </div>
+          <div class="card-body">
+                    <a href="{{ route('kategoris.create') }}" class="btn btn-md btn-success" style="margin-bottom: 10px">
                         Tambah
                         <i class="fas fa-plus-square"></i>
                     </a>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <table class="table table-bordered"  id="myTable">
                             <thead>
                                 <tr class="text-center">
                                     <th scope="col">NO.</th>
@@ -65,17 +55,17 @@
                                         <td class="text-center">
                                             <div>
                                                 <!-- detail -->
-                                                <a href="{{ route('kategori.show', $kategori->id) }}" class="btn btn-sm btn-primary" role="button">
+                                                <a href="{{ route('kategoris.show', $kategori->id) }}" class="btn btn-sm btn-primary" role="button">
                                                     <i class="fas fa-eye"></i>
                                                 </a>
                                                 <!-- edit -->
-                                                <a href="{{ route('kategori.edit', $kategori->id) }}"
+                                                <a href="{{ route('kategoris.edit', $kategori->id) }}"
                                                     class="btn btn-sm btn-info" role="button">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
                                                 <!-- delete -->
                                                 <form class="d-inline"
-                                                    action="{{ route('kategori.destroy', $kategori->id) }}" role="alert"
+                                                    action="{{ route('kategoris.destroy', $kategori->id) }}" role="alert"
                                                     method="POST">
                                                     @csrf
                                                     @method('DELETE')
@@ -96,6 +86,6 @@
             </div>
         </div>
     </div>
-    </div>
-    @include('sweetalert::alert')
+
+   
 @endsection

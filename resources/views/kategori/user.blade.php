@@ -14,12 +14,12 @@
     <div class="row mx-0 justify-content-center">
         <div class="col-lg-8">
                 <div class="row">
-                    @foreach ($kategoris as $kategori)
+                    @foreach ($kategori as $kategoris)
                     <div class="col-lg-4 col-md-6 pb-4">
                         <a class="courses-list-item position-relative d-block overflow-hidden mb-2" href="detail.html">
-                            <img class="img-fluid" src="{{ $kategori->thumbnail }}" alt="{{ $kategori->name }}">
+                            <img class="img-fluid" src="{{ $kategoris->thumbnail }}" alt="">
                             <div class="courses-text">
-                                <h4 class="text-center text-white px-3">{{ $kategori->name }}</h4>
+                                <h4 class="text-center text-white px-3">{{ $kategoris->name }}</h4>
                                 <div class="border-top w-100 mt-3">
                                     <div class="d-flex justify-content-between p-4">
                                         <span class="text-white"><i class="fa fa-user mr-2"></i>Jhon Doe</span>

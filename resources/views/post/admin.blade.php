@@ -1,39 +1,22 @@
-@extends('dashboard.layouts.main')
+@extends('layouts.dashboard')
 
 @section('title')
 @endsection
 @section('content')
     <!-- section:content -->
-    <div class="row">
-        <div class="col-md-12">
+    <div class="container mt-5">
+        <div class="row">
+          <div class="col-md-12">
             <div class="card">
-                <div class="card-header">
-                    <h1 class="h3 mb-2 text-gray-800">Post</h1>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <form action="" method="GET">
-                                <div class="input-group">
-                                    <input name="keyword" type="search" class="form-control" placeholder="Cari Kategori">
-                                    <div class="input-group-append">
-                                        <button class="btn btn-primary" type="submit">
-                                            <i class="fas fa-search"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <div class="col-md-3">
-                            <a href="/dashboard/post/create" class="btn btn-md btn-primary" style="margin-bottom: 10px">
-                                Tambah
-                                <i class="fas fa-plus-square"></i>
-                            </a>
-                        </div>
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+              <div class="card-header text-center">
+                <h1> Postingan </h1>
+              </div>
+              <div class="card-body">
+                        <a href="{{ route('post.create') }}" class="btn btn-md btn-success" style="margin-bottom: 10px">
+                            Tambah
+                            <i class="fas fa-plus-square"></i>
+                        </a>
+                        <table class="table table-bordered"  id="myTable">
                             <thead>
                                 <tr class="text-center">
                                     <th scope="col">NO.</th>
@@ -41,7 +24,6 @@
                                     <th scope="col">SLUG</th>
                                     <th scope="col">THUMBNAIL</th>
                                     <th scope="col">DESKRIPSI</th>
-                                    <th scope="col">CONTENT</th>
                                     <th scope="col">KATEGORI</th>
                                     <th scope="col">AKSI</th>
                                 </tr>
@@ -51,7 +33,7 @@
                                 $no = 1;
                                 ?>
                                 <!-- list category -->
-                                @foreach ($posts as $post)
+                                @foreach ($posts as $index => $post)
                                     <tr class="text-center">
                                         <td><?php echo $no++; ?></td>
                                         <!-- category list -->
@@ -77,14 +59,14 @@
                                                 {{ $post->deskripsi }}
                                             </label>
                                         </td>
-                                        <td>
+                                        {{-- <td>
                                             <label class="mt-auto mb-auto">
                                                 {{ $post->content }}
                                             </label>
-                                        </td>
+                                        </td> --}}
                                         <td>
                                             <label class="mt-auto mb-auto">
-                                                {{ $post->kategori_id }}
+                                                {{ $kategoris[$index]->name }}
                                             </label>
                                         </td>
                                         <td class="text-center">
@@ -120,5 +102,5 @@
             </div>
         </div>
     </div>
-    @include('sweetalert::alert')
+    
 @endsection

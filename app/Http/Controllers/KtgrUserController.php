@@ -9,8 +9,8 @@ class KtgrUserController extends Controller
 {
     public function index()
     {
-        return view('kategoris/user',[
-            'kategoris'=>Kategori::all(),
+        return view('kategori/user',[
+            'kategori'=>Kategori::all(),
             'title'=> 'Kategori'
         ]);
     }

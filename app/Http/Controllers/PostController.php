@@ -15,9 +15,10 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    {   
+        $kategoris = Kategori::all();
         $posts = post::all();
-        return view('dashboard.post.index', compact('posts'));
+        return view('post.admin', compact('posts','kategoris'));
     }
 
     /**
@@ -27,7 +28,7 @@ class PostController extends Controller
      */
     public function create(Request $request)
     {
-        return view('dashboard.post.create', [
+        return view('post.create', [
             'kategoris' => Kategori::all()
         ]);
     }
@@ -50,8 +51,8 @@ class PostController extends Controller
             'kategori_id' => $request->kategori_id,
             'status' => $request->status,
         ]);
-        Alert::success('Success', 'Post Berhasil Ditambahkan!');
-        return redirect()->route('post.index');
+       
+        return redirect()->route('/post ');
     }
 
     /**
@@ -63,7 +64,7 @@ class PostController extends Controller
     public function show(Post $post)
     {
         $kategoris = Kategori::all();
-        return view('dashboard.post.detail', compact('post','kategoris'));
+        return view('post.detail', compact('post','kategoris'));
     }
 
     /**
@@ -75,7 +76,7 @@ class PostController extends Controller
     public function edit(Post $id)
     {
         $kategoris = post::find($id);
-        return view('dashboard.post.edit');
+        return view('post.edit');
     }
 
     /**
@@ -99,7 +100,7 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $post->delete();
-        Alert::success('Success', 'Post Berhasil Dihapus!');
-        return redirect('/dashboard/post');
+        
+        return redirect('/post');
     }
 }

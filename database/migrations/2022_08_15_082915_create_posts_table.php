@@ -16,12 +16,12 @@ class CreatePostsTable extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('kategori_id')->constrained('kategoris');
             $table->string('judul');
             $table->string('slug');
             $table->string('thumbnail')->nullable();
             $table->text('deskripsi');
             $table->text('content');
-            $table->foreignId('kategori_id');
             $table->enum('status',['publish','draft']);
             $table->timestamp('published_at')->nullable();
             $table->timestamps();

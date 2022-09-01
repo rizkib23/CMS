@@ -8,9 +8,11 @@ use App\Http\Requests\UpdateProfilRequest;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class ProfilController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -18,8 +20,13 @@ class ProfilController extends Controller
      */
     public function index()
     {
-        
-        return view('profil');
+        return view('profil', [
+            'kategoris' => Profil::orderBy('id', 'desc')->get(),
+            'title' => 'Kategori'
+        ]);
+
+        // $profil = Profil::all();
+        // return view('profil', compact('user', 'profil'));
     }
     /**
      * Show the form for creating a new resource.
@@ -28,7 +35,7 @@ class ProfilController extends Controller
      */
     public function create()
     {
-        //  
+        return view('create');
     }
 
     /**
@@ -62,24 +69,31 @@ class ProfilController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Profil  $profil
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Profil $profil)
+    public function edit($id)
     {
-        //
+        $profil = Profil::find($id);
+        return view('create', compact('profil'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateProfilRequest  $request
-     * @param  \App\Models\Profil  $profil
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateProfilRequest $request, Profil $profil)
+    public function update(Request $request, $id)
     {
-        //
+        //  profil input
+        $fileName = $request->file('foto')->storeAs('foto', time() . "." . $request->file('foto')->getClientOriginalExtension(), 'public');
+        $profil =  Profil::updated([
+            'no_tlp' => $request->no_tlp,
+            'jenis_kelamin' => $request->jenis_kelamin,
+            'foto' => $fileName,
+        ]);
     }
 
     /**

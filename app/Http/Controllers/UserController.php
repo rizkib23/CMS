@@ -17,7 +17,8 @@ class UserController extends Controller
     public function index()
     {
         User::all();
-        return view('auth/login');
+        Profil::all();
+        return view('profil.create');
     }
 
     /**
@@ -50,10 +51,11 @@ class UserController extends Controller
 
      $user= User::create($request->all()); 
      //  profil input
+     $fileName = $request->file('foto')->storeAs('foto',time() . ".". $request->file('foto')->getClientOriginalExtension(), 'public');
      $profil=  Profil::create([
             'no_tlp' => $request->no_tlp,
             'jenis_kelamin' => $request->jenis_kelamin,
-            'foto' => $request->foto,
+            'foto' => $fileName,
             'user_id' =>  $user->id,
      ]);    
       return view('auth/login');
