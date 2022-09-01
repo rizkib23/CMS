@@ -2,19 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\kategori;
 use Illuminate\Http\Request;
-use App\Models\Kategori;
-use Illuminate\Support\Str;
+use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use LDAP\Result;
+use illuminate\Support\Str;
 
 class KategoriController extends Controller
 {
+
+    private $path = 'thumbnails';
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    {   
         $kategoris = kategori::all();
         return view('kategori.admin', compact('kategoris'));
     }
@@ -47,28 +53,27 @@ class KategoriController extends Controller
             'thumbnail' => $fileName,
         ]);
         Alert::success('Success', 'Kategori Berhasil Ditambahkan!');
-        return redirect()->route('kategori.admin');
-    }
+        return redirect()->route('kategori.index');
 
+    }
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\kategori  $kategori
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(kategori $kategori)
     {
-        $kategoris = kategori::find($id);
-        return view('dashboard.kategori.edit', compact('kategoris'));
+        return view('kategori.detail', ['kategori' => $kategori]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\kategori  $kategori
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(kategori $kategoris, $id)
     {
         $kategoris = kategori::find($id);
         return view('kategori.edit', compact('kategoris'));
@@ -78,10 +83,10 @@ class KategoriController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\kategori  $kategori
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, kategori $kategori)
     {
         $fileName = $kategori->thumbnail;
         if ($request->hasFile('thumbnail')) {
@@ -90,20 +95,20 @@ class KategoriController extends Controller
         }
         $kategori->update([
             'name' => $request->name,
-            'slug' => Str::slug($request->name),
+            'slug' => Str::slug($request->name, '-'),
             'thumbnail' => $fileName,
         ]);
         Alert::success('Success', 'Kategori Berhasil Diupdate!');
-        return redirect('kategori.admin');
+        return redirect('/kategori');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\kategori  $kategori
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(kategori $kategori)
     {
         $kategori->delete();
         Alert::success('Success', 'Kategori Berhasil Dihapus!');

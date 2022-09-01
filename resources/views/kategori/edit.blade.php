@@ -1,12 +1,12 @@
 @extends('dashboard.layouts.main')
 
-@section('title')
-@endsection
-
 @section('content')
     <div class="row">
         <div class="col-md-12">
             <div class="card">
+                <div class="card-header">
+                    <h1 class="h3 mb-2 text-gray-800">Kategori Edit</h1>
+                </div>
                 <div class="card-body">
                     <form action="{{ route('kategori.update', $kategoris->id) }}" method="POST">
                         @method('put')
@@ -66,19 +66,6 @@
                     $('#input_kategori_slug').val(generateSlug(name));
                 });
             });
-            function previewImage() {
-               const thumbnail = document.querrySelector(#thumbnail);
-               const imgPreview = document.querrySelector('.img-preview');
-
-               imgPreview.style.display = 'block';
-
-               const oFReader = new FileReader();
-               oFReader.readAsDataURL(thumbnail.files[0]);
-
-               oFReader.onload = function(oFREvent) {
-                  imgPreview.src = oFREvent.target.result;
-               }
-            }
         </script>
     @endpush
 @endsection
