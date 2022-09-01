@@ -15,10 +15,10 @@
                     <h2 class="my-1">
                         {{ $kategori->name }}
                     </h2>
-                    <!-- slug -->
+                    {{-- <!-- slug -->
                     <p class="text-justify">
                         {{ $kategori->slug }}
-                    </p>
+                    </p> --}}
                 </div>
             </div>
         </div>

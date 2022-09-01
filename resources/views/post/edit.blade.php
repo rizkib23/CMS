@@ -3,7 +3,8 @@
 @section('content')
     <div class="row">
         <div class="col-md-12">
-            <form action="{{ route('post.update') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('post.update', $post->id) }}" method="POST" enctype="multipart/form-data">
+                @method('put')
                 <div class="card">
                     <div class="card-header">
                         <h1 class="h3 mb-0 text-gray-800">Create Post</h1>
@@ -17,7 +18,8 @@
                                     <label for="input_post_judul" class="font-weight-bold">
                                         Judul
                                     </label>
-                                    <input id="input_post_judul" name="judul" type="text" value="{{ old('judul', $post->judul) }}" class="form-control" 
+                                    <input id="input_post_judul" name="judul" type="text"
+                                        value="{{ old('judul', $post->judul) }}" class="form-control"
                                         placeholder="Masukkan Judul Post" />
                                 </div>
                                 <!-- slug -->
@@ -25,28 +27,35 @@
                                     <label for="input_post_slug" class="font-weight-bold">
                                         Slug
                                     </label>
-                                    <input id="input_post_slug" name="slug" type="text" value="{{ old('slug', $post->slug) }}" class="form-control"
-                                        placeholder="Slug Post" readonly />
+                                    <input id="input_post_slug" name="slug" type="text"
+                                        value="{{ old('slug', $post->slug) }}" class="form-control" placeholder="Slug Post"
+                                        readonly />
                                 </div>
                                 <!-- thumbnail -->
                                 <div class="form-group">
                                     <label for="thumbnail">Thumbnail</label>
-                                        <input class="form-control" type="file" id="thumbnail" name="thumbnail" value="{{ old('thumbnail', $post->thumbnail) }}" readonly />
+                                    @if ($post->thumbnail)
+                                        <img class="img-fluid img-thumbnail mb-2 col-sm-2 d-block"
+                                            src="{{ asset('storage/' . $post->thumbnail) }}" />
+                                    @else
+                                        <img class="img-preview img-fluid mb-3 col-sm-5 d-block" width="200px">
+                                    @endif
+                                    <input class="form-control" type="file" id="thumbnail" name="thumbnail" readonly />
                                 </div>
                                 <!-- description -->
                                 <div class="form-group">
                                     <label for="input_post_deskripsi" class="font-weight-bold">
                                         Deskripsi
                                     </label>
-                                    <textarea id="input_post_deskripsi" name="deskripsi" placeholder="Masukkan Deskripsi Post" class="form-control" {{ old('deskripsi', $post->deskripsi) }}
-                                        rows="3"></textarea>
+                                    <textarea id="input_post_deskripsi" name="deskripsi" placeholder="Masukkan Deskripsi Post" class="form-control" rows="3">{{ old('deskripsi', $post->deskripsi) }}
+                                    </textarea>
                                 </div>
                                 <!-- content -->
                                 <div class="form-group">
                                     <label for="input_post_content" class="font-weight-bold">
                                         Content
                                     </label>
-                                    < id="input_post_content" name="content" placeholder="Masukka Content Post" class="form-control" {{ old('content', $post->content) }} rows="20"></textarea>
+                                    <textarea id="input_post_content" name="content" placeholder="Masukka Content Post" class="form-control" rows="20">{{ old('content', $post->content) }}</textarea>
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -58,11 +67,11 @@
                                     <div class="form-control overflow-auto" style="height: 886px">
                                         <!-- List Kategori -->
                                         <ul class="pl-1 my-1" style="list-style: none;">
-                                            <select class="form-control" id="kategori-option" name="kategori_id" >
+                                            <select class="form-control" id="kategori-option" name="kategori_id">
                                                 @foreach ($kategoris as $kategori)
-                                                   <option value="{{ $kategori->id }}">{{ $kategori->name }}</option>
+                                                    <option value="{{ $kategori->id }}">{{ $kategori->name }}</option>
                                                 @endforeach
-                                             </select>
+                                            </select>
                                         </ul>
                                         <!-- List Kategori -->
                                     </div>

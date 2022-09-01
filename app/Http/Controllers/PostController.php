@@ -6,9 +6,12 @@ use App\Models\Post;
 use App\Models\Kategori;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
+    private $path = 'thumbnails';
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +20,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = post::all();
-        return view('dashboard.post.index', compact('posts'));
+        return view('post.admin', compact('posts'));
     }
 
     /**
@@ -27,7 +30,7 @@ class PostController extends Controller
      */
     public function create(Request $request)
     {
-        return view('dashboard.post.create', [
+        return view('post.create', [
             'kategoris' => Kategori::all()
         ]);
     }
@@ -40,10 +43,14 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $fileName = $request->file('thumbnail')->storeAs('thumbnails',time() . ".". $request->file('thumbnail')->getClientOriginalExtension(), 'public');
+        $fileName = $request->file('thumbnail')
+        ->storeAs(
+            $this->path,
+            time() . ".". $request->file('thumbnail')->getClientOriginalExtension(), 
+            'public');
         $post = post::create([
             'judul' => $request->judul,
-            'slug' => $request->slug,
+            'slug' => Str::slug($request->judul, '-'),
             'thumbnail' => $fileName,
             'deskripsi' => $request->deskripsi,
             'content' => $request->content,
@@ -60,10 +67,10 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show(Post $post, Kategori $kategoris)
     {
-        $kategoris = Kategori::all();
-        return view('dashboard.post.detail', compact('post','kategoris'));
+        $kategoris = Kategori::find($post);
+        return view('post.detail', compact('post','kategoris'));
     }
 
     /**
@@ -72,10 +79,10 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function edit(Post $id)
+    public function edit(Post $post, Kategori $kategoris)
     {
-        $kategoris = post::find($id);
-        return view('dashboard.post.edit');
+        $kategoris = Kategori::find($post);
+        return view('post.edit', compact('post', 'kategoris'));
     }
 
     /**
@@ -87,7 +94,22 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $fileName = $post->thumbnail;
+        if ($request->hasFile('thumbnail')) {
+            $fileName = $request->file('thumbnail')->storeAs('thumbnails',time() . ".". $request->file('thumbnail')->getClientOriginalExtension(), 'public');
+            Storage::delete(['public/'. $post->thumbnail]);
+        }
+        $post->update([
+            'judul' => $request->judul,
+            'slug' => Str::slug($request->judul, '-'),
+            'thumbnail' => $fileName,
+            'deskripsi' => $request->deskripsi,
+            'content' => $request->content,
+            'kategori_id' => $request->kategori_id,
+            'status' => $request->status,
+        ]);
+        Alert::success('Success', 'Post Berhasil Diupdate!');
+        return redirect()->route('post.index');
     }
 
     /**
@@ -100,6 +122,6 @@ class PostController extends Controller
     {
         $post->delete();
         Alert::success('Success', 'Post Berhasil Dihapus!');
-        return redirect('/dashboard/post');
+        return redirect('/post');
     }
 }
