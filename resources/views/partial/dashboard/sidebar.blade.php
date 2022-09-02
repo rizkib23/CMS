@@ -13,8 +13,8 @@
    <hr class="sidebar-divider my-0">
 
    <!-- Nav Item - Dashboard -->
-   <li class="nav-item">
-    <a class="nav-link {{ Request::is('dashboard') ? 'active' : '' }}" href="/dashboard">           
+   <li class="nav-item {{ Request::is('dashboard') ? 'active' : '' }}">
+    <a class="nav-link" href="/dashboard">           
         <i class="fas fa-fw fa-tachometer-alt"></i>
            <span>Dashboard</span></a>
    </li>
@@ -28,22 +28,22 @@
    </div>
 
    <!-- Nav Item - Post -->
-   <li class="nav-item ">
-       <a class="nav-link" href="/dashboard/#">
+   <li class="nav-item {{ Request::is('dashboard/post', 'dashboard/post/create', 'dashboard/post/edit') ? 'active' : '' }}">
+       <a class="nav-link" href="/dashboard/post">
            <i class="fas fa-fw fa-table"></i>
            <span>Post</span></a>
    </li>
 
    <!-- Nav Item - Kategori -->
-   <li class="nav-item ">
-    <a class="nav-link {{ Request::is('dashboard/kategori') ? 'active' : '' }}" href="/dashboard/kategori"> 
+   <li class="nav-item {{ Request::is('dashboard/kategori', 'dashboard/kategori/create', 'dashboard/kategori/edit') ? 'active' : '' }}">
+    <a class="nav-link" href="/dashboard/kategori"> 
         <i class="fas fa-fw fa-table"></i>
            <span>Kategori</span></a>
    </li>
 
    <!-- Nav Item - Tag -->
-   <li class="nav-item ">
-    <a class="nav-link" href="/dashboard/#">
+   <li class="nav-item {{ Request::is('dashboard/tag', 'dashboard/tag/create', 'dashboard/tag/edit') ? 'active' : '' }}">
+    <a class="nav-link" href="/dashboard/tag">
            <i class="fas fa-fw fa-table"></i>
            <span>Tag</span></a>
    </li>
@@ -56,9 +56,9 @@
        User
    </div>
 
-   <!-- Nav Item - Charts -->
-   <li class="nav-item ">
-       <a class="nav-link" href="/dashboard/#">
+   <!-- Nav Item - User -->
+   <li class="nav-item {{ Request::is('dashboard') ? 'active' : '' }}">
+       <a class="nav-link" href="/dashboard">
            <i class="fas fa-fw fa-chart-area"></i>
            <span>User</span></a>
    </li>
@@ -72,8 +72,8 @@
    </div>
 
    <!-- Nav Item - File Manager -->
-   <li class="nav-item ">
-       <a class="nav-link" href="#">
+   <li class="nav-item {{ Request::is('dashboard') ? 'active' : '' }}">
+       <a class="nav-link" href="/dashboard">
            <i class="fas fa-fw fa-chart-area"></i>
            <span>File Manager</span></a>
    </li>
