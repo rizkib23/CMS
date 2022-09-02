@@ -11,12 +11,13 @@ class Post extends Model
 
     protected $fillable = [
         'judul',
-        'slug', 
-        'thumbnail', 
+        'slug',
+        'thumbnail',
         'deskripsi',
         'content',
         'kategori_id',
         'status',
+        'user_id',
     ];
 
     public function kategori()

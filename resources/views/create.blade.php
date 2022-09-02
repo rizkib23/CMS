@@ -1,14 +1,15 @@
 @extends('layouts.main')
 
 @section('container')
-<form action="{{ route('profil.update',$user->id) }}" method="post" enctype="multipart/form-data">
+<div class="mt-5">
+<form action="{{ route('profil.update',$useProfil->id) }}" method="post" enctype="multipart/form-data">
     @method('put')
     @csrf
 <div class="row mb-3">
     <label for="email" class="col-md-4 col-form-label text-md-end">No Hp</label>
 
     <div class="col-md-6">
-        <input type="number" class="form-control" name="no_tlp" required value="{{ $user->dataProfil->no_tlp }}">
+        <input type="number" class="form-control" name="no_tlp" required value="{{ $useProfil->dataProfil->no_tlp }}">
     </div>
 </div>
 
@@ -32,4 +33,5 @@
 </div>
  <button type="submit">SIMPAN</button>
 </form>
+</div>
 @endsection

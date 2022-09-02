@@ -16,6 +16,7 @@
           </li>
         </ul>
           <ul class="navbar-nav ml-auto">
+            <a class="btn btn-inline" href="/create/post"><i class="bi bi-pencil-square"></i></a>
           @guest
             @if (Route::has('login'))
               <li>
@@ -70,7 +71,6 @@ aria-hidden="true">
             </button>
         </div>
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.
-          <input type="text">
         </div>
         <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>

@@ -2,6 +2,52 @@
 
 return [
 
+    'authorities' => [
+        'manage_posts' => [
+            'post_show',
+            'post_create',
+            'post_update',
+            'post_detail',
+            'post_delet',
+        ],
+        'manage_kategoris' => [
+            'kategori_show',
+            'kategori_create',
+            'kategori_update',
+            'kategori_detail',
+            'kategori_delet',
+        ],
+        'manage_tags' => [
+            'tag_show',
+            'tag_create',
+            'tag_update',
+            'tag_detail',
+            'tag_delet',
+        ],
+        'manage_users' => [
+            'user_show',
+            'user_create',
+            'user_update',
+            'user_detail',
+            'user_delet',
+        ],
+        'manage_roles' => [
+            'role_show',
+            'role_create',
+            'role_update',
+            'role_detail',
+            'role_delet',
+        ],
+        'manage_komentars' => [
+            'komentar_show',
+            'komentar_create',
+            'komentar_update',
+            'komentar_detail',
+            'komentar_delet',
+        ]
+
+    ],
+
     'models' => [
 
         /*

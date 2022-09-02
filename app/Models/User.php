@@ -45,5 +45,8 @@ class User extends Authenticatable
     {
         return $this->hasOne(Profil::class, 'user_id', 'id');
     }
-   
+    public function dataPost()
+    {
+        return $this->hasMany(Post::class, 'user_id', 'id');
+    }
 }

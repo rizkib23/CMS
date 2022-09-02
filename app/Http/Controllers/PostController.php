@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\Kategori;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
@@ -21,9 +23,20 @@ class PostController extends Controller
     {
         $kategoris = Kategori::all();
         $posts = post::all();
-        return view('post.admin', compact('posts'));
+        $user = User::all();
+        return view('post.admin', compact('posts', 'kategoris', 'user'));
     }
-
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function userCreate()
+    {
+        $kategoris = Kategori::all();
+        $posts = post::all();
+        return view('post.createUser', compact('posts', 'kategoris'));
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -44,6 +57,8 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        $user_id = Auth::user();
+
         $fileName = $request->file('thumbnail')
             ->storeAs(
                 $this->path,
@@ -51,6 +66,7 @@ class PostController extends Controller
                 'public'
             );
         $post = post::create([
+            'user_id' => $user_id->id,
             'judul' => $request->judul,
             'slug' => Str::slug($request->judul, '-'),
             'thumbnail' => $fileName,
@@ -60,7 +76,7 @@ class PostController extends Controller
             'status' => $request->status,
         ]);
 
-        return redirect()->route('/post ');
+        return redirect('/post');
     }
 
     /**
@@ -110,7 +126,7 @@ class PostController extends Controller
             'kategori_id' => $request->kategori_id,
             'status' => $request->status,
         ]);
-        Alert::success('Success', 'Post Berhasil Diupdate!');
+
         return redirect()->route('post.index');
     }
 

@@ -9,6 +9,7 @@ use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
 
 class ProfilController extends Controller
 {
@@ -20,10 +21,10 @@ class ProfilController extends Controller
      */
     public function index()
     {
-        return view('profil', [
-            'kategoris' => Profil::orderBy('id', 'desc')->get(),
-            'title' => 'Kategori'
-        ]);
+        $profil = Profil::all();
+        $user = User::all();
+        $useProfil = Auth::user();
+        return view("profil", compact('profil', 'user', 'useProfil'));
 
         // $profil = Profil::all();
         // return view('profil', compact('user', 'profil'));
@@ -74,8 +75,10 @@ class ProfilController extends Controller
      */
     public function edit($id)
     {
-        $profil = Profil::find($id);
-        return view('create', compact('profil'));
+        $profil = Profil::all();
+        $user = User::all();
+        $useProfil = Auth::user();
+        return view('create', compact('profil', 'user', 'useProfil'));
     }
 
     /**

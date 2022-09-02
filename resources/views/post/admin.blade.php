@@ -16,15 +16,17 @@
                             Tambah
                             <i class="fas fa-plus-square"></i>
                         </a>
-                        <table class="table table-bordered"  id="myTable">
+                        <table class="table table-bordered table-responsive"  id="myTable">
                             <thead>
                                 <tr class="text-center">
                                     <th scope="col">NO.</th>
+                                    <th scope="col">PEMBUAT</th>
                                     <th scope="col">JUDUL</th>
                                     <th scope="col">SLUG</th>
                                     <th scope="col">THUMBNAIL</th>
                                     <th scope="col">DESKRIPSI</th>
                                     <th scope="col">KATEGORI</th>
+                                    <th scope="col">STATUS</th>
                                     <th scope="col">AKSI</th>
                                 </tr>
                             </thead>
@@ -35,8 +37,15 @@
                                 <!-- list category -->
                                 @foreach ($posts as $index => $post)
                                     <tr class="text-center">
-                                        <td><?php echo $no++; ?></td>
+                                        <td>
+                                            <?php echo $no++; ?>
+                                        </td>
                                         <!-- category list -->
+                                        <td>
+                                            <label class="mt-auto mb-auto">
+                                                {{ $user[$index]->name }}
+                                            </label>
+                                        </td>
                                         <td>
                                             <label class="mt-auto mb-auto">
                                                 <!-- todo: show judul post-->
@@ -59,22 +68,25 @@
                                                 {{ $post->deskripsi }}
                                             </label>
                                         </td>
-                                        {{-- <td>
-                                            <label class="mt-auto mb-auto">
-                                                {{ $post->content }}
-                                            </label>
-                                        </td> --}}
                                         <td>
                                             <label class="mt-auto mb-auto">
                                                 {{ $kategoris[$index]->name }}
                                             </label>
                                         </td>
+                                        <td>
+                                            <label class="mt-auto mb-auto">
+                                                {{ $post->status }}
+                                            </label>
+                                        </td>
                                         <td class="text-center">
                                             <div>
+                                                @if ($post->status =['publish'])
                                                 <!-- detail -->
                                                 <a href="{{ route('post.show', ['post' => $post]) }}" class="btn btn-sm btn-primary" role="button">
                                                     <i class="fas fa-eye"></i>
                                                 </a>
+                                                @endif
+                                                @if($post->status = ['draft'])
                                                 <!-- edit -->
                                                 <a href="{{ route('post.edit', $post->id) }}" class="btn btn-sm btn-info"
                                                     role="button">
@@ -89,6 +101,7 @@
                                                         <i class="fas fa-trash"></i>
                                                     </button>
                                                 </form>
+                                                @endif
                                             </div>
                                         </td>
                                     </tr>
