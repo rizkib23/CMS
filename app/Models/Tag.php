@@ -22,4 +22,9 @@ class Tag extends Model
     protected $fillable = [
         'nama_tag'
     ];
+
+    public function posts()
+    {
+        return $this->belongsTo(Post::class);
+    }
 }
