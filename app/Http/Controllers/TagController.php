@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Tag;
+use Illuminate\Support\Facades\Storage;
+use illuminate\Support\Str;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class TagController extends Controller
 {

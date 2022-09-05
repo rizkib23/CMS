@@ -86,8 +86,8 @@
                                         Status
                                     </label>
                                     <select id="select_post_status" name="status" class="custom-select">
-                                        <option value="draft">Draft</option>
-                                        <option value="publish">Publish</option>
+                                        <option value="{{ old('status', $post->status) }}"></option>
+
                                     </select>
                                 </div>
                             </div>

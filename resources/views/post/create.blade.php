@@ -39,7 +39,7 @@
                                         Deskripsi
                                     </label>
                                     <textarea id="input_post_deskripsi" name="deskripsi" placeholder="Masukkan Deskripsi Post" class="form-control "
-                                        rows="3"></textarea>
+                                        rows="4"></textarea>
                                 </div>
                                 <!-- content -->
                                 <div class="form-group">
@@ -47,7 +47,7 @@
                                         Content
                                     </label>
                                     <textarea id="input_post_content" name="content" placeholder="Masukka Content Post" class="form-control "
-                                        rows="20"></textarea>
+                                        rows="19"></textarea>
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -68,6 +68,23 @@
                                         <!-- List Kategori -->
                                     </div>
                                 </div>
+                                <!-- tag -->
+                                <div class="form-group">
+                                    <label for="select_post_tag" class="font-weight-bold">
+                                        Tag
+                                    </label>
+                                    <div class="form-control overflow-auto-responsive" style="height: 370px">
+                                        <ul class="pl-1 my-1" style="list-style: none;">
+                                            <select class="tag-responsive form-control custom-select w-100" id="select_post_tag" name="tag[]" data-placeholder="Pilih Tag" multiple="multiple">
+                                                @foreach ($tags as $tag)
+                                                    <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                             </div>
                         </div>
                         <div class="row">

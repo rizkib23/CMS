@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\kategori;
 use Illuminate\Http\Request;
-use App\Models\Kategori;
+use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\DB;
+use LDAP\Result;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Str;
+use illuminate\Support\Str;
 
 class KategoriController extends Controller
 {
@@ -56,26 +59,25 @@ class KategoriController extends Controller
         ]);
         return redirect()->route('kategoris.index');
     }
-
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\kategori  $kategori
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(kategori $kategori)
     {
-        $kategoris = kategori::find($id);
+        $kategoris = kategori::find($kategori);
         return view('kategori.detail', compact('kategoris'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\kategori  $kategori
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(kategori $kategoris, $id)
     {
         $kategoris = Kategori::find($id);
         return view('kategori.edit', compact('kategoris'));
@@ -85,7 +87,7 @@ class KategoriController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\kategori  $kategori
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Kategori $kategori)
@@ -97,7 +99,7 @@ class KategoriController extends Controller
         }
         $kategori->update([
             'name' => $request->name,
-            'slug' => Str::slug($request->name),
+            'slug' => Str::slug($request->name, '-'),
             'thumbnail' => $fileName,
         ]);
         return redirect('/kategoris');
