@@ -33,14 +33,21 @@
                                 </div>
                                 <!-- thumbnail -->
                                 <div class="form-group">
-                                    <label for="thumbnail">Thumbnail</label>
-                                    @if ($post->thumbnail)
-                                        <img class="img-fluid img-thumbnail mb-2 col-sm-2 d-block"
-                                            src="{{ asset('storage/' . $post->thumbnail) }}" />
-                                    @else
-                                        <img class="img-preview img-fluid mb-3 col-sm-5 d-block" width="200px">
-                                    @endif
-                                    <input class="form-control" type="file" id="thumbnail" name="thumbnail" readonly />
+                                    <label for="input_post_thumbnail" class="font-weight-bold">
+                                        Thumbnail
+                                    </label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <button id="button_post_thumbnail" data-input="input_post_thumbnail" data-preview="holder" 
+                                                class="btn btn-primary" type="button">
+                                                Browse
+                                            </button>
+                                        </div>
+                                        <input id="input_post_thumbnail" name="thumbnail" type="text" value="{{ old('thumbnail', $post->thumbnail) }}"
+                                            class="form-control @error('thumbnail') is-invalid @enderror" placeholder="Thumbnail Post" readonly />
+                                    </div>
+                                </div>
+                                <div id="holder">
                                 </div>
                                 <!-- description -->
                                 <div class="form-group">
@@ -64,16 +71,31 @@
                                     <label for="input_post_deskripsi" class="font-weight-bold">
                                         Kategori
                                     </label>
-                                    <div class="form-control overflow-auto" style="height: 886px">
+                                    <div class="form-control overflow-auto" style="height: 400px">
                                         <!-- List Kategori -->
                                         <ul class="pl-1 my-1" style="list-style: none;">
                                             <select class="form-control" id="kategori-option" name="kategori_id">
                                                 @foreach ($kategoris as $kategori)
-                                                    <option value="{{ $kategori->id }}">{{ $kategori->name }}</option>
+                                                    <option value="{{ $kategori->id }}{{ $kategori->id == $post->kategori_id ? 'selected' : '' }}">{{ $kategori->name }}</option>
                                                 @endforeach
                                             </select>
                                         </ul>
                                         <!-- List Kategori -->
+                                    </div>
+                                </div>
+                                <!-- tag -->
+                                <div class="form-group">
+                                    <label for="select_post_tag" class="font-weight-bold">
+                                        Tag
+                                    </label>
+                                    <div class="form-control overflow-auto-responsive" style="height: 370px">
+                                        <ul class="pl-1 my-1" style="list-style: none;">
+                                            <select class="tag-responsive form-control custom-select w-100" id="select_post_tag" name="tag[]" multiple="multiple">
+                                                @foreach ($tags as $tag)
+                                                    <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
@@ -87,7 +109,6 @@
                                     </label>
                                     <select id="select_post_status" name="status" class="custom-select">
                                         <option value="{{ old('status', $post->status) }}"></option>
-
                                     </select>
                                 </div>
                             </div>
@@ -116,10 +137,20 @@
     @push('javascript-external')
         <script src="{{ asset('../vendor/select2/js/select2.full.min.js') }}"></script>
         {{-- filemanager --}}
-        <script src="{{ asset('../vendor/laravel-filemanager/js/stand-alone-button.js') }}"></script>
+        <script src="{{ asset('/vendor/laravel-filemanager/js/stand-alone-button.js') }}"></script>
         {{-- Tinymce5 --}}
         <script src="{{ asset('vendor/tinymce5/jquery.tinymce.min.js') }}"></script>
         <script src="{{ asset('vendor/tinymce5/tinymce.min.js') }}"></script>
+        {{-- multiple-select2 --}}
+        <script src="{{ asset('js/select2.min.js') }}"></script>
+        <script>
+            //Multiple Select
+            $(document).ready(function() {
+                $('.tag-responsive').select2({
+                    multiple: true,
+                });
+            });
+        </script>
     @endpush
 
     @push('javascript-internal')
@@ -151,6 +182,8 @@
                     toolbar1: "fullscreen preview",
                     toolbar2: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media",
                 });
+                //file manager
+                $('#button_post_thumbnail').filemanager('image');
             });
         </script>
     @endpush

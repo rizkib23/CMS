@@ -7,6 +7,9 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card">
+                <div class="card-header">
+                    <h1 class="h3 mb-2 text-gray-800">Kategori Create</h1>
+                </div>
                 <div class="card-body">
                     <form action="{{ route('kategori.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
@@ -18,19 +21,25 @@
                             <input id="input_kategori_name" name="name" type="text" class="form-control"
                                 placeholder="Masukkan Nama Kategori" required />
                         </div>
-                        <!-- slug -->
-                        <div class="form-group">
-                            <label for="input_kategori_slug" class="font-weight-bold">
-                                Slug
-                            </label>
-                            <input id="input_kategori_slug" name="slug" type="text" class="form-control"
-                                placeholder="Slug Kategori" readonly />
-                        </div>
                         <!-- thumbnail -->
                         <div class="form-group">
-                            <label for="thumbnail">Thumbnail</label>
-                                <input class="form-control" type="file" id="thumbnail" name="thumbnail" readonly />
+                            <label for="input_kategori_thumbnail" class="font-weight-bold">
+                                Thumbnail
+                            </label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <button id="button_kategori_thumbnail" data-input="input_kategori_thumbnail" data-preview="holder"
+                                        class="btn btn-primary" type="button">
+                                        Browse
+                                    </button>
+                                </div>
+                                <input id="input_kategori_thumbnail" name="thumbnail" value="" type="text"
+                                    class="form-control" placeholder="Thumbnail Post" readonly />
+                            </div>
                         </div>
+                        <div id="holder">
+                        </div>
+
                         <div class="float-right">
                             <a class="btn btn-warning px-4" href="{{ route('kategori.index') }}">Kembali</a>
                             <button type="submit" class="btn btn-primary px-4">Simpan</button>
@@ -49,7 +58,7 @@
     @push('javascript-external')
         <script src="{{ asset('../vendor/select2/js/select2.full.min.js') }}"></script>
         {{-- filemanager --}}
-        <script src="{{ asset('../vendor/laravel-filemanager/js/stand-alone-button.js') }}"></script>
+        <script src="{{ asset('/vendor/laravel-filemanager/js/stand-alone-button.js') }}"></script>
     @endpush
 
     @push('javascript-internal')
@@ -66,8 +75,9 @@
                 $('#input_kategori_name').change(function() {
                     let name = $(this).val();
                     $('#input_kategori_slug').val(generateSlug(name));
-                });
-                
+                });  
+                //file manager
+                $('#button_kategori_thumbnail').filemanager('image');
             });
         </script>
     @endpush

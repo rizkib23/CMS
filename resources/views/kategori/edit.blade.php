@@ -21,14 +21,21 @@
                         </div>
                         <!-- thumbnail -->
                         <div class="form-group">
-                            <label for="thumbnail">Thumbnail</label>
-                            @if ($kategoris->thumbnail)
-                                <img class="img-fluid img-thumbnail mb-2 col-sm-2 d-block"
-                                    src="{{ asset('storage/' . $kategoris->thumbnail) }}" />
-                            @else
-                                <img class="img-preview img-fluid mb-3 col-sm-5 d-block" width="200px">
-                            @endif
-                            <input class="form-control" type="file" id="thumbnail" name="thumbnail" readonly />
+                            <label for="input_kategori_thumbnail" class="font-weight-bold">
+                                Thumbnail
+                            </label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <button id="button_kategori_thumbnail" data-input="input_kategori_thumbnail" data-preview="holder"
+                                        class="btn btn-primary" type="button">
+                                        Browse
+                                    </button>
+                                </div>
+                                <input id="input_kategori_thumbnail" name="thumbnail" value="{{ old('thumbnail', asset($kategoris->thumbnail)) }}" type="text"
+                                    class="form-control" placeholder="Thumbnail Post" readonly />
+                            </div>
+                        </div>
+                        <div id="holder">
                         </div>
 
                         <div class="float-right">
@@ -48,7 +55,7 @@
     @push('javascript-external')
         <script src="{{ asset('../vendor/select2/js/select2.full.min.js') }}"></script>
         {{-- filemanager --}}
-        <script src="{{ asset('../vendor/laravel-filemanager/js/stand-alone-button.js') }}"></script>
+        <script src="{{ asset('/vendor/laravel-filemanager/js/stand-alone-button.js') }}"></script>
     @endpush
     @push('javascript-internal')
         <script>
@@ -65,6 +72,8 @@
                     let name = $(this).val();
                     $('#input_kategori_slug').val(generateSlug(name));
                 });
+                //file manager
+                $('#button_kategori_thumbnail').filemanager('image');
             });
         </script>
     @endpush

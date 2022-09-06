@@ -46,22 +46,25 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $fileName = $request->file('thumbnail')
-        ->storeAs(
-            $this->path,
-            time() . ".". $request->file('thumbnail')->getClientOriginalExtension(), 
-            'public');
-        $post = post::create([
-            'judul' => $request->judul,
-            'slug' => Str::slug($request->judul, '-'),
-            'thumbnail' => $fileName,
-            'deskripsi' => $request->deskripsi,
-            'content' => $request->content,
-            'kategori_id' => $request->kategori_id,
-            'tag_id' => $request->tag_id,
-            'status' => $request->status,
-        ]);
-        Alert::success('Success', 'Post Berhasil Ditambahkan!');
+        $post = new Post;
+        $post->judul = $request['judul'];
+        $post->slug = Str::slug($post->judul, '-'); ;
+        $post->thumbnail = parse_url($request->thumbnail)['path'];
+        $post->deskripsi = $request['deskripsi'];
+        $post->content = $request['content'];
+        $post->status = $request['status'];
+        $post->save();
+        
+        $kategori_post = new KategoriPost;
+        $kategori_post->kategori_id = $request['kategori'];
+        $kategori_post->post_id = $post->id;
+        $kategori_post->save();
+
+        $tag_post = new TagPost;
+        $tag_post->post_id = $post->id;
+        $tag_post->tag_id = $request['tag[]'];
+        $tag_post->save();
+        dd($tag_post);
         return redirect()->route('post.index');
     }
 
