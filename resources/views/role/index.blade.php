@@ -42,13 +42,17 @@
                                             <i class="fas fa-eye"></i>
                                         </a>
                                         <!-- edit -->
-                                        <a href="" class="btn btn-sm btn-info" role="button">
+                                        <a href="{{ route('roles.edit', ['role'=>$role]) }}" class="btn btn-sm btn-info" role="button">
                                             <i class="fas fa-edit"></i>
                                         </a>
                                         <!-- delete -->
-                                        <button type="submit" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#hapusTags">
+                                        <form class="d-inline" action="{{ route('roles.destroy', ['role'=>$role]) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                          <button type="submit"  class="btn btn-sm btn-danger">
                                             <i class="fas fa-trash"></i>
                                         </button>
+                                        </form>
                                     </div>
                                 </td>
                             </tr>

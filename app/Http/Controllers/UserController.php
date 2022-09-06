@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Profil;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -16,9 +18,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        User::all();
-        Profil::all();
-        return view('profil.create');
+        return view("user.index", [
+            'user' => User::all(),
+
+        ]);
     }
 
     /**
@@ -28,7 +31,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        return redirect('auth/register');
+        return view('user.create', [
+            'roles' => Role::all(),
+        ]);
     }
 
     /**
@@ -39,26 +44,25 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+
         // dd($request->all());
-        $request -> validate([
+        $validator = Validator::make($request->all(), [
             'name' => 'required|max:255',
             'email' => 'required|email|unique:users',
-            'password' => 'required|min:5|max:255|confirmed',  
+            'password' => 'required|min:5|max:255|confirmed',
         ]);
-        
-     // $validateData['password'] = bcrypt($validateData['password']);
-     $request['password'] = Hash::make($request['password']); 
+        if ($validator->fails()) {
+            return redirect()->back()->withInput($request->all())->withErrors($validator);
+        }
 
-     $user= User::create($request->all()); 
-     //  profil input
-     $fileName = $request->file('foto')->storeAs('foto',time() . ".". $request->file('foto')->getClientOriginalExtension(), 'public');
-     $profil=  Profil::create([
-            'no_tlp' => $request->no_tlp,
-            'jenis_kelamin' => $request->jenis_kelamin,
-            'foto' => $fileName,
-            'user_id' =>  $user->id,
-     ]);    
-      return view('auth/login');
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+        //  profil input
+        $user->assignRole($request->role);
+        return redirect('/user');
     }
 
     /**
@@ -78,9 +82,12 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        //
+        return view('user.edit', [
+            'roles' => Role::all(),
+            'user' => $user,
+        ]);
     }
 
     /**
@@ -90,9 +97,12 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {
-        //
+        // dd($request->all());
+        //  profil input
+        $user->syncRoles($request->role);
+        return redirect('/user');
     }
 
     /**
@@ -101,8 +111,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        //
+        $user->removeRole($user->roles->first());
+        $user->delete();
+        return redirect('/user');
     }
 }

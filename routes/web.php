@@ -38,15 +38,6 @@ Route::get('/', function () {
     );
 });
 
-// Route::get('/post/user', function () {
-//     return view(
-//         'post.user',
-//         [
-//             "title" => "post"
-//         ]
-//     );
-// });
-
 Route::resource('/kategori', KtgrUserController::class,);
 // post
 Auth::routes();
@@ -58,6 +49,7 @@ Route::group(['middleware' => ['auth',]], function () {
     Route::resource('/tags', TagController::class);
     Route::resource('/post', PostController::class);
     Route::resource('/roles', RoleController::class);
+    Route::resource('/user', UserController::class);
 });
 
 // Route::group(['middleware' => ['auth']], function () {

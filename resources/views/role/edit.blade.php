@@ -1,5 +1,6 @@
 @extends('../layouts.dashboard')
 @section('content')
+
 <div class="container mt-5">
     <div class="row">
       <div class="col-md-12">
@@ -8,11 +9,12 @@
             <h1> Tambah Role </h1>
           </div>
           <div class="card-body">
-            <form action="{{ route('roles.store') }}" method="POST">
+            <form action="{{ route('roles.update', $role->id) }}" method="POST">
                 @csrf
+                @method('PUT')
                 <div class="form-group">
                     <label>Nama Role</label>
-                    <input type="text" name="name" required  class="form-control">
+                    <input type="text" name="name" required  class="form-control" value="{{ old('name', $role->name) }}">
                 </div>
                 <div class="row">
                 @foreach ($authorities as $manageName => $permissions)
@@ -24,8 +26,12 @@
                         @foreach($permissions as $permission)
                         <li class="list-group-item">
                           <div class="form-check">
-                            <input id="{{ $permission }}" type="checkbox" class="form-check-input" value="{{ $permission }}" name="permissions[]">
-                            <label for="form-check-label">{{ $permission }}</label>
+                            @if (old('permissions', $permissionsChecked))
+                                <input id="{{ $permission }}" type="checkbox" class="form-check-input" value="{{ $permission }}" name="permissions[]" {{ in_array($permission, old('permissions',$permissionsChecked)) ? 'checked' : null }}>
+                            @else
+                                <input id="{{ $permission }}" type="checkbox" class="form-check-input" value="{{ $permission }}" name="permissions[]">
+                            @endif
+                             <label for="form-check-label">{{ $permission }}</label>
                           </div>
                         </li>
                         @endforeach
@@ -44,7 +50,4 @@
       </div>
     </div>
 </div>
-{{-- {{ in_array($permission, $rolePermissions) ? "checked" : null }} onclick="return false;" --}}
-
-
-                @endsection
+@endsection

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Spatie\Permission\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class RoleController extends Controller
 {
@@ -42,7 +44,19 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $validator = validator::make($request->all(), [
+            'name' => "required|string|max:50|unique:roles,name",
+
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withInput($request->all())->withErrors($validator);
+        }
+
+
+        $role = Role::create(['name' => $request->name]);
+        $role->givePermissionTo($request->permissions);
+        return redirect('/roles');
     }
 
     /**
@@ -68,7 +82,11 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
-        //
+        return view('role.edit', [
+            'role' => $role,
+            'authorities' => config('permission.authorities'),
+            'permissionsChecked' => $role->permissions->pluck('name')->toArray()
+        ]);
     }
 
     /**
@@ -80,7 +98,11 @@ class RoleController extends Controller
      */
     public function update(Request $request, Role $role)
     {
-        //
+
+        $role->name = $request->name;
+        $role->syncPermissions($request->permissions);
+        $role->save();
+        return redirect('/roles');
     }
 
     /**
@@ -91,6 +113,9 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
-        //
+
+        $role->revokePermissionTo($role->permissions->pluck('name')->toArray());
+        $role->delete();
+        return redirect('/roles');
     }
 }

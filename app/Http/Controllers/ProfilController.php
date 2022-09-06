@@ -21,13 +21,12 @@ class ProfilController extends Controller
      */
     public function index()
     {
-        $profil = Profil::all();
-        $user = User::all();
-        $useProfil = Auth::user();
-        return view("profil", compact('profil', 'user', 'useProfil'));
 
-        // $profil = Profil::all();
-        // return view('profil', compact('user', 'profil'));
+
+
+        return view("profil", [
+            'user' => User::all()
+        ]);
     }
     /**
      * Show the form for creating a new resource.

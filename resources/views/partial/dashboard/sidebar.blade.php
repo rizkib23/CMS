@@ -28,7 +28,7 @@
    </div>
 
    <!-- Nav Item - Post -->
-   <li class="nav-item {{ Request::is('dashboard/post', 'dashboard/post/create', 'dashboard/post/edit') ? 'active' : '' }}">
+   <li class="nav-item {{ Request::is('post/admin', 'post/create', 'post/edit', 'post/detail') ? 'active' : '' }}">
        <a class="nav-link" href="/dashboard/post">
            <i class="fas fa-fw fa-table"></i>
            <span>Post</span></a>
@@ -66,8 +66,8 @@
     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Keterangan</h6>
-            <a class="collapse-item" href="/role">Role</a>
-            <a class="collapse-item" href="cards.html">Cards</a>
+            <a class="collapse-item" href="/roles">Role</a>
+            <a class="collapse-item" href="/user">User</a>
         </div>
     </div>
 </li>
