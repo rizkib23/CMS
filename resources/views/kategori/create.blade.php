@@ -6,10 +6,10 @@
 @section('content')
 <div class="container mt-4">
     <div class="row">
-       <div class="col-12">
-          <div class="card">
-                <div class="card-header text-center">
-                    <h1> Tambah Kategori Baru </h1> 
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h1 class="h3 mb-2 text-gray-800">Kategori Create</h1>
                 </div>
                 <div class="card-body">
                     <form action="{{ route('kategoris.store') }}" method="POST" enctype="multipart/form-data">
@@ -27,18 +27,20 @@
                             <label for="input_kategori_slug" class="font-weight-bold">
                                 Slug
                             </label>
-                            <input id="input_kategori_slug" name="slug" type="text" class="form-control"
-                                placeholder="Slug Kategori" readonly />
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <button id="button_kategori_thumbnail" data-input="input_kategori_thumbnail" data-preview="holder"
+                                        class="btn btn-primary" type="button">
+                                        Browse
+                                    </button>
+                                </div>
+                                <input id="input_kategori_thumbnail" name="thumbnail" value="" type="text"
+                                    class="form-control" placeholder="Thumbnail Post" readonly />
+                            </div>
                         </div>
-                        <!-- thumbnail -->
-                        <div class="form-group">
-                            <label for="thumbnail" class="font-weight-bold">Thumbnail</label>
-                        
-                            
-                                <input class="form-control" type="file" id="thumbnail" name="thumbnail" readonly />
+                        <div id="holder">
                         </div>
-                       
-                        
+
                         <div class="float-right">
 
                             <a class="btn btn-warning px-4" href="/kategoris">Kembali</a>
@@ -61,7 +63,7 @@
     @push('javascript-external')
         <script src="{{ asset('../vendor/select2/js/select2.full.min.js') }}"></script>
         {{-- filemanager --}}
-        <script src="{{ asset('../vendor/laravel-filemanager/js/stand-alone-button.js') }}"></script>
+        <script src="{{ asset('/vendor/laravel-filemanager/js/stand-alone-button.js') }}"></script>
     @endpush
 
     @push('javascript-internal')
@@ -78,8 +80,9 @@
                 $('#input_kategori_name').change(function() {
                     let name = $(this).val();
                     $('#input_kategori_slug').val(generateSlug(name));
-                });
-                
+                });  
+                //file manager
+                $('#button_kategori_thumbnail').filemanager('image');
             });
         </script>
     @endpush

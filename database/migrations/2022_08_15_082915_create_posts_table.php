@@ -19,12 +19,12 @@ class CreatePostsTable extends Migration
             $table->foreignId('kategori_id')->constrained('kategoris');
             $table->foreignId('user_id')->constrained('users');
             $table->string('judul');
-            $table->string('slug');
-            $table->string('thumbnail')->nullable();
+            $table->string('slug')->unique();
+            $table->string('thumbnail');
             $table->text('deskripsi');
             $table->text('content');
+            $table->text('kategori_id');
             $table->enum('status', ['publish', 'draft']);
-            $table->timestamp('published_at')->nullable();
             $table->timestamps();
         });
     }
