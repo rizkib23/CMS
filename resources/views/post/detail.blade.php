@@ -1,4 +1,4 @@
-@extends('dashboard.layouts.main')
+@extends('layouts.main')
 
 @section('content')
     <div class="row">
@@ -22,16 +22,15 @@
                         {{ $post->deskripsi }}
                     </p>
                     <!-- categories -->
-                    @foreach ($kategoris as $kategori)
-                        <span class="badge badge-primary">{{ $kategori->name }}</span>
-                    @endforeach
+                   
+                        <span class="badge badge-primary">{{ $post->dataKategori->name }}</span>
                     <!-- content -->
                     <div class="py-1">
                         {!! $post->content !!}
                     </div>
                     <!-- tags  -->
-                    @foreach ($tags as $tag)
-                        <span class="badge badge-info">{{ $tag->name }}</span>
+                    @foreach ($post->dataTagPost as $tag)
+                        <span class="badge badge-info">{{ $tag->dataTags->name }}</span>
                     @endforeach
 
                     <div class="d-flex justify-content-end">

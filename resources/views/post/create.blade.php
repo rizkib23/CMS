@@ -1,4 +1,4 @@
-@extends('dashboard.layouts.main')
+@extends('layouts.main')
 
 @section('content')
     <div class="row">
@@ -63,7 +63,7 @@
                                     <div class="form-control overflow-auto-responsive" style="height: 310px">
                                         <!-- List Kategori -->
                                         <ul class="pl-1 my-1" style="list-style: none;">
-                                            <select class="form-control @error('kategori') is-invalid @enderror" id="kategori-option" name="kategori"
+                                            <select class="form-control @error('kategori') is-invalid @enderror" id="kategori-option" name="kategori_id"
                                                 data-placeholder="Pilih Kategori">
                                                 @foreach ($kategoris as $kategori)
                                                     <option value="{{ $kategori->id }}">{{ $kategori->name }}</option>

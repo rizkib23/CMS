@@ -20,8 +20,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = post::all();
-        return view('post.admin', compact('posts'));
+        $posts = Post::latest()->paginate(5);
+        return view('dashboard.post.index', compact('posts'));
     }
 
     /**
@@ -29,11 +29,12 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request, $post)
+    public function create(Request $request, Post $post)
     {
-        return view('post.create', [
+        return view('dashboard.post.create', [
             'kategoris' => Kategori::all(),
             'tags' => Tag::all(),
+            'statuses' => $this->statuses(),
             'post' => $post
         ]);
     }
@@ -44,28 +45,60 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        $post = new Post;
-        $post->judul = $request['judul'];
-        $post->slug = Str::slug($post->judul, '-'); ;
-        $post->thumbnail = parse_url($request->thumbnail)['path'];
-        $post->deskripsi = $request['deskripsi'];
-        $post->content = $request['content'];
-        $post->status = $request['status'];
-        $post->save();
-        
-        $kategori_post = new KategoriPost;
-        $kategori_post->kategori_id = $request['kategori'];
-        $kategori_post->post_id = $post->id;
-        $kategori_post->save();
+    public function store(Request $request, Tag $tag, Kategori $kategoris, Post $post)
+    { 
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'judul' => 'required',
+                'thumbnail' => 'required',
+                'deskripsi' => 'required',
+                'content' => 'required',
+                'kategori_id' => 'required',
+                'tag' => 'required',
+                'status' => 'required',
+            ],
+            [],
+        );
+            if ($validator->fails()) {
+            return response()->json(['success' => false, 'message' => $validator->errors()->first()]);
+        } 
 
-        $tag_post = new TagPost;
-        $tag_post->post_id = $post->id;
-        $tag_post->tag_id = $request['tag[]'];
-        $tag_post->save();
-        dd($tag_post);
-        return redirect()->route('post.index');
+        try {
+            DB::beginTransaction();
+            $dataPost = [
+                'judul' => $request->judul,
+                'slug' => Str::slug($request->judul, '-'),
+                'thumbnail' => parse_url($request->thumbnail)['path'],
+                'deskripsi' => $request->deskripsi,
+                'content' => $request->content,
+                'kategori_id' =>$request->kategori_id,
+                'status' => $request->status
+            ];
+            $createPost = Post::create($dataPost);
+
+            $dataTagPost = [];
+            foreach ($request->tag as $key => $dtTag){ 
+            $createTagPost = TagPost::create([
+                'post_id' => $createPost->id,
+                'tag_id' => $dtTag,
+                ]);
+            }
+            
+            Alert::success('Success', 'Post Berhasil DiInput!');
+            return redirect()->route('post.admin');
+
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            Alert::error('Error', 'data gagal disimpan', ['error' => $th->getMessage()]);
+            if ($request['tag']) {
+                $request['tag'] = Tag::select('id', 'name')->whereIn('id', $request->tag)->get();
+            }
+            return redirect()->route('post.admin');
+
+        } finally {
+            DB::commit();
+        }
     }
 
     /**
@@ -74,11 +107,9 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post, Kategori $kategoris, Tag $tags)
+    public function show(Post $post)
     {
-        $kategoris = Kategori::find($post);
-        $tags = Tag::find($post);
-        return view('dashboard.post.detail', compact('post','kategoris','tags'));
+        return view('dashboard.post.detail', compact('post'));
     }
 
     /**
@@ -87,11 +118,12 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function edit(Post $post, Kategori $kategoris, Tag $tags)
+    public function edit(Post $post)
     {
-        $kategoris = Kategori::find($post);
-        $tags = Tag::find($post);
-        return view('dashboard.post.edit', compact('post','kategoris','tags'));
+        $kategoris = Kategori::all();
+        $tags = Tag::all();
+        $statuses = $this->statuses();
+        return view('dashboard.post.edit', compact('post', 'kategoris', 'tags', 'statuses'));
     }
 
     /**
@@ -101,23 +133,60 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request, Post $post, TagPost $tagPost)
     {
-        $fileName = $post->thumbnail;
-        if ($request->hasFile('thumbnail')) {
-            $fileName = $request->file('thumbnail')->storeAs('thumbnails',time() . ".". $request->file('thumbnail')->getClientOriginalExtension(), 'public');
-            Storage::delete(['public/'. $post->thumbnail]);
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'judul' => 'required',
+                'thumbnail' => 'required',
+                'deskripsi' => 'required',
+                'content' => 'required',
+                'kategori_id' => 'required',
+                'tag' => 'required',
+                'status' => 'required',
+            ],
+            [],
+        );
+        if ($validator->fails()) {
+            return response()->json(['success' => false, 'message' => $validator->errors()->first()]);
+        }   
+        try {
+            DB::beginTransaction();
+            $dataPost = [
+                'judul' => $request->judul,
+                'slug' => Str::slug($request->judul, '-'),
+                'thumbnail' => parse_url($request->thumbnail)['path'],
+                'deskripsi' => $request->deskripsi,
+                'content' => $request->content,
+                'kategori_id' =>$request->kategori_id,
+                'status' => $request->status
+            ];
+            $post->update($dataPost);
+
+            $dataTagPost = [];
+            foreach ($request->tag as $key => $dtTag){ 
+            $tagPost->update([
+                'post_id' => $post->id,
+                'tag_id' => $dtTag,
+            ]);
+
+            }
+
+            Alert::success('Success', 'Post Berhasil DiUpdate!');
+            return redirect()->route('post.index');
+
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            Alert::error('Error', 'data gagal disimpan', ['error' => $th->getMessage()]);
+            if ($request['tag']) {
+                $request['tag'] = Tag::select('id', 'name')->whereIn('id', $request->tag)->get();
+            }
+            return redirect()->route('post.index');
+
+        } finally {
+            DB::commit();
         }
-        $post->update([
-            'judul' => $request->judul,
-            'slug' => Str::slug($request->judul, '-'),
-            'thumbnail' => $fileName,
-            'deskripsi' => $request->deskripsi,
-            'content' => $request->content,
-            'kategori_id' => $request->kategori_id,
-            'tag_id' => $request->tag_id,
-            'status' => $request->status,
-        ]);
         Alert::success('Success', 'Post Berhasil Diupdate!');
         return redirect()->route('post.index');
     }
@@ -132,6 +201,14 @@ class PostController extends Controller
     {
         $post->delete();
         Alert::success('Success', 'Post Berhasil Dihapus!');
-        return redirect('/post');
+        return redirect('/dashboard/post');
+    }
+
+    private function statuses()
+    {
+        return [
+            'draft' => 'draft',
+            'publish' => 'publish'
+        ];
     }
 }

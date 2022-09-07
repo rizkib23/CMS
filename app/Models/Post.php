@@ -15,16 +15,17 @@ class Post extends Model
         'thumbnail', 
         'deskripsi',
         'content',
+        'kategori_id',
         'status',
     ];
 
-    public function kategori()
+    public function dataKategori()
     {
-        return $this->belongsToMany(Kategori::class)->withTimestamps();
+        return $this->belongsTo(Kategori::class, 'kategori_id', 'id');
     }
 
-    public function tags()
+    public function dataTagPost()
     {
-        return $this->belongsToMany(Tag::class)->withTimestamps();
+        return $this->hasMany(TagPost::class, 'post_id', 'id');
     }
 }

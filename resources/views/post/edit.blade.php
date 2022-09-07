@@ -1,4 +1,4 @@
-@extends('dashboard.layouts.main')
+@extends('layouts.main')
 
 @section('content')
     <div class="row">
@@ -7,7 +7,7 @@
                 @method('put')
                 <div class="card">
                     <div class="card-header">
-                        <h1 class="h3 mb-0 text-gray-800">Create Post</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Edit Post</h1>
                     </div>
                     <div class="card-body">
                         <div class="row d-flex align-items-stretch">
@@ -76,7 +76,7 @@
                                         <ul class="pl-1 my-1" style="list-style: none;">
                                             <select class="form-control" id="kategori-option" name="kategori_id">
                                                 @foreach ($kategoris as $kategori)
-                                                    <option value="{{ $kategori->id }}{{ $kategori->id == $post->kategori_id ? 'selected' : '' }}">{{ $kategori->name }}</option>
+                                                <option value="{{ $kategori->id }}" {{ ( $kategori->id == $post->kategori_id) ? 'selected' : '' }}>{{ $kategori->name }}</option>
                                                 @endforeach
                                             </select>
                                         </ul>
@@ -91,8 +91,8 @@
                                     <div class="form-control overflow-auto-responsive" style="height: 370px">
                                         <ul class="pl-1 my-1" style="list-style: none;">
                                             <select class="tag-responsive form-control custom-select w-100" id="select_post_tag" name="tag[]" multiple="multiple">
-                                                @foreach ($tags as $tag)
-                                                    <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                                                 @foreach ($tags as $tag)
+                                                    <option value="{{ old('tag', $tag->id) }}"{{ (collect(old('tag'))->contains($option->id)) ? 'selected':'' }}>{{ $tag->name }}</option>
                                                 @endforeach
                                             </select>
                                         </ul>
@@ -108,7 +108,9 @@
                                         Status
                                     </label>
                                     <select id="select_post_status" name="status" class="custom-select">
+                                        @foreach ($statuses as $status)     
                                         <option value="{{ old('status', $post->status) }}"></option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>

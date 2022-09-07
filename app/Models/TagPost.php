@@ -21,6 +21,11 @@ class TagPost extends Model
 
     public function posts()
     {
-        return $this->belongsTo(Post::class);
+        return $this->belongsToMany(Post::class, 'post_id', 'id');
+    }
+
+    public function dataTags()
+    {
+        return $this->belongsTo(Tag::class, 'tag_id', 'id');
     }
 }

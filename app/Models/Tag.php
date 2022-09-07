@@ -20,11 +20,22 @@ class Tag extends Model
     protected $table = 'tags';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'nama_tag'
+        'name',
+        'slug',
     ];
+
+    public function scopeSearch($query, $name)
+    {
+        return $query->where('name','LIKE', "%{$name}%");
+    }
 
     public function posts()
     {
-        return $this->belongsTo(Post::class);
+        return $this->belongsToMany(Post::class);
+    }
+
+    public function tag_post()
+    {
+        return $this->belongsToMany(TagPost::class);
     }
 }

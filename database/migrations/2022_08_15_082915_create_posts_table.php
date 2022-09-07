@@ -21,6 +21,7 @@ class CreatePostsTable extends Migration
             $table->string('thumbnail');
             $table->text('deskripsi');
             $table->text('content');
+            $table->text('kategori_id');
             $table->enum('status',['publish','draft']);
             $table->timestamps();
 
