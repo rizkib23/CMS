@@ -65,7 +65,5 @@ class PermissionTableSeeder extends Seeder
         $superAdmin->givePermissionTo($superAdminPermission);
         $admin->givePermissionTo($adminPermission);
         $user->givePermissionTo($userPermission);
-
-        $userSuperAdmin = User::find(1)->assignRole("superAdmin");
     }
 }

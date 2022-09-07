@@ -44,7 +44,24 @@ return [
             'komentar_update',
             'komentar_detail',
             'komentar_delet',
-        ]
+        ],
+        'manage_profil' => [
+            'profil_show',
+            'profil_create',
+            'profil_update',
+            'profil_detail',
+            'profil_delet',
+        ],
+        'manage_dashboard' => [
+            'show_dashboard'
+        ],
+        'manage_pengumuman' => [
+            'pengumuman_show',
+            'pengumuman_create',
+            'pengumuman_update',
+            'pengumuman_detail',
+            'pengumuman_delet',
+        ],
 
     ],
 

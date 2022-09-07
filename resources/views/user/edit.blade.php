@@ -31,6 +31,19 @@
                             @endforeach
                         </select>
                 </div>
+                {{-- <div class="form-group">
+                  <label for="status">Status</label>
+
+                  <div class="form-control @error('status') is-invalid @enderror">
+                      <input type="radio" value="aktif" {{ $user->status == 'aktif' ? 'checked' : ''  }} name="status">Aktif
+                      <input type="radio" value="nonaktif" {{$user->status == 'nonaktif' ? 'checked' : ''  }} name="status">NonAktif
+                      @error('status')
+                      <span class="invalid-feedback" role="alert">
+                          <strong>{{ $message }}</strong>
+                      </span>
+                  @enderror
+                  </div>
+              </div> --}}
                 {{-- permisiion --}}
                 <div class="float-right">
                     <button type="submit" class="btn btn-success px-3 berhasil">SIMPAN</button>

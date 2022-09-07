@@ -10,6 +10,14 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class TagController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:tag_show', ['only' => 'index']);
+        $this->middleware('permission:tag_create', ['only' => 'create', 'store']);
+        $this->middleware('permission:tag_update', ['only' => 'edit', 'update']);
+        $this->middleware('permission:tag_delet', ['only' => 'destroy']);
+        $this->middleware('permission:tag_detail', ['only' => 'show']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -17,11 +25,10 @@ class TagController extends Controller
      */
     public function index()
     {
-        
-        return view('tags/admin',[
-            'tags'=>Tag::orderBy('id','desc')->get(),
+
+        return view('tags/admin', [
+            'tags' => Tag::orderBy('id', 'desc')->get(),
         ]);
-        
     }
 
     /**
@@ -68,7 +75,7 @@ class TagController extends Controller
     public function edit($id)
     {
         $tags = Tag::find($id);
-        return view('tags.edit',compact('tags'));
+        return view('tags.edit', compact('tags'));
     }
 
     /**
@@ -80,8 +87,8 @@ class TagController extends Controller
      */
     public function update(Request $request, $id)
     {
-       Tag::find($id)->update(['nama_tag'=>$request->nama_tag]);
-       return redirect('/tags');
+        Tag::find($id)->update(['nama_tag' => $request->nama_tag]);
+        return redirect('/tags');
     }
 
     /**

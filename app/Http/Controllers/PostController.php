@@ -11,9 +11,19 @@ use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Tag;
+use App\Models\TagPostingan;
 
 class PostController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:post_show', ['only' => 'index']);
+        $this->middleware('permission:post_create', ['only' => 'create', 'store']);
+        $this->middleware('permission:post_update', ['only' => 'edit', 'update']);
+        $this->middleware('permission:post_delet', ['only' => 'destroy']);
+        $this->middleware('permission:post_detail', ['only' => 'show']);
+    }
+
     private $path = 'thumbnails';
     /**
      * Display a listing of the resource.
@@ -22,28 +32,24 @@ class PostController extends Controller
      */
     public function index()
     {
-        $kategoris = Kategori::all();
-        $posts = post::all();
-        $user = User::all();
-        return view('post.admin', compact('posts', 'kategoris', 'user'));
+
+        return view('post.admin', [
+            'kategoris' => Kategori::all(),
+            'tags' => Tag::all(),
+            'posts' => Post::all()
+        ]);
     }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function userCreate()
-    {
-        $kategoris = Kategori::all();
-        $posts = post::all();
-        return view('post.createUser', compact('posts', 'kategoris'));
-    }
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request, $post)
+    public function create(Request $request, Post $post)
     {
         return view('post.create', [
             'kategoris' => Kategori::all(),
@@ -78,6 +84,11 @@ class PostController extends Controller
             'kategori_id' => $request->kategori_id,
             'tag_id' => $request->tag_id,
             'status' => $request->status,
+        ]);
+
+        TagPostingan::crate([
+            'tag_id' => $post->kategori_id,
+            'postingan_id' => $post->id
         ]);
 
         return redirect('/post');

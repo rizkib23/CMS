@@ -21,7 +21,7 @@
                 
                     <ul class="list-group mx-1 mt-1">
                         <li class="list-group-item">
-                          {{ $manageName }}
+                          {{ucwords(str_replace("_"," ",$manageName)); }}
                         </li>
                         @foreach($permissions as $permission)
                         <li class="list-group-item">
@@ -31,7 +31,7 @@
                             @else
                                 <input id="{{ $permission }}" type="checkbox" class="form-check-input" value="{{ $permission }}" name="permissions[]">
                             @endif
-                             <label for="form-check-label">{{ $permission }}</label>
+                             <label for="form-check-label">{{ ucwords(str_replace("_"," ",$permission)); }}</label>
                           </div>
                         </li>
                         @endforeach

@@ -13,7 +13,7 @@
    <hr class="sidebar-divider my-0">
 
    <!-- Nav Item - Dashboard -->
-   <li class="nav-item {{ Request::is('dashboard') ? 'active' : '' }}">
+   <li class="nav-item {{ Request::is('../index') ? 'active' : '' }}">
     <a class="nav-link" href="/dashboard">           
         <i class="fas fa-fw fa-tachometer-alt"></i>
            <span>Dashboard</span></a>
@@ -29,23 +29,29 @@
 
    <!-- Nav Item - Post -->
    <li class="nav-item {{ Request::is('post/admin', 'post/create', 'post/edit', 'post/detail') ? 'active' : '' }}">
-       <a class="nav-link" href="/dashboard/post">
+       <a class="nav-link" href="/post">
            <i class="fas fa-fw fa-table"></i>
            <span>Post</span></a>
    </li>
 
    <!-- Nav Item - Kategori -->
-   <li class="nav-item {{ Request::is('dashboard/kategori', 'dashboard/kategori/create', 'dashboard/kategori/edit') ? 'active' : '' }}">
-    <a class="nav-link" href="/dashboard/kategori"> 
+   <li class="nav-item {{ Request::is('kategori/admin', 'kategori/create', 'kategori/edit') ? 'active' : '' }}">
+    <a class="nav-link" href="/kategoris"> 
         <i class="fas fa-fw fa-table"></i>
            <span>Kategori</span></a>
    </li>
 
    <!-- Nav Item - Tag -->
-   <li class="nav-item {{ Request::is('dashboard/tag', 'dashboard/tag/create', 'dashboard/tag/edit') ? 'active' : '' }}">
-    <a class="nav-link" href="/dashboard/tag">
+   <li class="nav-item {{ Request::is('tags/admin', 'tags/create', 'tags/edit') ? 'active' : '' }}">
+    <a class="nav-link" href="/tags">
            <i class="fas fa-fw fa-table"></i>
            <span>Tag</span></a>
+   </li>
+
+   <li class="nav-item {{ Request::is('tags/admin', 'tags/create', 'tags/edit') ? 'active' : '' }}">
+    <a class="nav-link" href="/pengumuman">
+        <i class="bi bi-calendar"></i>
+           <span>Pengumuman</span></a>
    </li>
 
    <!-- Divider -->
@@ -56,7 +62,7 @@
        User
    </div>
 
-   <!-- Nav Item - Charts -->
+   <!-- Nav Item - user -->
    <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
         aria-expanded="true" aria-controls="collapseTwo">
@@ -66,7 +72,9 @@
     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Keterangan</h6>
+            @can('manage_role')
             <a class="collapse-item" href="/roles">Role</a>
+            @endcan
             <a class="collapse-item" href="/user">User</a>
         </div>
     </div>

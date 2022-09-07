@@ -14,13 +14,13 @@
              
                 <ul class="list-group mx-1 mt-1">
                   <li class="list-group-item">
-                    {{ $manageName }}
+                    {{ucwords(str_replace("_"," ",$manageName)); }}
                   </li>
                   @foreach($permissions as $permission)
                   <li class="list-group-item">
                     <div class="form-check">
                       <input type="checkbox" class="form-check-input" value="" {{ in_array($permission, $rolePermissions) ? "checked" : null }} onclick="return false;">
-                      <label for="form-check-label">{{ $permission }}</label>
+                      <label for="form-check-label"> {{ ucwords(str_replace("_"," ",$permission)); }} </label>
                     </div>
                   </li>
                   @endforeach

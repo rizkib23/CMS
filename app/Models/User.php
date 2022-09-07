@@ -22,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'status'
     ];
 
     /**
@@ -44,10 +45,14 @@ class User extends Authenticatable
     ];
     public function dataProfil()
     {
-        return $this->hasOne(Profil::class, 'user_id', 'id');
+        return $this->belongsTo(Profil::class, 'id', 'user_id');
     }
     public function dataPost()
     {
         return $this->hasMany(Post::class, 'user_id', 'id');
+    }
+    public function dataPengumuman()
+    {
+        return $this->hasMany(Pengumuman::class, 'user_id', 'id');
     }
 }

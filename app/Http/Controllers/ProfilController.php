@@ -9,11 +9,19 @@ use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\View;
 
 class ProfilController extends Controller
 {
-
+    public function __construct()
+    {
+        $this->middleware('permission:profil_show', ['only' => 'index']);
+        $this->middleware('permission:profil_create', ['only' => 'create', 'store']);
+        $this->middleware('permission:profil_update', ['only' => 'edit', 'update']);
+        $this->middleware('permission:profil_delet', ['only' => 'destroy']);
+        $this->middleware('permission:profil_detail', ['only' => 'show']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -23,19 +31,25 @@ class ProfilController extends Controller
     {
 
 
-
-        return view("profil", [
-            'user' => User::all()
-        ]);
+        return view(
+            "profil.profil"
+        );
     }
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creatng a new resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        return view('create');
+        // return view(
+        //     'profil.create',
+        //     [
+        //         'user' => User::first(),
+        //         'profil' => Profil::first(),
+        //         'userAuth' => Auth::user(),
+        //     ]
+        // );
     }
 
     /**
@@ -72,12 +86,18 @@ class ProfilController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Profil $profil)
     {
-        $profil = Profil::all();
-        $user = User::all();
-        $useProfil = Auth::user();
-        return view('create', compact('profil', 'user', 'useProfil'));
+
+
+        // $user =  Profil::where('user_id', $user->id)->get();
+        return view(
+            'profil.profil',
+            [
+
+                'profile' => $profil,
+            ]
+        );
     }
 
     /**
@@ -87,15 +107,27 @@ class ProfilController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Profil $profil, User $user)
     {
-        //  profil input
-        $fileName = $request->file('foto')->storeAs('foto', time() . "." . $request->file('foto')->getClientOriginalExtension(), 'public');
-        $profil =  Profil::updated([
-            'no_tlp' => $request->no_tlp,
-            'jenis_kelamin' => $request->jenis_kelamin,
-            'foto' => $fileName,
+        //  profil 
+
+        $user = User::where('id', Auth::user()->id);
+        $fileName = $profil->foto;
+        if ($request->hasFile('foto')) {
+            $fileName = $request->file('foto')->storeAs('foto', time() . "." . $request->file('foto')->getClientOriginalExtension(), 'public');
+            Storage::delete(['public/' . $profil->foto]);
+        }
+        $updateProfil = $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
         ]);
+        $update = $profil->where('user_id', Auth::user()->id)->update([
+            'foto' => $fileName,
+            'jenis_kelamin' => $request->jenis_kelamin,
+            'no_tlp' => $request->no_tlp
+        ]);
+
+        return redirect('/profil');
     }
 
     /**

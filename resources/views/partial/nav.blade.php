@@ -16,7 +16,6 @@
           </li>
         </ul>
           <ul class="navbar-nav ml-auto">
-            <a class="btn btn-inline" href="/create/post"><i class="bi bi-pencil-square"></i></a>
           @guest
             @if (Route::has('login'))
               <li>
@@ -31,18 +30,18 @@
             @endif
             @else
               
-              @if( Auth::user()->role == 'admin')
+              @can('manage_dashboard')
               <li>
                 <a class="nav-link" class="btn btn-outline-primary" href="/dashboard">Dashboard</a>
               </li>
-            @endif
+              @endcan
            
             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                 {{ Auth::user()->name }}
             </a>
 
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="/profil">
+              <a class="dropdown-item" href="{{ route('profil.index') }}">
                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                 Profile
             </a>

@@ -6,14 +6,14 @@ use Illuminate\Http\Request;
 
 class DashboarController extends Controller
 {
-   /**
+    /**
      * Create a new controller instance.
      *
      * @return void
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('permission:show_dashboard', ['only' => 'index']);
     }
 
     /**
@@ -23,10 +23,8 @@ class DashboarController extends Controller
      */
     public function index()
     {
-        return view('index',[
+        return view('index', [
             "title" => "Dashboard"
         ]);
     }
-
-   
 }

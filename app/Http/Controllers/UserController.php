@@ -11,6 +11,15 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:user_show', ['only' => 'index']);
+        $this->middleware('permission:user_create', ['only' => 'create', 'store']);
+        $this->middleware('permission:user_update', ['only' => 'edit', 'update']);
+        $this->middleware('permission:user_delet', ['only' => 'destroy']);
+        $this->middleware('permission:user_detail', ['only' => 'show']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -62,6 +71,10 @@ class UserController extends Controller
         ]);
         //  profil input
         $user->assignRole($request->role);
+
+        $profil =  Profil::create([
+            'user_id' =>  $user->id,
+        ]);
         return redirect('/user');
     }
 
@@ -99,9 +112,13 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        // dd($request->all());
-        //  profil input
         $user->syncRoles($request->role);
+        // if ($user->$request->status = ['nonaktif']) {
+        //     $user->removeRole($user->roles->first());
+        // } else {
+        //     $user->assignRole('user');
+        // }
+
         return redirect('/user');
     }
 

@@ -13,6 +13,15 @@ use illuminate\Support\Str;
 
 class KategoriController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:kategori_show', ['only' => 'index']);
+        $this->middleware('permission:kategori_create', ['only' => 'create', 'store']);
+        $this->middleware('permission:kategori_update', ['only' => 'edit', 'update']);
+        $this->middleware('permission:kategori_delet', ['only' => 'destroy']);
+        $this->middleware('permission:kategori_detail', ['only' => 'show']);
+    }
+
     private $path = 'thumbnail';
     /**
      * Display a listing of the resource.
@@ -92,6 +101,7 @@ class KategoriController extends Controller
      */
     public function update(Request $request, Kategori $kategori)
     {
+
         $fileName = $kategori->thumbnail;
         if ($request->hasFile('thumbnail')) {
             $fileName = $request->file('thumbnail')->storeAs('thumbnails', time() . "." . $request->file('thumbnail')->getClientOriginalExtension(), 'public');

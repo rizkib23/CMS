@@ -7,6 +7,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\DashboarController;
 use App\Http\Controllers\KtgrUserController;
+use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -50,13 +51,9 @@ Route::group(['middleware' => ['auth',]], function () {
     Route::resource('/post', PostController::class);
     Route::resource('/roles', RoleController::class);
     Route::resource('/user', UserController::class);
+    Route::resource('/profil', ProfilController::class);
+    Route::resource('/pengumuman', PengumumanController::class);
 });
-
-// Route::group(['middleware' => ['auth']], function () {
-//     Route::resource('/profil', ProfilController::class);
-//     Route::get('/create/post', [PostController::class, 'userCreate'])->name('userCreate');
-// });
-
 
 Route::group(['prefix' => 'filemanager'], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();

@@ -8,10 +8,12 @@
             <h1> Role </h1>
           </div>
           <div class="card-body">
+            @can('role_create')
             <a href="{{ route('roles.create') }}" class="btn btn-md btn-success" style="margin-bottom: 10px">
                 Tambah
                 <i class="fas fa-plus-square"></i>
             </a>
+            @endcan
                     <table class="table table-bordered"  id="myTable">   
                      <thead>
                             <tr class="text-center">
@@ -38,6 +40,7 @@
                                 <td class="text-center">
                                     <div>
                                         {{-- detail --}}
+                                        @can('role_detail', 'role_delete', 'role_update')
                                         <a href="{{ route('roles.show', $role->id) }}" class="btn btn-sm btn-primary" role="button">
                                             <i class="fas fa-eye"></i>
                                         </a>
@@ -53,6 +56,7 @@
                                             <i class="fas fa-trash"></i>
                                         </button>
                                         </form>
+                                        @endcan
                                     </div>
                                 </td>
                             </tr>
