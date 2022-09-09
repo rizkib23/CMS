@@ -37,8 +37,17 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::latest()->paginate(5);
-        return view('post.admin', compact('posts'));
+        $statusSelected = in_array($request->get('status'), ['publish', 'draft']) ? $request->get('status') : "publish";
+        $posts = $statusSelected == "publish" ? Post::publish() : Post::draft();
+        // $posts = Post::latest()->paginate(5);
+        if ($request->get('keyword')) {
+            $posts->search($request->get('keyword'));
+        }
+        return view('dashboard.post.index', [
+            'posts' => $posts->get(),
+            'statuses' => $this->statuses(),
+            'statusSelected' => $statusSelected,
+        ]);
     }
     /**
      * Display a listing of the resource.

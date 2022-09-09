@@ -59,3 +59,4 @@ Route::group(['middleware' => ['auth',]], function () {
 Route::group(['prefix' => 'filemanager'], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });
+Route::resource('/meta', MetaController::class);

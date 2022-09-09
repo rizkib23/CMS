@@ -29,41 +29,43 @@
             </div>
         </div>
     </div>
-    <div class="owl-carousel courses-carousel">
-        {{--  --}}
-        <div class="courses-item position-relative">
-            <img class="img-fluid" src="img/courses-1.jpg" alt="">
-            <div class="courses-text">
-                <h4 class="text-center text-white px-3">Web design & development courses for beginners</h4>
-                <div class="border-top w-100 mt-3">
-                    <div class="d-flex justify-content-between p-4">
-                        <span class="text-white"><i class="fa fa-user mr-2"></i>Jhon Doe</span>
-                        <span class="text-white"><i class="fa fa-star mr-2"></i>4.5 <small>(250)</small></span>
+    <div class="row">
+        <div class="col">
+           <!-- Post list:start -->
+           <div class="card mb-4">
+              <div class="card-body">
+                 <div class="row">
+                    @foreach ($posts as $dtpost)
+                    <div class="col-lg-4 col-md-6 pb-4">
+                        <a class="courses-list-item position-relative d-block overflow-hidden mb-2" href="{{ route('post-kategori', ['slug' => $dtpost->slug]) }}">
+                            <img class="img-fluid" width="200px" src="{{ asset('storage/..' . $dtpost->thumbnail) }}" alt="kategori">
+                            <div class="courses-text">
+                               <div class="border-top w-100 mt-3">
+                                   <div class="d-flex justify-content-between p-4 text-center">
+                                <h4 class="text-center text-white px-3">{{ $dtpost->name }}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
                     </div>
-                </div>
-                <div class="w-100 bg-white text-center p-4" >
-                    <a class="btn btn-primary" href="detail.html">Course Detail</a>
-                </div>
-            </div>
+                    @endforeach
+                 </div>
+              </div>
+           </div>
+           <!-- empty -->
+           <h3 class="text-center">
+              No data
+           </h3>
+           <!-- Post list:end -->
         </div>
-    </div>
+     </div>
+     
+     <!-- pagination:start -->
+     <div class="row">
+        <div class="col">
+     
+        </div>
+     </div>
+    
 <!-- Courses End -->
-</div>
-<div class="card mt-5 mr-3 ml-3">
-    <div class="card-header text-center bg-info">
-    <h4>Pengumuman</h4>
-    </div>
-    @foreach ($pengumuman as $pengumumans)
-    <div class="bg-light bg-gradient text-white mr-3 ml-3 mt-3 mb-1">
-        <button class="btn btn-block btn-outline" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample{{ $pengumumans->id }}" aria-expanded="false" aria-controls="collapseExample">
-            <h5>{{ $pengumumans->judul }}</h5>
-        </button>
-        <div class="collapse" id="collapseExample{{ $pengumumans->id }}">
-          <div class="card card-body text-dark">
-            {{  $pengumumans->isi }}
-          </div>
-        </div>
-    </div>
-    @endforeach
-  </div>
 @endsection

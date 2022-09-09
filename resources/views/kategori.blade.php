@@ -9,24 +9,22 @@
     </div>
      
      <!-- List category -->
-     <div class="row">
-        @forelse ($kategoris as $kategori)
+     <div class="row flex-row">
+        @forelse ($kategoris as $dtkategori)
             <!-- true -->
-        <div class="col-lg-4 col-sm-6 portfolio-item">
-            <div class="card h-100">
-               <!-- thumbnail:start -->
-               <!-- Thumbnail -->
-                    <img class="img-fluid img-thumbnail" style="700x400" src="{{ asset('storage/..' . $kategori->thumbnail) }}"/>
-               <!-- thumbnail:end -->         
-               <div class="card-body">
-                  <h4 class="card-title">
-                     <a href="">
-                        {{ $kategori->name }}
-                     </a>
-                  </h4>
-               </div>
-            </div>
-         </div>
+            <div class="col-lg-4 col-md-6 pb-4">
+               <a class="courses-list-item position-relative d-block overflow-hidden mb-2" href="{{ route('post-kategori', ['slug' => $dtkategori->slug]) }}">
+                   <img class="img-fluid" width="200px" src="{{ asset('storage/..' . $dtkategori->thumbnail) }}" alt="kategori">
+                   <div class="courses-text">
+                      <div class="border-top w-100 mt-3">
+                          <div class="d-flex justify-content-between p-4 text-center">
+                       <h4 class="text-center text-white px-3">{{ $dtkategori->name }}</h4>
+                           </div>
+                       </div>
+                   </div>
+               </a>
+           </div>
+             
         @empty
             <!-- false -->
         <h3 class="text-center">
