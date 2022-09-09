@@ -86,7 +86,7 @@ class PostController extends Controller
             }
             
             Alert::success('Success', 'Post Berhasil DiInput!');
-            return redirect()->route('post.admin');
+            return redirect()->route('post.index');
 
         } catch (\Throwable $th) {
             DB::rollBack();
@@ -94,7 +94,7 @@ class PostController extends Controller
             if ($request['tag']) {
                 $request['tag'] = Tag::select('id', 'name')->whereIn('id', $request->tag)->get();
             }
-            return redirect()->route('post.admin');
+            return redirect()->route('post.index');
 
         } finally {
             DB::commit();
@@ -154,6 +154,7 @@ class PostController extends Controller
         try {
             DB::beginTransaction();
             $dataPost = [
+                'id' => $request->id,
                 'judul' => $request->judul,
                 'slug' => Str::slug($request->judul, '-'),
                 'thumbnail' => parse_url($request->thumbnail)['path'],
@@ -162,18 +163,19 @@ class PostController extends Controller
                 'kategori_id' =>$request->kategori_id,
                 'status' => $request->status
             ];
-            $post->update($dataPost);
+            Post::where('id', $request->id)->update($dataPost);
 
+            
             $dataTagPost = [];
-            foreach ($request->tag as $key => $dtTag){ 
-            $tagPost->update([
-                'post_id' => $post->id,
-                'tag_id' => $dtTag,
-            ]);
+            $tagPost->where('post_id',$request->id)->delete();
+            foreach ($request->tag as $dtTag){ 
+                $createTagPost = TagPost::create([
+                    'post_id' => $request->id,
+                    'tag_id' => $dtTag,
+                    ]);
+                }
 
-            }
-
-            Alert::success('Success', 'Post Berhasil DiUpdate!');
+            Alert::success('Success', 'Post Berhasil DiInput!');
             return redirect()->route('post.index');
 
         } catch (\Throwable $th) {
@@ -183,13 +185,9 @@ class PostController extends Controller
                 $request['tag'] = Tag::select('id', 'name')->whereIn('id', $request->tag)->get();
             }
             return redirect()->route('post.index');
-
-        } finally {
-            DB::commit();
+         } finally {
+        DB::commit();
         }
-        Alert::success('Success', 'Post Berhasil Diupdate!');
-        return redirect()->route('post.index');
-    }
 
     /**
      * Remove the specified resource from storage.
