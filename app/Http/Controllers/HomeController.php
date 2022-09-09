@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Kategori;
 use App\Models\User;
+use App\Models\Pengumuman;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
@@ -13,7 +14,7 @@ class HomeController extends Controller
     {
         return view('home', [
             "title" => "home",
-            'users' => User::with(["dataProfil"])->findOrFail(Auth::user()->id),
+            'pengumuman' => Pengumuman::orderBy('id', 'desc')->get(),
         ]);
     }
 }

@@ -21,7 +21,6 @@
                                     <th scope="col">NO.</th>
                                     <th scope="col">KATEGORI</th>
                                     <th scope="col">SLUG</th>
-                                    <th scope="col">THUMBNAIL</th>
                                     <th scope="col">AKSI</th>
                                 </tr>
                             </thead>
@@ -44,12 +43,6 @@
                                             <label class="mt-auto mb-auto">
                                                 <!-- todo: show category slug -->
                                                 {{ $kategori->slug }}
-                                            </label>
-                                        </td>
-                                        <td>
-                                            <label class="mt-auto mb-auto">
-                                                <!-- todo: show category slug -->
-                                                {{ $kategori->thumbnail }}
                                             </label>
                                         </td>
                                         <td class="text-center">

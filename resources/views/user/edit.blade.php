@@ -20,6 +20,7 @@
                     <label>Email </label>
                     <input type="email" name="email" readonly  class="form-control" value="{{ old('email', $user->email) }}">
                 </div>
+                @if (Auth::user()->hasRole('Super Admin'))
                 <div class="form-group">
                   <label for="role">Role</label>                  
                       <select id="role" class="form-control" name="role" required>
@@ -33,7 +34,9 @@
                           @endforeach
                         @endif
                       </select>
-              </div>
+                </div>
+                @endif
+             
                 <div class="form-group">
                   <label for="status">Status</label>
 

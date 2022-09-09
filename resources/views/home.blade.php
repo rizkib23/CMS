@@ -30,6 +30,7 @@
         </div>
     </div>
     <div class="owl-carousel courses-carousel">
+        {{--  --}}
         <div class="courses-item position-relative">
             <img class="img-fluid" src="img/courses-1.jpg" alt="">
             <div class="courses-text">
@@ -45,81 +46,24 @@
                 </div>
             </div>
         </div>
-        <div class="courses-item position-relative">
-            <img class="img-fluid" src="img/courses-2.jpg" alt="">
-            <div class="courses-text">
-                <h4 class="text-center text-white px-3">Web design & development courses for beginners</h4>
-                <div class="border-top w-100 mt-3">
-                    <div class="d-flex justify-content-between p-4">
-                        <span class="text-white"><i class="fa fa-user mr-2"></i>Jhon Doe</span>
-                        <span class="text-white"><i class="fa fa-star mr-2"></i>4.5 <small>(250)</small></span>
-                    </div>
-                </div>
-                <div class="w-100 bg-white text-center p-4" >
-                    <a class="btn btn-primary" href="detail.html">Course Detail</a>
-                </div>
-            </div>
-        </div>
-        <div class="courses-item position-relative">
-            <img class="img-fluid" src="img/courses-3.jpg" alt="">
-            <div class="courses-text">
-                <h4 class="text-center text-white px-3">Web design & development courses for beginners</h4>
-                <div class="border-top w-100 mt-3">
-                    <div class="d-flex justify-content-between p-4">
-                        <span class="text-white"><i class="fa fa-user mr-2"></i>Jhon Doe</span>
-                        <span class="text-white"><i class="fa fa-star mr-2"></i>4.5 <small>(250)</small></span>
-                    </div>
-                </div>
-                <div class="w-100 bg-white text-center p-4" >
-                    <a class="btn btn-primary" href="detail.html">Course Detail</a>
-                </div>
-            </div>
-        </div>
-        <div class="courses-item position-relative">
-            <img class="img-fluid" src="img/courses-4.jpg" alt="">
-            <div class="courses-text">
-                <h4 class="text-center text-white px-3">Web design & development courses for beginners</h4>
-                <div class="border-top w-100 mt-3">
-                    <div class="d-flex justify-content-between p-4">
-                        <span class="text-white"><i class="fa fa-user mr-2"></i>Jhon Doe</span>
-                        <span class="text-white"><i class="fa fa-star mr-2"></i>4.5 <small>(250)</small></span>
-                    </div>
-                </div>
-                <div class="w-100 bg-white text-center p-4" >
-                    <a class="btn btn-primary" href="detail.html">Course Detail</a>
-                </div>
-            </div>
-        </div>
-        <div class="courses-item position-relative">
-            <img class="img-fluid" src="img/courses-5.jpg" alt="">
-            <div class="courses-text">
-                <h4 class="text-center text-white px-3">Web design & development courses for beginners</h4>
-                <div class="border-top w-100 mt-3">
-                    <div class="d-flex justify-content-between p-4">
-                        <span class="text-white"><i class="fa fa-user mr-2"></i>Jhon Doe</span>
-                        <span class="text-white"><i class="fa fa-star mr-2"></i>4.5 <small>(250)</small></span>
-                    </div>
-                </div>
-                <div class="w-100 bg-white text-center p-4" >
-                    <a class="btn btn-primary" href="detail.html">Course Detail</a>
-                </div>
-            </div>
-        </div>
-        <div class="courses-item position-relative">
-            <img class="img-fluid" src="img/courses-6.jpg" alt="">
-            <div class="courses-text">
-                <h4 class="text-center text-white px-3">Web design & development courses for beginners</h4>
-                <div class="border-top w-100 mt-3">
-                    <div class="d-flex justify-content-between p-4">
-                        <span class="text-white"><i class="fa fa-user mr-2"></i>Jhon Doe</span>
-                        <span class="text-white"><i class="fa fa-star mr-2"></i>4.5 <small>(250)</small></span>
-                    </div>
-                </div>
-                <div class="w-100 bg-white text-center p-4" >
-                    <a class="btn btn-primary" href="detail.html">Course Detail</a>
-                </div>
-            </div>
-        </div>
     </div>
 <!-- Courses End -->
+</div>
+<div class="card mt-5 mr-3 ml-3">
+    <div class="card-header text-center bg-info">
+    <h4>Pengumuman</h4>
+    </div>
+    @foreach ($pengumuman as $pengumumans)
+    <div class="bg-light bg-gradient text-white mr-3 ml-3 mt-3 mb-1">
+        <button class="btn btn-block btn-outline" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample{{ $pengumumans->id }}" aria-expanded="false" aria-controls="collapseExample">
+            <h5>{{ $pengumumans->judul }}</h5>
+        </button>
+        <div class="collapse" id="collapseExample{{ $pengumumans->id }}">
+          <div class="card card-body text-dark">
+            {{  $pengumumans->isi }}
+          </div>
+        </div>
+    </div>
+    @endforeach
+  </div>
 @endsection

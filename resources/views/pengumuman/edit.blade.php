@@ -14,7 +14,11 @@
                         @method('put')
                         @csrf
                         <div class="form-group text-center">
-                            <label><h1>Isi</h1></label>
+                            <label><h5>Judul</h5></label>
+                            <input type="text" name="judul" required class="form-control" value="{{ old('judul', $pengumuman->judul) }}" autofocus >
+                        </div>
+                        <div class="form-group text-center">
+                            <label><h5>Isi</h5></label>
                             <textarea type="text" name="isi" required class="form-control" rows="15" autofocus >{{ old('isi', $pengumuman->isi) }}</textarea>
                         </div>
                         <div class="float-right">

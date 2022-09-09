@@ -57,7 +57,8 @@ class PengumumanController extends Controller
         Pengumuman::create([
             'user_id' => $user_id,
             'isi' => $request->isi,
-            'tanggal' => now()
+            'tanggal' => now(),
+            'judul' => $request->judul
         ]);
         return redirect('/pengumuman');
     }
@@ -98,7 +99,8 @@ class PengumumanController extends Controller
     public function update(Request $request, Pengumuman $pengumuman)
     {
         $pengumuman->update([
-            'isi' => $request->isi
+            'isi' => $request->isi,
+            'judul' => $request->judul
         ]);
         return redirect('/pengumuman');
     }

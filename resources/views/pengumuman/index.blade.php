@@ -20,7 +20,7 @@
                      <thead>
                             <tr class="text-center">
                                 <th scope="col">no</th>
-                                <th scope="col">Pembuat</th>
+                                <th scope="col">judul</th>
                                 <th scope="col">Isi</th>
                                 <th scope="col">Tanggal</th>
                                 <th scope="col">Aksi</th>
@@ -37,7 +37,7 @@
                                 <td scope="col">{{ $no++ }}</td>
                                 <td>
                                     <label class="mt-auto mb-auto">
-                                        {{ $pengumumans->dataUser->name}}
+                                        {{ $pengumumans->judul}}
                                     </label>
                                 </td>
                                 <td>

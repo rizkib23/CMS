@@ -13,7 +13,11 @@
                     <form action="{{ route('pengumuman.store') }}" method="POST">
                         @csrf
                         <div class="form-group text-center">
-                            <label><h1>Isi</h1></label>
+                            <label>Judul</label>
+                            <input type="text" name="judul" required  class="form-control" autofocus>
+                        </div>
+                        <div class="form-group text-center">
+                            <label><h5>Isi</h5></label>
                             <textarea type="text" name="isi" required  class="form-control" rows="15" autofocus></textarea>
                         </div>
                         <div class="float-right">

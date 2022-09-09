@@ -58,6 +58,9 @@
                             </td>
                             <td class="text-center">
                                 <div>
+                                    <a href="{{ route('user.show', $users->id) }}" class="btn btn-sm btn-primary" role="button">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
                                     <!-- edit -->
                                     <a href="{{ route('user.edit', $users->id) }}" class="btn btn-sm btn-info" role="button">
                                         <i class="fas fa-edit"></i>

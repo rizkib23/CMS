@@ -35,8 +35,6 @@
            <!-- Main Content -->
            <div id="content">
                @yield('content')
-
-
            </div>
            <!-- Footer -->
            @include('partial.dashboard.footer')

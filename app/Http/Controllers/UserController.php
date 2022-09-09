@@ -68,7 +68,6 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:255',
             'email' => 'required|email|unique:users',
-            'password' => 'required|min:5|max:255|confirmed',
         ]);
         if ($validator->fails()) {
             return redirect()->back()->withInput($request->all())->withErrors($validator);
@@ -77,10 +76,10 @@ class UserController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'password' => Hash::make($request->email),
         ]);
         //  profil input
-        $user->assignRole($request->role);
+        $user->assignRole('user');
 
         $profil =  Profil::create([
             'user_id' =>  $user->id,
@@ -94,9 +93,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user)
     {
-        //
+        return view('user.detail', compact('user'));
     }
 
     /**

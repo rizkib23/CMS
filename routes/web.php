@@ -28,16 +28,17 @@ use App\Http\Controllers\UserController;
 |
 */
 // user interface
+Route::resource('/', HomeController::class);
 Route::resource('/home', HomeController::class);
 
-Route::get('/', function () {
-    return view(
-        'home',
-        [
-            "title" => "Home"
-        ]
-    );
-});
+// Route::get('/', function () {
+//     return view(
+//         'home',
+//         [
+//             "title" => "Home"
+//         ]
+//     );
+// });
 
 Route::resource('/kategori', KtgrUserController::class,);
 // post
