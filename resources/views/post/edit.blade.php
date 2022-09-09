@@ -4,15 +4,17 @@
     <div class="row">
         <div class="col-md-12">
             <form action="{{ route('post.update', $post->id) }}" method="POST" enctype="multipart/form-data">
+                @csrf
                 @method('put')
                 <div class="card">
+                    <input id="input_post-judul" name="id" type="hidden" value="{{ old('judul', $post->id) }}"
+                        class="form-control" placeholder="Masukkan id Post" />
                     <div class="card-header">
                         <h1 class="h3 mb-0 text-gray-800">Edit Post</h1>
                     </div>
                     <div class="card-body">
                         <div class="row d-flex align-items-stretch">
                             <div class="col-md-8">
-                                @csrf
                                 <!-- Judul -->
                                 <div class="form-group">
                                     <label for="input_post_judul" class="font-weight-bold">
@@ -38,13 +40,15 @@
                                     </label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <button id="button_post_thumbnail" data-input="input_post_thumbnail" data-preview="holder" 
-                                                class="btn btn-primary" type="button">
+                                            <button id="button_post_thumbnail" data-input="input_post_thumbnail"
+                                                data-preview="holder" class="btn btn-primary" type="button">
                                                 Browse
                                             </button>
                                         </div>
-                                        <input id="input_post_thumbnail" name="thumbnail" type="text" value="{{ old('thumbnail', $post->thumbnail) }}"
-                                            class="form-control @error('thumbnail') is-invalid @enderror" placeholder="Thumbnail Post" readonly />
+                                        <input id="input_post_thumbnail" name="thumbnail" type="text"
+                                            value="{{ old('thumbnail', $post->thumbnail) }}"
+                                            class="form-control @error('thumbnail') is-invalid @enderror"
+                                            placeholder="Thumbnail Post" readonly />
                                     </div>
                                 </div>
                                 <div id="holder">
@@ -54,7 +58,8 @@
                                     <label for="input_post_deskripsi" class="font-weight-bold">
                                         Deskripsi
                                     </label>
-                                    <textarea id="input_post_deskripsi" name="deskripsi" placeholder="Masukkan Deskripsi Post" class="form-control" rows="3">{{ old('deskripsi', $post->deskripsi) }}
+                                    <textarea id="input_post_deskripsi" name="deskripsi" placeholder="Masukkan Deskripsi Post" class="form-control"
+                                        rows="3">{{ old('deskripsi', $post->deskripsi) }}
                                     </textarea>
                                 </div>
                                 <!-- content -->
@@ -76,9 +81,9 @@
                                         <ul class="pl-1 my-1" style="list-style: none;">
                                             <select class="form-control" id="kategori-option" name="kategori_id">
                                                 @foreach ($kategoris as $kategori)
-                                                <option value="{{ $kategori->id }}"
-                                                    {{ $kategori->id == $post->kategori_id ? 'selected' : '' }}>
-                                                    {{ $kategori->name }}</option>
+                                                    <option value="{{ $kategori->id }}"
+                                                        {{ $kategori->id == $post->kategori_id ? 'selected' : '' }}>
+                                                        {{ $kategori->name }}</option>
                                                 @endforeach
                                             </select>
                                         </ul>
@@ -118,9 +123,11 @@
                                         Status
                                     </label>
                                     <select id="select_post_status" name="status" class="custom-select">
-                                        @foreach ($statuses as $key => $value)     
-                                        <option value="{{ $key }}{{ old('status', $post->status) == $key ? 'selected' : null }}">{{ $value }}</option>
-                                    @endforeach
+                                        @foreach ($statuses as $key => $value)
+                                            <option
+                                                value="{{ $key }}{{ old('status', $post->status) == $key ? 'selected' : null }}">
+                                                {{ $value }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>

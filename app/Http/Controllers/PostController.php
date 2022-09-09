@@ -106,6 +106,12 @@ class PostController extends Controller
                     'tag_id' => $dtTag,
                 ]);
             }
+<<<<<<< HEAD
+=======
+            
+            Alert::success('Success', 'Post Berhasil DiInput!');
+            return redirect()->route('post.index');
+>>>>>>> 5380f8e7c3b19f76fd41fc54338e00fefd5b39e6
 
             Alert::success('Success', 'Post Berhasil DiInput!');
             return redirect()->route('post.index');
@@ -185,13 +191,15 @@ class PostController extends Controller
             ];
             Post::where('id', $request->id)->update($dataPost);
 
+            
             $dataTagPost = [];
-            foreach ($request->tag as $key => $dtTag) {
-                $tagPost->update([
-                    'post_id' => $post->id,
+            $tagPost->where('post_id',$request->id)->delete();
+            foreach ($request->tag as $dtTag){ 
+                $createTagPost = TagPost::create([
+                    'post_id' => $request->id,
                     'tag_id' => $dtTag,
-                ]);
-            }
+                    ]);
+                }
 
             Alert::success('Success', 'Post Berhasil DiUpdate!');
             return redirect()->route('post.index');
@@ -202,12 +210,9 @@ class PostController extends Controller
                 $request['tag'] = Tag::select('id', 'name')->whereIn('id', $request->tag)->get();
             }
             return redirect()->route('post.index');
-        } finally {
-            DB::commit();
+         } finally {
+        DB::commit();
         }
-        Alert::success('Success', 'Post Berhasil Diupdate!');
-        return redirect()->route('post.index');
-    }
 
     /**
      * Remove the specified resource from storage.
