@@ -21,11 +21,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 // user interface
-Route::get('/', function () {
-    return view('home', [
-        "title" => "Home"
-    ]);
-});
+Route::get('/', [HomeController::class, 'index']);
+
 
 Route::resource('/kategori',KategoriController::class);
 
