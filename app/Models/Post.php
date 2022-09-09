@@ -28,4 +28,22 @@ class Post extends Model
     {
         return $this->hasMany(TagPost::class, 'post_id', 'id');
     }
+    public function dataTags()
+    {
+        return $this->belongsTo(Tag::class, 'tag_id', 'id');
+    }
+
+    public function scopePublish($query)
+    {
+        return $query->where('status', "publish");
+    }
+    public function scopeDraft($query)
+    {
+        return $query->where('status', "draft");
+    }
+
+    public function scopeSearch($query, $judul)
+    {
+        return $query->where('judul', 'LIKE', "%($judul)%");
+    }
 }
