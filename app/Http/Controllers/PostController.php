@@ -7,11 +7,16 @@ use App\Models\Kategori;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Tag;
+use App\Models\TagPost;
 use App\Models\TagPostingan;
+use Illuminate\Auth\Events\Validated;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use RealRashid\SweetAlert\Facades\Alert;
+
 
 class PostController extends Controller
 {
@@ -33,7 +38,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::latest()->paginate(5);
-        return view('dashboard.post.index', compact('posts'));
+        return view('post.admin', compact('posts'));
     }
     /**
      * Display a listing of the resource.
@@ -47,7 +52,7 @@ class PostController extends Controller
      */
     public function create(Request $request, Post $post)
     {
-        return view('dashboard.post.create', [
+        return view('post.create', [
             'kategoris' => Kategori::all(),
             'tags' => Tag::all(),
             'statuses' => $this->statuses(),
@@ -89,7 +94,8 @@ class PostController extends Controller
                 'deskripsi' => $request->deskripsi,
                 'content' => $request->content,
                 'kategori_id' => $request->kategori_id,
-                'status' => $request->status
+                'status' => $request->status,
+                'user_id' => Auth::user()->id
             ];
             $createPost = Post::create($dataPost);
 
@@ -102,14 +108,14 @@ class PostController extends Controller
             }
 
             Alert::success('Success', 'Post Berhasil DiInput!');
-            return redirect()->route('post.admin');
+            return redirect()->route('post.index');
         } catch (\Throwable $th) {
             DB::rollBack();
             Alert::error('Error', 'data gagal disimpan', ['error' => $th->getMessage()]);
             if ($request['tag']) {
                 $request['tag'] = Tag::select('id', 'name')->whereIn('id', $request->tag)->get();
             }
-            return redirect()->route('post.admin');
+            return redirect()->route('post.create');
         } finally {
             DB::commit();
         }
@@ -123,7 +129,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        return view('dashboard.post.detail', compact('post'));
+        return view('post.detail', compact('post'));
     }
 
     /**
@@ -137,7 +143,7 @@ class PostController extends Controller
         $kategoris = Kategori::all();
         $tags = Tag::all();
         $statuses = $this->statuses();
-        return view('dashboard.post.edit', compact('post', 'kategoris', 'tags', 'statuses'));
+        return view('post.edit', compact('post', 'kategoris', 'tags', 'statuses'));
     }
 
     /**
@@ -168,6 +174,7 @@ class PostController extends Controller
         try {
             DB::beginTransaction();
             $dataPost = [
+                'id' => $request->id,
                 'judul' => $request->judul,
                 'slug' => Str::slug($request->judul, '-'),
                 'thumbnail' => parse_url($request->thumbnail)['path'],
@@ -176,7 +183,7 @@ class PostController extends Controller
                 'kategori_id' => $request->kategori_id,
                 'status' => $request->status
             ];
-            $post->update($dataPost);
+            Post::where('id', $request->id)->update($dataPost);
 
             $dataTagPost = [];
             foreach ($request->tag as $key => $dtTag) {
@@ -212,7 +219,7 @@ class PostController extends Controller
     {
         $post->delete();
         Alert::success('Success', 'Post Berhasil Dihapus!');
-        return redirect('/dashboard/post');
+        return redirect('/post');
     }
 
     private function statuses()

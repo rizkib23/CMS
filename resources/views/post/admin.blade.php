@@ -43,6 +43,8 @@
              </div>
           </div>
           <div class="card-body">
+            <table class="table" id="myTable">
+               <tbody>
              <ul class="list-group list-group-flush">
                 <!-- list post -->
                 @forelse ($posts as $post)
@@ -76,6 +78,8 @@
                     Data Belum Ada
                 @endforelse
              </ul>
+               </tbody>
+            </table>
           </div>
        </div>
     </div>

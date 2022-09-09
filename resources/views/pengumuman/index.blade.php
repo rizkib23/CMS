@@ -30,14 +30,14 @@
                      <tbody>
                         <?php $no=1; ?>
                         <!-- list category -->
-                        @foreach ($pengumuman as $index => $pengumumans)
+                        @foreach ($pengumuman as $pengumumans)
                             <!-- category list -->
-                            
+                           {{-- {{ dd($pengumumans->dataUser) }} --}}
                            <tr>
                                 <td scope="col">{{ $no++ }}</td>
                                 <td>
                                     <label class="mt-auto mb-auto">
-                                        {{ $user[$index]->name }}
+                                        {{ $pengumumans->dataUser->name}}
                                     </label>
                                 </td>
                                 <td>
@@ -52,18 +52,29 @@
                                 </td>
                                 <td class="text-center">
                                     <div>
-                                        <!-- detail -->
-                                        <a href="{{ route('pengumuman.show', $pengumumans->id) }}" class="btn btn-sm btn-primary" role="button">
-                                            <i class="fas fa-eye"></i>
-                                        </a>
-                                        <!-- edit -->
+                                      @if ( $pengumumans->user_id !== Auth::user()->id )
+                                       <!-- detail -->
+                                      <a href="{{ route('pengumuman.show', $pengumumans->id) }}" class="btn btn-sm btn-primary" role="button">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                      @else
+                                      <!-- detail -->
+                                      <a href="{{ route('pengumuman.show', $pengumumans->id) }}" class="btn btn-sm btn-primary" role="button">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                           <!-- edit -->
                                         <a href="{{ route('pengumuman.edit', $pengumumans->id) }}" class="btn btn-sm btn-info" role="button">
                                             <i class="fas fa-edit"></i>
                                         </a>
                                         <!-- delete -->
-                                        <button type="submit" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#hapusTags">
+                                        <form class="d-inline" action="{{ route('pengumuman.destroy', $pengumumans->id) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-danger">
                                             <i class="fas fa-trash"></i>
                                         </button>
+                                        </form>
+                                      @endif
                                     </div>
                                 </td>
                             </tr>

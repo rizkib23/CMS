@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Pengumuman;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class PengumumanController extends Controller
 {
@@ -28,7 +29,6 @@ class PengumumanController extends Controller
     {
         return view('pengumuman.index', [
             'pengumuman' => Pengumuman::all(),
-            'user' => User::all(),
         ]);
     }
 
@@ -41,7 +41,7 @@ class PengumumanController extends Controller
     {
         return view('pengumuman.create', [
             'pengumuman' => $pengumuman,
-            'user' => User::all(),
+            'user' => Auth::user()->id,
         ]);
     }
 
@@ -53,9 +53,9 @@ class PengumumanController extends Controller
      */
     public function store(Request $request, Pengumuman $pengumuman)
     {
-        $user_id = Auth::user();
+        $user_id = Auth::user()->id;
         Pengumuman::create([
-            'user_id' => $user_id->id,
+            'user_id' => $user_id,
             'isi' => $request->isi,
             'tanggal' => now()
         ]);
@@ -109,8 +109,10 @@ class PengumumanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Pengumuman $pengumuman)
     {
-        //
+        $pengumuman->delete();
+        Alert::success('Success', 'Post Berhasil Dihapus!');
+        return redirect('/pengumuman');
     }
 }

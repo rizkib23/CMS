@@ -32,10 +32,10 @@
                             <!-- category list -->
                             
                            <tr>
-                                <td scope="col">{{ $no++ }}</td>
+                                <td scope="col" class="text-center">{{ $no++ }}</td>
                                 <td>
                                     <label class="mt-auto mb-auto">
-                                        {{ $tag->nama_tag }}
+                                        {{ $tag->name }}
                                     </label>
                                 </td>
                                 <td class="text-center">

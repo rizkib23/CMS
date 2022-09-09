@@ -53,6 +53,6 @@ class User extends Authenticatable
     }
     public function dataPengumuman()
     {
-        return $this->hasMany(Pengumuman::class, 'user_id', 'id');
+        return $this->hasMany(Pengumuman::class, 'id', 'user_id');
     }
 }

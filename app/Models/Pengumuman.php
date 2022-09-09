@@ -11,4 +11,8 @@ class Pengumuman extends Model
     protected $fillable = [
         'user_id', 'isi', 'tanggal'
     ];
+    public function dataUser()
+    {
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
 }

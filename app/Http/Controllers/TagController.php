@@ -50,7 +50,7 @@ class TagController extends Controller
     public function store(Request $request)
     {
         $tags = Tag::create([
-            'nama_tag' => $request->nama_tag
+            'name' => $request->name
         ]);
         return redirect()->route('tags.index');
     }
@@ -87,7 +87,7 @@ class TagController extends Controller
      */
     public function update(Request $request, $id)
     {
-        Tag::find($id)->update(['nama_tag' => $request->nama_tag]);
+        Tag::find($id)->update(['name' => $request->name]);
         return redirect('/tags');
     }
 

@@ -16,17 +16,17 @@ class Tag extends Model
      *
      * @var array<int, string>
      */
-    protected $guarded =[];
+    protected $guarded = [];
     protected $table = 'tags';
     protected $primaryKey = 'id';
     protected $fillable = [
         'name',
-        'slug',
+
     ];
 
     public function scopeSearch($query, $name)
     {
-        return $query->where('name','LIKE', "%{$name}%");
+        return $query->where('name', 'LIKE', "%{$name}%");
     }
 
     public function posts()

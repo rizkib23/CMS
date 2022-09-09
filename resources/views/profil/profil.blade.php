@@ -12,7 +12,7 @@
                       <div class="col-md-4">
 
                         @if(Auth::user()->dataProfil->foto)
-                            <img src="{{ asset('storage/' . Auth::user()->dataProfil->foto )}}" class="img-thumbnail rounded mx-auto d-block">
+                            <img src="{{ asset('storage/' . Auth::user()->dataProfil->foto )}}" width="200px" class="img-thumbnail rounded mx-auto d-block">
                         @else
                             <img src="{{ asset('img/profil.jpg') }}" class="img-thumbnail rounded mx-auto d-block">
                         @endif     

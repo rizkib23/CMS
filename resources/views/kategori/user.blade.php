@@ -17,7 +17,7 @@
                     @foreach ($kategori as $kategoris)
                     <div class="col-lg-4 col-md-6 pb-4">
                         <a class="courses-list-item position-relative d-block overflow-hidden mb-2" href="detail.html" >
-                            <img class="img-fluid" src="{{ asset('storage/' . $kategoris->thumbnail )}}" alt="">
+                            <img class="img-fluid" src="{{ asset('storage/..' . $kategoris->thumbnail )}}" alt="">
                             <div class="courses-text">
                                 <h4 class="text-center text-white px-3">{{ $kategoris->name }}</h4>
                                 <div class="border-top w-100 mt-3">

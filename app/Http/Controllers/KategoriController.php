@@ -55,16 +55,10 @@ class KategoriController extends Controller
      */
     public function store(Request $request)
     {
-        $fileName = $request->file('thumbnail')
-            ->storeAs(
-                $this->path,
-                time() . "." . $request->file('thumbnail')->getClientOriginalExtension(),
-                'public'
-            );
         $kategori = Kategori::create([
             'name' => $request->name,
             'slug' => Str::slug($request->name, '-'),
-            'thumbnail' => $fileName,
+            'thumbnail' => parse_url($request->thumbnail)['path'],
         ]);
         return redirect()->route('kategoris.index');
     }
@@ -76,8 +70,11 @@ class KategoriController extends Controller
      */
     public function show(kategori $kategori)
     {
-        $kategoris = kategori::find($kategori);
-        return view('kategori.detail', compact('kategoris'));
+
+        return view('kategori.detail', [
+            'kategoris' => $kategori
+
+        ]);
     }
 
     /**
@@ -102,15 +99,10 @@ class KategoriController extends Controller
     public function update(Request $request, Kategori $kategori)
     {
 
-        $fileName = $kategori->thumbnail;
-        if ($request->hasFile('thumbnail')) {
-            $fileName = $request->file('thumbnail')->storeAs('thumbnails', time() . "." . $request->file('thumbnail')->getClientOriginalExtension(), 'public');
-            Storage::delete(['public/' . $kategori->thumbnail]);
-        }
         $kategori->update([
             'name' => $request->name,
             'slug' => Str::slug($request->name, '-'),
-            'thumbnail' => $fileName,
+            'thumbnail' =>  parse_url($request->thumbnail)['path'],
         ]);
         return redirect('/kategoris');
     }

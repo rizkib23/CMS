@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Profil;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Permission\Traits\HasRoles;
 
 class UserController extends Controller
 {
@@ -27,8 +30,15 @@ class UserController extends Controller
      */
     public function index()
     {
+        $a = Auth::user();
+        if ($a->hasRole('Super Admin')) {
+            return view("user.index", [
+                'user' => User::all()->where('id', '<>', Auth::user()->id),
+
+            ]);
+        }
         return view("user.index", [
-            'user' => User::all(),
+            'user' => User::role('user')->get()->where('id', '<>', Auth::user()->id),
 
         ]);
     }
@@ -98,8 +108,9 @@ class UserController extends Controller
     public function edit(User $user)
     {
         return view('user.edit', [
-            'roles' => Role::all(),
+            'rolesSelect' => $user->roles->first(),
             'user' => $user,
+            'roles' => Role::all(),
         ]);
     }
 
@@ -112,12 +123,18 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $user->syncRoles($request->role);
-        // if ($user->$request->status = ['nonaktif']) {
-        //     $user->removeRole($user->roles->first());
-        // } else {
-        //     $user->assignRole('user');
-        // }
+
+        if ($request->status == ('nonaktif')) {
+            $user->update([
+                'status' => $request->status
+            ]);
+            $user->removeRole($user->roles->first());
+        } else {
+            $user->update([
+                'status' => $request->status
+            ]);
+            $user->syncRoles($request->role);
+        }
 
         return redirect('/user');
     }
@@ -131,7 +148,7 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $user->removeRole($user->roles->first());
-        $user->delete();
+        User::destroy($user->id);
         return redirect('/user');
     }
 }

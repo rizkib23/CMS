@@ -6,7 +6,7 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header text-center">
-            <h1> Tambah Role </h1>
+            <h1> Edit Role </h1>
           </div>
           <div class="card-body">
             <form action="{{ route('roles.update', $role->id) }}" method="POST">

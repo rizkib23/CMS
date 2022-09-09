@@ -20,18 +20,21 @@
                     <label>Email </label>
                     <input type="email" name="email" readonly  class="form-control" value="{{ old('email', $user->email) }}">
                 </div>
-
                 <div class="form-group">
-                    <label for="role">Role</label>
-
-                   
-                        <select id="role" class="form-control" name="role" required >
-                            @foreach ($roles as $role)
-                            <option value="{{ $role->name }}">{{ $role->name }}</option>
-                            @endforeach
-                        </select>
-                </div>
-                {{-- <div class="form-group">
+                  <label for="role">Role</label>                  
+                      <select id="role" class="form-control" name="role" required>
+                         @if(old('role',$rolesSelect))
+                          <option value="{{ old('role', $rolesSelect->id) }}" selected>
+                            {{ old('role', $rolesSelect->name) }}
+                          </option>     
+                          @else
+                          @foreach ($roles as $role)
+                          <option value="{{ $role->name }}">{{ $role->name }}</option>
+                          @endforeach
+                        @endif
+                      </select>
+              </div>
+                <div class="form-group">
                   <label for="status">Status</label>
 
                   <div class="form-control @error('status') is-invalid @enderror">
@@ -43,7 +46,7 @@
                       </span>
                   @enderror
                   </div>
-              </div> --}}
+              </div>
                 {{-- permisiion --}}
                 <div class="float-right">
                     <button type="submit" class="btn btn-success px-3 berhasil">SIMPAN</button>

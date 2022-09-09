@@ -23,9 +23,9 @@
                                 <th scope="col">Nama</th>
                                 <th scope="col">Email</th>
                                 <th scope="col">Jabatan</th>
+                                <th scope="col">Status</th>
                                 <th scope="col">Aksi</th>
                             </tr>
-                        
                      </thead>
                      <tbody>
                         <?php $no=1; ?>
@@ -49,9 +49,12 @@
                                         <label class="mt-auto mb-auto">{{ $item }}</label>
 
                                         @endforeach
-                                    @endif
-                                
-                                    
+                                    @endif        
+                            </td>
+                            <td>
+                                <label for="mt-auto mb-auto">
+                                    {{ $users->status }}
+                                </label>
                             </td>
                             <td class="text-center">
                                 <div>

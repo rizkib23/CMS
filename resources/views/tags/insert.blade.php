@@ -14,7 +14,7 @@
                         @csrf
                         <div class="form-group">
                             <label>Nama Tag</label>
-                            <input type="text" name="nama_tag" required  class="form-control">
+                            <input type="text" name="name" required  class="form-control">
                         </div>
                         <div class="float-right">
                             <button type="submit" class="btn btn-success px-3 berhasil">SIMPAN</button>
