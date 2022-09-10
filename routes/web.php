@@ -16,6 +16,7 @@ use Spatie\Permission\Models\Role;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\MetaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,8 +29,9 @@ use App\Http\Controllers\UserController;
 |
 */
 // user interface
-Route::resource('/', HomeController::class);
-Route::resource('/home', HomeController::class);
+Route::get('/', [HomeController::class, 'index']);
+Route::get('/home', [HomeController::class, 'index']);
+
 
 // Route::get('/', function () {
 //     return view(

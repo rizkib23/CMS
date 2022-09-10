@@ -54,11 +54,18 @@
                        <p>
                           {{ $post->deskripsi }}
                        </p>
+                       <div class="float-left">| {{ucwords($post->dataUser->name) }} | {{ $post->created_at }}</div>
                        <div class="float-right">
+                       @if ( $post->user_id !== Auth::user()->id )
                           <!-- detail -->
                           <a href="{{ route('post.show', ['post' => $post]) }}" class="btn btn-sm btn-primary" role="button">
                              <i class="fas fa-eye"></i>
                           </a>
+                        @else
+                        <!-- detail -->
+                        <a href="{{ route('post.show', ['post' => $post]) }}" class="btn btn-sm btn-primary" role="button">
+                           <i class="fas fa-eye"></i>
+                        </a>
                           <!-- edit -->
                           <a href="{{ route('post.edit', $post->id) }}" class="btn btn-sm btn-info" role="button">
                              <i class="fas fa-edit"></i>
@@ -71,6 +78,7 @@
                                 <i class="fas fa-trash"></i>
                              </button>
                           </form>
+                          @endif
                        </div>
                     </div>
                  </div>

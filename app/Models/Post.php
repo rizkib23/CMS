@@ -19,12 +19,19 @@ class Post extends Model
         'status',
         'user_id',
     ];
-
+    public function getCreatedAtAttribute()
+    {
+        return \Carbon\Carbon::parse($this->attributes['created_at'])
+            ->format('d, M Y H:i');
+    }
     public function dataKategori()
     {
         return $this->belongsTo(Kategori::class, 'kategori_id', 'id');
     }
-
+    public function dataUser()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
     public function dataTagPost()
     {
         return $this->hasMany(TagPost::class, 'post_id', 'id');
@@ -45,6 +52,6 @@ class Post extends Model
 
     public function scopeSearch($query, $judul)
     {
-        return $query->where('judul', 'LIKE', "%($judul)%");
+        return $query->where('judul', 'LIKE', "%{$judul}%");
     }
 }

@@ -90,9 +90,9 @@
 
    <!-- Nav Item - File Manager -->
    <li class="nav-item {{ Request::is('dashboard') ? 'active' : '' }}">
-       <a class="nav-link" href="/dashboard">
-           <i class="fas fa-fw fa-chart-area"></i>
-           <span>File Manager</span></a>
+       <a class="nav-link" href="/">
+           {{-- <i class="fas fa-fw fa-chart-area"></i> --}}
+           <span>Home</span></a>
    </li>
 
    <!-- Divider -->

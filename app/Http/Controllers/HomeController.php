@@ -4,16 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\Kategori;
+use App\Models\Pengumuman;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
+
     public function index()
     {
-        $posts = Post::all();
+        $posts = Post::publish()->latest()->paginate();
+        $pengumuman = Pengumuman::orderBy('id', 'desc')->get();
         return view('home', [
             'title' => "Home",
-            'posts' => $posts
+            'posts' => $posts,
+            'notif' => $pengumuman
         ]);
     }
 
