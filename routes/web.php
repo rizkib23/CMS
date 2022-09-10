@@ -24,7 +24,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index']);
 
 
-Route::resource('/kategori',KategoriController::class);
+Route::get('/kategori', [HomeController::class, 'listKategori']);
+
 
 Route::get('/tai', function () {
     return view('tags/tags_user',[
