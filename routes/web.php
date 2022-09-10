@@ -33,13 +33,19 @@ Route::get('/', [HomeController::class, 'index']);
 Route::get('/home', [HomeController::class, 'index']);
 
 
-// Route::get('/', function () {
-//     return view(
-//         'home',
-//         [
-//             "title" => "Home"
-//         ]
-//     );
+Route::get('/kategori', [HomeController::class, 'listKategori']);
+
+
+Route::get('/tai', function () {
+    return view('tags/tags_user', [
+        "title" => "Tag"
+    ]);
+});
+
+// Route::get('/login', function () {
+//     return view('login/login1',[
+//         "title" => "Login"
+//     ]);
 // });
 
 Route::resource('/kategori', KtgrUserController::class,);

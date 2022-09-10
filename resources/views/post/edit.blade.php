@@ -3,7 +3,7 @@
 @section('content')
     <div class="row">
         <div class="col-md-12">
-            <form action="{{ route('post.update', $post->id) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('post.update', ['post' => $post]) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('put')
                 <div class="card">
@@ -124,9 +124,7 @@
                                     </label>
                                     <select id="select_post_status" name="status" class="custom-select">
                                         @foreach ($statuses as $key => $value)
-                                            <option
-                                                value="{{ $key }}{{ old('status', $post->status) == $key ? 'selected' : null }}">
-                                                {{ $value }}</option>
+                                            <option value="{{ $key }}"{{ old('status', $post->status) == $key ? 'selected' : null }}>{{ $value }}</option>
                                         @endforeach
                                     </select>
                                 </div>
