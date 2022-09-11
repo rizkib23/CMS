@@ -56,10 +56,29 @@
                                     <p>
                                         {{ $post->deskripsi }}
                                     </p>
+                                    <div class="float-left">
+                                        | {{ucwords($post->dataUser->name) }} | {{ $post->created_at }}
+                                    </div>
+
                                     <div class="float-right">
+
+                                        
+                                        <!-- detail -->
+                                         @if($post->status == ('publish'))
+                                          <!-- detail -->
+                                        <a href="{{ route('post.show', ['post' => $post]) }}" class="btn btn-sm btn-primary"
+                                            role="button">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                         @elseif($post->user_id !== Auth::user()->id)
                                         <!-- detail -->
                                         <a href="{{ route('post.show', ['post' => $post]) }}" class="btn btn-sm btn-primary"
                                             role="button">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        
+                                        @else                                                                               <!-- detail -->
+                                        <a href="{{ route('post.show', ['post' => $post]) }}" class="btn btn-sm btn-primary" role="button">
                                             <i class="fas fa-eye"></i>
                                         </a>
                                         <!-- edit -->
@@ -68,7 +87,7 @@
                                             <i class="fas fa-edit"></i>
                                         </a>
                                         <!-- delete -->
-                                        <form class="d-inline" action="{{ route('post.destroy', $post->id) }}"
+                                        <form class="d-inline" role="alert" action="{{ route('post.destroy', $post->id) }}"
                                             method="POST">
                                             @csrf
                                             @method('DELETE')
@@ -76,6 +95,7 @@
                                                 <i class="fas fa-trash"></i>
                                             </button>
                                         </form>
+                                       @endif 
                                     </div>
                                 </div>
                             </div>
@@ -89,3 +109,27 @@
     </div>
     @include('sweetalert::alert')
 @endsection
+@push('javascript-internal')
+    <script>
+        $(document).ready(function(){
+            $("form[role='alert']").submit(function(event) {
+                event.preventDefault();
+                Swal.fire({
+                    title: "Apakah anda Yakin?",
+                    text: "Data akan dihapus",
+                    icon: 'warning',
+                    allowOutsideClick: false,
+                    showCancelButton: true,
+                    cancelButtonText: "Batalkan",
+                    reverseButtons: true,
+                    confirmButtonText: "Konfirmasi",
+                    }).then((result) => {
+                    if (result.isConfirmed) {
+                        // todo: process of deleting 
+                        event.target.submit();
+                    }
+                    });
+            });
+        }); 
+    </script>
+@endpush

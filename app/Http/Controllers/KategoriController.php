@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use LDAP\Result;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Validator;
 use illuminate\Support\Str;
 
 class KategoriController extends Controller
@@ -55,12 +56,24 @@ class KategoriController extends Controller
      */
     public function store(Request $request)
     {
-        $kategori = Kategori::create([
-            'name' => $request->name,
-            'slug' => Str::slug($request->name, '-'),
-            'thumbnail' => parse_url($request->thumbnail)['path'],
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:255|unique:kategoris'
         ]);
-        return redirect()->route('kategoris.index');
+        if ($validator->fails()) {
+            return redirect()->back()->withInput($request->all())->withErrors($validator);
+        }
+        try {
+            $kategori = Kategori::create([
+                'name' => $request->name,
+                'slug' => Str::slug($request->name, '-'),
+                'thumbnail' => parse_url($request->thumbnail)['path'],
+            ]);
+            Alert::success('Success', 'Tag Berhasil Ditambahkan!');
+            return redirect()->route('kategoris.index');
+        } catch (\Throwable $th) {
+            Alert::error('Error', 'Tag Gagal Ditambahkan!');
+            return redirect()->back()->withInput($request->all())->withErrors($validator);
+        }
     }
     /**
      * Display the specified resource.
@@ -98,12 +111,18 @@ class KategoriController extends Controller
      */
     public function update(Request $request, Kategori $kategori)
     {
-
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:255'
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withInput($request->all())->withErrors($validator);
+        }
         $kategori->update([
             'name' => $request->name,
             'slug' => Str::slug($request->name, '-'),
             'thumbnail' =>  parse_url($request->thumbnail)['path'],
         ]);
+        Alert::success('Success', 'Kategori Berhasil DiUpdate!');
         return redirect('/kategoris');
     }
 
@@ -115,10 +134,18 @@ class KategoriController extends Controller
      */
     public function destroy(Kategori $kategori)
     {
-        if ($kategori->thumbnail) {
-            File::delete('thumbnail', $kategori->thumbnail);
+
+
+        try {
+            if ($kategori->thumbnail) {
+                File::delete('thumbnail', $kategori->thumbnail);
+            }
+            $coba = Kategori::destroy($kategori->id);
+        } catch (\Throwable $th) {
+            Alert::error('Error', 'Kategori Gagal Dihapus!', ['error' => $th->getMessage()]);
+            return redirect('/kategoris');
         }
-        Kategori::destroy($kategori->id);
+        Alert::success('Success', 'Kategori Berhasil Dihapus!');
         return redirect('/kategoris');
     }
 }

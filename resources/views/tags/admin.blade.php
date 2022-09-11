@@ -44,11 +44,13 @@
                                         <a href="{{ route('tags.edit', $tag->id) }}" class="btn btn-sm btn-info" role="button">
                                             <i class="fas fa-edit"></i>
                                         </a>
-                                        <!-- delete -->
-                                        <form class="d-inline" action="{{ route('tags.destroy', $tag->id) }}" method="POST">
+                                        {{-- <!-- delete  -->{{ route('tags.destroy', $tag->id) }} --}}
+                                        <form class="d-inline" role="alert" alert-title="Apakah Kamu Yakin?" alert-text="Data akan dihapus" action="{{ route('tags.destroy', $tag->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
-                                            <button class="btn btn-sm btn-danger"> <i class="fas fa-trash"></i></button>
+                                            <button type="submit" class="btn btn-sm btn-danger">
+                                                 <i class="fas fa-trash"></i>
+                                            </button>
                                         </form>
                                     </div>
                                 </td>
@@ -62,4 +64,30 @@
         </div>
     </div>
 </div>
+@include('sweetalert::alert')
 @endsection
+
+@push('javascript-internal')
+    <script>
+        $(document).ready(function(){
+            $("form[role='alert']").submit(function(event) {
+                event.preventDefault();
+                Swal.fire({
+                    title: "Apakah anda Yakin?",
+                    text: "Data akan dihapus",
+                    icon: 'warning',
+                    allowOutsideClick: false,
+                    showCancelButton: true,
+                    cancelButtonText: "Batalkan",
+                    reverseButtons: true,
+                    confirmButtonText: "Konfirmasi",
+                    }).then((result) => {
+                    if (result.isConfirmed) {
+                        // todo: process of deleting 
+                        event.target.submit();
+                    }
+                    });
+            });
+        }); 
+    </script>
+@endpush

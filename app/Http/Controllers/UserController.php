@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use RealRashid\SweetAlert\Facades\Alert;
 use Spatie\Permission\Traits\HasRoles;
 
 class UserController extends Controller
@@ -84,6 +85,7 @@ class UserController extends Controller
         $profil =  Profil::create([
             'user_id' =>  $user->id,
         ]);
+        Alert::success('Success', 'Akun Berhasil DiTambahkan!');
         return redirect('/user');
     }
 
@@ -134,7 +136,7 @@ class UserController extends Controller
             ]);
             $user->syncRoles($request->role);
         }
-
+        Alert::success('Success', 'Akun Berhasil DiEdit!');
         return redirect('/user');
     }
 
@@ -146,8 +148,18 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        $user->removeRole($user->roles->first());
-        User::destroy($user->id);
+
+        try {
+            if ($user->getRoleNames() == false) {
+                User::destroy($user->id);
+            }
+            User::destroy($user->id);
+            $user->removeRole($user->roles->first());
+        } catch (\Throwable $th) {
+            Alert::success('Success', 'Akun Berhasil DiHapus!');
+            return redirect('/user');
+        }
+        Alert::success('Success', 'Akun Berhasil DiHapus!');
         return redirect('/user');
     }
 }

@@ -17,10 +17,15 @@
                         <!-- title -->
                         <div class="form-group">
                             <label for="input_kategori_name" class="font-weight-bold">
-                                Nama
+                                Nama 
                             </label>
-                            <input id="input_kategori_name" name="name" type="text" class="form-control"
-                                placeholder="Masukkan Nama Kategori" required />
+                            <input id="input_kategori_name" name="name" type="text" class="form-control  @error('name') is-invalid @enderror"
+                                placeholder="Masukkan Nama Kategori" value="{{ old('name') }}" required />
+                                @error('name')
+                                <span class="invalid-feedback" role="alert">
+                                  <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
                         </div>
                         <!-- slug -->
                         <div class="form-group">
@@ -35,7 +40,12 @@
                                     </button>
                                 </div>
                                 <input id="input_kategori_thumbnail" name="thumbnail" value="" type="text"
-                                    class="form-control" placeholder="Thumbnail Post" readonly />
+                                    class="form-control" placeholder="Thumbnail Post" readonly  @error('thumbnail') is-invalid @enderror />
+                                    @error('thumbnail')
+                                    <span class="invalid-feedback" role="alert">
+                                      <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
                             </div>
                         </div>
                         <div id="holder">

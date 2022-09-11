@@ -14,7 +14,12 @@
                         @csrf
                         <div class="form-group">
                             <label>Nama Tag</label>
-                            <input type="text" name="name" required  class="form-control">
+                            <input type="text" name="name" required  class="form-control @error('name') is-invalid @enderror" autofocus value="{{ old('name') }}">
+                            @error('name')
+                            <span class="invalid-feedback" role="alert">
+                              <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
                         </div>
                         <div class="float-right">
                             <button type="submit" class="btn btn-success px-3 berhasil">SIMPAN</button>

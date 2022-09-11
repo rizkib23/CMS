@@ -49,7 +49,7 @@
                                             <i class="fas fa-edit"></i>
                                         </a>
                                         <!-- delete -->
-                                        <form class="d-inline" action="{{ route('roles.destroy', ['role'=>$role]) }}" method="POST">
+                                        <form class="d-inline" role="alert" action="{{ route('roles.destroy', ['role'=>$role]) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
                                           <button type="submit"  class="btn btn-sm btn-danger">
@@ -69,4 +69,29 @@
         </div>
     </div>
 </div>
+@include('sweetalert::alert')
 @endsection
+@push('javascript-internal')
+    <script>
+        $(document).ready(function(){
+            $("form[role='alert']").submit(function(event) {
+                event.preventDefault();
+                Swal.fire({
+                    title: "Apakah anda Yakin?",
+                    text: "Data akan dihapus",
+                    icon: 'warning',
+                    allowOutsideClick: false,
+                    showCancelButton: true,
+                    cancelButtonText: "Batalkan",
+                    reverseButtons: true,
+                    confirmButtonText: "Konfirmasi",
+                    }).then((result) => {
+                    if (result.isConfirmed) {
+                        // todo: process of deleting 
+                        event.target.submit();
+                    }
+                    });
+            });
+        }); 
+    </script>
+@endpush

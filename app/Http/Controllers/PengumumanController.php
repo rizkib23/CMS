@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Pengumuman;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class PengumumanController extends Controller
@@ -53,6 +54,13 @@ class PengumumanController extends Controller
      */
     public function store(Request $request, Pengumuman $pengumuman)
     {
+        $validator = Validator::make($request->all(), [
+            'judul' => 'required|max:255',
+            'judul' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withInput($request->all())->withErrors($validator);
+        }
         $user_id = Auth::user()->id;
         Pengumuman::create([
             'user_id' => $user_id,
@@ -60,6 +68,7 @@ class PengumumanController extends Controller
             'tanggal' => now(),
             'judul' => $request->judul
         ]);
+        Alert::success('Success', 'Pengumuman Berhasil DiTambahkan!');
         return redirect('/pengumuman');
     }
 
@@ -98,10 +107,18 @@ class PengumumanController extends Controller
      */
     public function update(Request $request, Pengumuman $pengumuman)
     {
+        $validator = Validator::make($request->all(), [
+            'judul' => 'required|max:255',
+            'judul' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withInput($request->all())->withErrors($validator);
+        }
         $pengumuman->update([
             'isi' => $request->isi,
             'judul' => $request->judul
         ]);
+        Alert::success('Success', 'Pengumuman Berhasil DiUdate');
         return redirect('/pengumuman');
     }
 
@@ -113,8 +130,8 @@ class PengumumanController extends Controller
      */
     public function destroy(Pengumuman $pengumuman)
     {
-        $pengumuman->delete();
-        Alert::success('Success', 'Post Berhasil Dihapus!');
+        $pengumuman->delete($pengumuman->id);
+        Alert::success('Success', 'Pengumuman Berhasil Dihapus!');
         return redirect('/pengumuman');
     }
 }

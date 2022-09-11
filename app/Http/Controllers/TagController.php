@@ -52,6 +52,7 @@ class TagController extends Controller
         $tags = Tag::create([
             'name' => $request->name
         ]);
+        Alert::success('Success', 'Tag Berhasil DiTambahkan!');
         return redirect()->route('tags.index');
     }
 
@@ -88,6 +89,8 @@ class TagController extends Controller
     public function update(Request $request, $id)
     {
         Tag::find($id)->update(['name' => $request->name]);
+
+        Alert::success('Success', 'Tag Berhasil DiUpdate!');
         return redirect('/tags');
     }
 
@@ -99,7 +102,13 @@ class TagController extends Controller
      */
     public function destroy(Tag $tag)
     {
-        Tag::destroy($tag->id);
-        return redirect('/tags');
+
+
+        Tag::find($tag->id)->delete();
+        return redirect()->route('tags.index')
+            ->with('success', 'User deleted successfully');
+        // Tag::destroy($tag->id);
+        // Alert::success('Success', 'Tag Berhasil DiHapus!');
+        // return redirect('/tags');
     }
 }

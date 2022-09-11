@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\View;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ProfilController extends Controller
 {
@@ -126,7 +127,7 @@ class ProfilController extends Controller
             'jenis_kelamin' => $request->jenis_kelamin,
             'no_tlp' => $request->no_tlp
         ]);
-
+        Alert::success('Success', 'Profil Berhasil DiUpdate!');
         return redirect('/profil');
     }
 

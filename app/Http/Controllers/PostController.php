@@ -118,9 +118,6 @@ class PostController extends Controller
 
             Alert::success('Success', 'Post Berhasil DiInput!');
             return redirect()->route('post.index');
-
-            Alert::success('Success', 'Post Berhasil DiInput!');
-            return redirect()->route('post.index');
         } catch (\Throwable $th) {
             DB::rollBack();
             Alert::error('Error', 'data gagal disimpan', ['error' => $th->getMessage()]);

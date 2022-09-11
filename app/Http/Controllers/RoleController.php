@@ -6,6 +6,7 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class RoleController extends Controller
 {
@@ -64,6 +65,7 @@ class RoleController extends Controller
 
         $role = Role::create(['name' => $request->name]);
         $role->givePermissionTo($request->permissions);
+        Alert::success('Success', 'Role Berhasil DiTambahkan!');
         return redirect('/roles');
     }
 
@@ -110,6 +112,7 @@ class RoleController extends Controller
         $role->name = $request->name;
         $role->syncPermissions($request->permissions);
         $role->save();
+        Alert::success('Success', 'Role Berhasil DiUpdate');
         return redirect('/roles');
     }
 
@@ -124,6 +127,7 @@ class RoleController extends Controller
 
         $role->revokePermissionTo($role->permissions->pluck('name')->toArray());
         $role->delete();
+        Alert::success('Success', 'Role Berhasil DiHapus');
         return redirect('/roles');
     }
 }

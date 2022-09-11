@@ -57,7 +57,7 @@
                                                     <i class="fas fa-edit"></i>
                                                 </a>
                                                 <!-- delete -->
-                                                <form class="d-inline"
+                                                <form class="d-inline" role="alert"
                                                     action="{{ route('kategoris.destroy', $kategori->id) }}" role="alert"
                                                     method="POST">
                                                     @csrf
@@ -80,5 +80,29 @@
         </div>
     </div>
 
-   
+    @include('sweetalert::alert')
 @endsection
+@push('javascript-internal')
+    <script>
+        $(document).ready(function(){
+            $("form[role='alert']").submit(function(event) {
+                event.preventDefault();
+                Swal.fire({
+                    title: "Apakah anda Yakin?",
+                    text: "Data akan dihapus",
+                    icon: 'warning',
+                    allowOutsideClick: false,
+                    showCancelButton: true,
+                    cancelButtonText: "Batalkan",
+                    reverseButtons: true,
+                    confirmButtonText: "Konfirmasi",
+                    }).then((result) => {
+                    if (result.isConfirmed) {
+                        // todo: process of deleting 
+                        event.target.submit();
+                    }
+                    });
+            });
+        }); 
+    </script>
+@endpush
