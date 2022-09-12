@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('title')
-    {{ $title }}
+    {{ request()->get('keyword') }}
 @endsection
 @section('container')
 <!-- page title -->

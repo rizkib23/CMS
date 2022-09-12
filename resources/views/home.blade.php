@@ -11,8 +11,9 @@
             <h1 class="text-white mt-4 mb-4">Belajar dimana aja</h1>
             <h1 class="text-white display-1 mb-5">Overload Coding</h1>
             <div class="mx-auto mb-5" style="width: 100%; max-width: 600px;">
+
                 <form class="input-group my-1" action="{{ route('search-post') }}" method="GET">
-                    <input name="keyword" value="{{ request()->get('keyword') }}" type="search"
+                    <input name="keyword" type="search"
                         class="form-control border-light" style="padding: 30px 25px;" placeholder="Cari">
                     <div class="input-group-append">
                         <button class="btn btn-outline-light px-4 px-lg-5" type="submit">
@@ -20,6 +21,7 @@
                         </button>
                     </div>
                 </form>
+
             </div>
         </div>
     </div>
@@ -45,7 +47,7 @@
                                 <div class="col-lg-6">
                                     <!-- thumbnail:start -->
                                     <!-- true -->
-                                    <img class="img-fluid rounded" src="{{ asset('storage/..' . $dtpost->thumbnail) }}"
+                                    <img class="img-fluid rounded" src="{{ asset('storage/.' . $dtpost->thumbnail) }}"
                                         alt="Post">
                                 </div>
                                 <div class="col-lg-6">
@@ -67,16 +69,7 @@
                 <!-- Post list:end -->
             </div>
         </div>
-
-        <!-- pagination:start -->
-        @if ($posts->hasPages())
-            <div class="row">
-                <div class="col">
-                    {{ $posts->links() }}
-                </div>
-            </div>
-        @endif
-
+        
         <div class="container-fluid px-0 py-5">
             <div class="row mx-0 justify-content-center pt-5">
                 <div class="col-lg-6">
@@ -94,8 +87,8 @@
                             <div class="col">
                              @forelse ($tag as $dttag)
                                  <!-- true -->
-                                 <a href="{{ route('post-tag', ['slug'=> $dttag->slug]) }}"
-                                 class="badge badge-info py-3 px-5">#{{ $dttag->name }}</a>
+                                 <a href="{{ route('post-tag', ['slug'=> $dttag->slug]) }}"     
+                                 class="badge badge-info py-3 px-5 my-2">#{{ $dttag->name }}</a>
                              @empty
                                  <!-- false -->
                                  <h3 class="text-center">
@@ -108,5 +101,13 @@
                 </div>
             </div>
         </div>
+        <!-- pagination:start -->
+        @if ($posts->hasPages())
+            <div class="row">
+                <div class="col">
+                    {{ $posts->links() }}
+                </div>
+            </div>
+        @endif
         <!-- pagination:End -->
     @endsection

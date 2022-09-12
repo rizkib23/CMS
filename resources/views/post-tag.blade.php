@@ -6,7 +6,7 @@ Ocoding Bog | {{ $title }}
 @section('container')
     <!-- Title -->
     <h2 class="mt-4 mb-3 text-center">
-      {{ $title }}
+        {{ $title }}
     </h2>
     
     <div class="row">
@@ -21,9 +21,9 @@ Ocoding Bog | {{ $title }}
                            <img class="img-fluid rounded" src="{{ asset('storage/..' . $dtpost->thumbnail) }}" alt="Post">
                        </div>
                        <div class="col-lg-6">
-                           <h2 class="card-title">{{ $dtpost->title }}</h2>
+                           <h2 class="card-title">{{ $dtpost->judul }}</h2>
                            <p class="card-text">{{ $dtpost->deskripsi }}</p>
-                           <a href="" class="btn btn-primary">
+                           <a href="{{ route('post-detail', ['slug' => $dtpost->slug]) }}" class="btn btn-primary">
                                Selengkapnya
                            </a>
                        </div>

@@ -30,12 +30,13 @@ class HomeController extends Controller
         ]);
     }
 
-    public function searchPosts(Request $request)
+    public function searchPosts(Request $request, Post $posts)
     {
         if ($request->get('keyword')) {
             return redirect()->route('home');
         }
         return view('search-post', [
+            'title' => $posts->judul,
             'posts' => Post::Publish()->search($request->keyword)
             ->paginate($this->perpage)
             ->appends(['keyword' => $request->keyword])
@@ -80,10 +81,12 @@ class HomeController extends Controller
         $tag = Tag::where('slug',$slug)->first();
         $tags =Tag::search($tag->name)->get();
 
-        return view('post-tag', [
+        $content = [
+            'title' => $tag->name,
             'posts' => $posts,
             'tag' => $tag,
-            'tags' => $tags
-        ]);
+            'tags' => $tags,
+        ];
+        return view('post-tag', $content );
     }
 }
