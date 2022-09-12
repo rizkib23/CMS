@@ -1,31 +1,26 @@
 @extends('layouts.main')
 
 @section('title')
-    
+Ocoding Bog | {{ $title }}
 @endsection
-@section('deskription')
-    
-@endsection
-@section('content')
+
+@section('container')
        <!-- Title:start -->
    <h2 class="mt-4 mb-3">
-    Post title
+    {{ $posts->judul }}
  </h2>
  <!-- Title:end -->
 
- <!-- Breadcrumb:Start -->
- Breadcrumb
- <!-- Breadcrumb:end -->
  <div class="row">
     <!-- Post Content Column:start -->
     <div class="col-lg-8">
        <!-- thumbnail:start -->
-       thumbnail
+       <img class="img-thumbnail" style="200x700" src="{{ asset('storage/..' . $posts->thumbnail) }}">
        <!-- thumbnail:end -->
        <hr>
        <!-- Post Content:start -->
        <div>
-          Content
+          {{!! $posts->content !!}}
        </div>
        <!-- Post Content:end -->
        <hr>

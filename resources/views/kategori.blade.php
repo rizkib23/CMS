@@ -7,6 +7,7 @@
         </div>
         <h1 class="text-white mt-4 mb-4 text-center">Kategori</h1>
     </div>
+    <br>
      
      <!-- List category -->
      <div class="row flex-row">
@@ -34,11 +35,4 @@
      </div>
      <!-- List category -->
      
-     <!-- pagination:start -->
-     <div class="row">
-        <div class="col">
-     
-        </div>
-     </div>
-     <!-- pagination:end -->
 @endsection
