@@ -6,6 +6,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\DashboarController;
+use App\Http\Controllers\KomentarController;
 use App\Http\Controllers\KtgrUserController;
 use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\PostController;
@@ -62,6 +63,7 @@ Route::group(['middleware' => ['auth',]], function () {
     Route::resource('/user', UserController::class);
     Route::resource('/profil', ProfilController::class);
     Route::resource('/pengumuman', PengumumanController::class);
+    Route::resource('/komen', KomentarController::class);
 });
 
 Route::group(['prefix' => 'filemanager'], function () {

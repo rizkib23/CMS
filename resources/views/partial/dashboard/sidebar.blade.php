@@ -83,11 +83,6 @@
    <!-- Divider -->
    <hr class="sidebar-divider">
 
-   <!-- Heading -->
-   <div class="sidebar-heading">
-       File Manager
-   </div>
-
    <!-- Nav Item - File Manager -->
    <li class="nav-item {{ Request::is('dashboard') ? 'active' : '' }}">
        <a class="nav-link" href="/">

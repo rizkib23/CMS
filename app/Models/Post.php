@@ -19,6 +19,10 @@ class Post extends Model
         'status',
         'user_id',
     ];
+    public function dataKomentar()
+    {
+        return $this->hasMany(Komentar::class, 'post_id', 'id');
+    }
     public function getCreatedAtAttribute()
     {
         return \Carbon\Carbon::parse($this->attributes['created_at'])

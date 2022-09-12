@@ -40,6 +40,12 @@
                     </div>
                 </div>
             </div>
+            {{-- <form action="{{ route('komen.store') }}" method="post"> 
+                @csrf
+                <input type="hidden" name="post_id" value="{{ $post->id }}">
+                <textarea name="isi" id="" rows="2">masukkan komentar</textarea>
+                <button type="submit">save</button>
+            </form> --}}
         </div>
     </div>
 @endsection

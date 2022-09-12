@@ -18,6 +18,11 @@
                                         Judul
                                     </label>
                                     <input id="input_post_judul" name="judul" type="text" value="{{ old('title') }}" class="form-control @error('judul') is-invalid @enderror" placeholder="Masukkan Judul Post" />
+                                    @error('judul')
+                                    <span class="invalid-feedback" role="alert">
+                                      <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
                                 </div>
                                 <!-- thumbnail -->
                                 <div class="form-group">
@@ -33,6 +38,11 @@
                                         </div>
                                         <input id="input_post_thumbnail" name="thumbnail" type="text"
                                             class="form-control @error('thumbnail') is-invalid @enderror" placeholder="Thumbnail Post" readonly />
+                                            @error('thumbnail')
+                                            <span class="invalid-feedback" role="alert">
+                                              <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
                                     </div>
                                 </div>
                                 <div id="holder">
@@ -44,6 +54,11 @@
                                     </label>
                                     <textarea id="input_post_deskripsi" name="deskripsi" value="{{ old('deskripsi') }}" placeholder="Masukkan Deskripsi Post" class="form-control @error('deskripsi') is-invalid @enderror"
                                         rows="5"></textarea>
+                                        @error('deskripsi')
+                                        <span class="invalid-feedback" role="alert">
+                                          <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
                                 </div>
                                 <!-- content -->
                                 <div class="form-group">
@@ -52,6 +67,11 @@
                                     </label>
                                     <textarea id="input_post_content" name="content" value="{{ old('content') }}" placeholder="Masukkan Content Post" class="form-control @error('content') is-invalid @enderror"
                                         rows="20"></textarea>
+                                        @error('content')
+                                        <span class="invalid-feedback" role="alert">
+                                          <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -70,6 +90,11 @@
                                                 @endforeach
                                             </select>
                                         </ul>
+                                        @error('kategori')
+                                        <span class="invalid-feedback" role="alert">
+                                          <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
                                         <!-- List Kategori -->
                                     </div>
                                 </div>
@@ -88,6 +113,11 @@
                                                 @endforeach
                                             </select>
                                         </ul>
+                                        @error('tag')
+                                        <span class="invalid-feedback" role="alert">
+                                          <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
@@ -101,6 +131,7 @@
                                 @foreach ($statuses as $key => $value)
                                     <option value="{{ $key }}">{{ $value }}</option>
                                 @endforeach
+                                
                             </select>
                         </div>
                         <div class="row">

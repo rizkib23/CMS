@@ -212,7 +212,7 @@ class PostController extends Controller
             if ($request['tag']) {
                 $request['tag'] = Tag::select('id', 'name')->whereIn('id', $request->tag)->get();
             }
-            return redirect()->route('post.index');
+            return redirect()->route('post.create');
         } finally {
             DB::commit();
         }
