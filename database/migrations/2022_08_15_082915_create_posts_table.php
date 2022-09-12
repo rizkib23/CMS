@@ -25,6 +25,7 @@ class CreatePostsTable extends Migration
             $table->enum('status',['publish','draft']);
             $table->timestamps();
 
+
         });
     }
 
