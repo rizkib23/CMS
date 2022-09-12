@@ -38,6 +38,8 @@
            
             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                 {{ Auth::user()->name }}
+                <img class="img-profile img-circle" height="40px" width="40px"
+                   src="{{  asset('storage/' . Auth::user()->dataProfil->foto) }}">
             </a>
 
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">

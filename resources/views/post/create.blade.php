@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 mr-2 ml-2">
             <form action="{{ route('post.store') }}" method="POST">
                 @csrf
                 <div class="card">

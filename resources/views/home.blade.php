@@ -29,25 +29,28 @@
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row ml-3 mr-3">
         <div class="col">
            <!-- Post list:start -->
            @forelse ($posts as $dtpost)
-           <div class="card mb-4">
+           <div class="card mb-4 ">
             <div class="card-body">
                <div class="row">
-                  <div class="col-lg-6">
+                  <div class="col-lg-4">
                      <!-- thumbnail:start -->
                         <!-- true -->
                         <img class="img-fluid rounded" src="{{ asset('storage/..' . $dtpost->thumbnail) }}" alt="Post">
                   </div>
-                  <div class="col-lg-6">
+                  <div class="col-lg-4">
                      <h2 class="card-title">{{ $dtpost->judul }}</h2>
                      <p class="card-text">{{ $dtpost->deskripsi }}</p>
                      <a href="{{ route('post-detail', ['slug'=> $dtpost->slug]) }}" class="btn btn-primary">
                         Selengkapnya
                      </a>
                   </div>
+                  <div class="text-center">
+                    | {{ucwords($dtpost->dataUser->name) }} | {{ $dtpost->created_at }}
+                </div>
                </div>
             </div>
          </div>
@@ -71,7 +74,7 @@
         </div>
      </div>
      @endif
-<!-- pagination:End -->
+
 <!-- Courses Start -->
 <div class="container-fluid px-0 py-5">
     <div class="row mx-0 justify-content-center pt-5">

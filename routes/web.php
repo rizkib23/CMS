@@ -31,8 +31,9 @@ use App\Http\Controllers\MetaController;
 */
 // user interface
 Route::get('/', [HomeController::class, 'home'])->name('home');
+Route::get('/home', [HomeController::class, 'home'])->name('home');
 
-Route::get('/post/{slug}', [HomeController::class, 'showPostDetail'])->name('post-detail');
+Route::get('/posts/{slug}', [HomeController::class, 'showPostDetail'])->name('post-detail');
 
 Route::get('/kategori', [HomeController::class, 'listKategori'])->name('kategori');
 
@@ -53,7 +54,7 @@ Route::get('/tai', function () {
 //     ]);
 // });
 
-Route::resource('/kategori', KtgrUserController::class,);
+// Route::resource('/kategori', KtgrUserController::class,);
 // post
 Auth::routes();
 

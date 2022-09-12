@@ -9,13 +9,15 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
+    private $perpage = 10;
     public function home()
     {
-        $posts = Post::publish()->latest()->paginate();
-        $pengumuman = Pengumuman::orderBy('id', 'desc')->get();
+        $posts = Post::all();
+        $pengumuman = Pengumuman::orderBy('created_at', 'desc')->get();
         return view('home', [
             'title' => "Home",
-            'posts' => Post::publish()->latest()->paginate($this->perpage)
+            'posts' => Post::publish()->latest()->paginate($this->perpage),
+            'notif' => Pengumuman::orderBy('id', 'desc')->get()
         ]);
     }
 
@@ -35,7 +37,7 @@ class HomeController extends Controller
         }
         return view('search-post', [
             'posts' => Post::Publish()->search($request->keyword)
-                ->paginate($this->perpage)
+                // ->paginate($this->perpage)
                 ->appends(['keyword' => $request->keyword])
         ]);
     }
@@ -44,7 +46,7 @@ class HomeController extends Controller
     {
         $posts = Post::publish()->whereHas('dataKategori', function ($query) use ($slug) {
             return $query->where('slug', $slug);
-        })->paginate($this->perpage);
+        });
 
         $kategoris = Kategori::where('slug', $slug)->first();
 

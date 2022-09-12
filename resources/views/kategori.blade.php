@@ -9,10 +9,10 @@
     </div>
      
      <!-- List category -->
-     <div class="row flex-row">
+     <div class="row flex-row mt-4 ml-4 mr-4">
         @forelse ($kategoris as $dtkategori)
             <!-- true -->
-            <div class="col-lg-4 col-md-6 pb-4">
+            <div class="col-lg-4 col-md-6 m-auto pb-4">
                <a class="courses-list-item position-relative d-block overflow-hidden mb-2" href="{{ route('post-kategori', ['slug' => $dtkategori->slug]) }}">
                    <img class="img-fluid rounded" src="{{ asset('storage/..' . $dtkategori->thumbnail) }}" alt="kategori">
                    <div class="courses-text">

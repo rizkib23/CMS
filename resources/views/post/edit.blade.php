@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('content')
-    <div class="row">
+    <div class="row mr-2 ml-2">
         <div class="col-md-12">
             <form action="{{ route('post.update', ['post' => $post]) }}" method="POST" enctype="multipart/form-data">
                 @csrf
