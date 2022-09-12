@@ -25,7 +25,7 @@ class HomeController extends Controller
     {
         $kategoris = Kategori::all();
         return view('kategori', [
-            'title' => "kategori",
+            'title' => "Kategori",
             'kategoris' => $kategoris
         ]);
     }
@@ -62,8 +62,26 @@ class HomeController extends Controller
         if (!$posts) {
             return redirect()->route('home');
         }
+        // dd($posts->judul);
         return view('post-detail', [
-            'posts' => $posts
+            'posts' => $posts,
+            'title' => $posts->judul
+        ]);
+    }
+
+    public function showPostByTag($slug)
+    {
+        $posts = Post::publish()->whereHas('dataTags', function ($query) use ($slug) {
+            return $query->where('slug', $slug);
+        })->paginate($this->perpage);
+
+        $tag = Tag::where('slug', $slug)->first();
+        $tags = Tag::search($tag->name)->get();
+
+        return view('home', [
+            'posts' => $posts,
+            'tag' => $tag,
+            'tags' => $tags
         ]);
     }
 }
