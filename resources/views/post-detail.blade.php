@@ -31,7 +31,7 @@ Ocoding Bog | {{ $title }}
        <!-- Categories Widget -->
        <div class="card mb-3">
           <h5 class="card-header">
-             Categories
+             Kategori
           </h5>
           <div class="card-body">
              <!-- category list:start -->

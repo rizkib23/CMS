@@ -23,7 +23,7 @@ Ocoding Bog | {{ $title }}
                        <div class="col-lg-6">
                            <h2 class="card-title">{{ $dtpost->title }}</h2>
                            <p class="card-text">{{ $dtpost->deskripsi }}</p>
-                           <a href="{{ route('post-detail', ['slug' => $dtpost->slug]) }}" class="btn btn-primary">
+                           <a href="" class="btn btn-primary">
                                Selengkapnya
                            </a>
                        </div>
