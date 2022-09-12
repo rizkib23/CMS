@@ -21,10 +21,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 // user interface
-Route::get('/', [HomeController::class, 'index']);
+Route::get('/', [HomeController::class, 'home'])->name('home');
 
+Route::get('/post/{slug}', [HomeController::class, 'showPostDetail'])->name('post-detail');
 
-Route::get('/kategori', [HomeController::class, 'listKategori']);
+Route::get('/kategori', [HomeController::class, 'listKategori'])->name('kategori');
+
+Route::get('/search', [HomeController::class, 'searchPosts'])->name('search-post');
+
+Route::get('/kategori/{slug}', [HomeController::class, 'showPostByKategori'])->name('post-kategori');
 
 
 Route::get('/tai', function () {

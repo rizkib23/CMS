@@ -1,24 +1,13 @@
 @extends('layouts.main')
 
+@section('title')
+    {{ request()->get('keyword') }}
+@endsection
 @section('container')
-{{-- awal --}}
-<div class="bg-info position-relative overlay-bottom py-5" style="margin-bottom: auto">
-    <div class="container text-center my-5 py-5">
-        <h1 class="text-white mt-4 mb-4">Belajar dimana aja</h1>
-        <h1 class="text-white display-1 mb-5">Overload Coding</h1>
-        <div class="mx-auto mb-5" style="width: 100%; max-width: 600px;">
-            <form class="input-group my-1" action="{{ route('search-post') }}" method="GET">
-                <input name="keyword" value="{{ request()->get('keyword') }}" type="search" class="form-control border-light" style="padding: 30px 25px;" placeholder="Cari">
-                <div class="input-group-append">
-                    <button class="btn btn-outline-light px-4 px-lg-5" type="submit">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-{{-- --- --}}
+<!-- page title -->
+<h2 class="my-3">
+    {{ ['keyword' => request()->get('keyword')] }}
+ </h2>
 
 <!-- Courses Start -->
 <div class="container-fluid px-0 py-5">
@@ -44,7 +33,7 @@
                   <div class="col-lg-6">
                      <h2 class="card-title">{{ $dtpost->judul }}</h2>
                      <p class="card-text">{{ $dtpost->deskripsi }}</p>
-                     <a href="{{ route('post-detail', ['slug'=> $dtpost->slug]) }}" class="btn btn-primary">
+                     <a href="" class="btn btn-primary">
                         Selengkapnya
                      </a>
                   </div>

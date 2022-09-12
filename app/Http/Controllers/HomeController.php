@@ -8,12 +8,12 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function index()
+    public function home()
     {
         $posts = Post::all();
         return view('home', [
             'title' => "Home",
-            'posts' => $posts
+            'posts' => Post::publish()->latest()->paginate($this->perpage)
         ]);
     }
 
@@ -23,6 +23,18 @@ class HomeController extends Controller
         return view('kategori', [
             'title' => "kategori",
             'kategoris' => $kategoris
+        ]);
+    }
+
+    public function searchPosts(Request $request)
+    {
+        if ($request->get('keyword')) {
+            return redirect()->route('home');
+        }
+        return view('search-post', [
+            'posts' => Post::Publish()->search($request->keyword)
+            ->paginate($this->perpage)
+            ->appends(['keyword' => $request->keyword])
         ]);
     }
 
@@ -37,6 +49,17 @@ class HomeController extends Controller
         return view('kategori', [
             'posts' => $posts,
             'kategoris' => $kategoris,
+        ]);
+    }
+
+    public function showPostDetail($slug)
+    {
+        $posts = Post::where('slug', $slug)->first();
+        if (!$posts) {
+            return redirect()->route('home');
+        }
+        return view('post-detail', [
+            'posts' => $posts
         ]);
     }
 }

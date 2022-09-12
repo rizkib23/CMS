@@ -14,7 +14,7 @@
             <!-- true -->
             <div class="col-lg-4 col-md-6 pb-4">
                <a class="courses-list-item position-relative d-block overflow-hidden mb-2" href="{{ route('post-kategori', ['slug' => $dtkategori->slug]) }}">
-                   <img class="img-fluid" width="200px" src="{{ asset('storage/..' . $dtkategori->thumbnail) }}" alt="kategori">
+                   <img class="img-fluid rounded" src="{{ asset('storage/..' . $dtkategori->thumbnail) }}" alt="kategori">
                    <div class="courses-text">
                       <div class="border-top w-100 mt-3">
                           <div class="d-flex justify-content-between p-4 text-center">
@@ -28,7 +28,7 @@
         @empty
             <!-- false -->
         <h3 class="text-center">
-            No data
+            Belum Ada Data
          </h3>
         @endforelse
      </div>
