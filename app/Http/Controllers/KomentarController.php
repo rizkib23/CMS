@@ -41,6 +41,7 @@ class KomentarController extends Controller
             'user_id' => Auth::user()->id,
             'post_id' => $request->post_id,
             'isi' => $request->isi,
+            'parent' => $request->parent
         ]);
         return redirect()->back()->with('succses');
     }

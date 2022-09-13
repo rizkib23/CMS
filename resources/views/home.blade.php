@@ -35,7 +35,7 @@
             </div>
         </div>
         <br>
-        <div class="row">
+        <div class="row ml-3 mr-3">
             <div class="col">
                 <!-- Post list:start -->
                 @forelse ($posts as $dtpost)
@@ -48,7 +48,7 @@
                                     <img class="img-fluid rounded" src="{{ asset('storage/..' . $dtpost->thumbnail) }}"
                                         alt="Post">
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <h2 class="card-title">{{ $dtpost->judul }}</h2>
                                     <p class="card-text">{{ $dtpost->deskripsi }}</p>
                                     <a href="{{ route('post-detail', ['slug' => $dtpost->slug]) }}" class="btn btn-primary">
@@ -96,8 +96,8 @@
                         <div class="row">
                             <div class="col">
                              @forelse ($tag as $dttag)
-                                 <!-- true -->
-                                 <a href="{{ route('post-tag', ['slug'=> $dttag->slug]) }}"
+                                 {{-- <!-- true  {{ route('post-tag', ['slug'=> $dttag->slug]) }}--> --}}
+                                 <a href=""
                                  class="badge badge-info py-3 px-5">#{{ $dttag->name }}</a>
                              @empty
                                  <!-- false -->

@@ -22,7 +22,7 @@
 
     <!-- Libraries Stylesheet -->
     <link href="{{ asset('lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
-
+    <link rel="stylesheet" href="{{ asset('dist/css/bootstrap.min.css') }}">
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     {{-- end --}}

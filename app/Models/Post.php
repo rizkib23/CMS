@@ -45,6 +45,11 @@ class Post extends Model
         return $this->belongsTo(Tag::class, 'tag_id', 'id');
     }
 
+    public function dataKomen()
+    {
+        return $this->hasMany(Komentar::class, 'post_id', 'id');
+    }
+
     public function scopePublish($query)
     {
         return $query->where('status', "publish");

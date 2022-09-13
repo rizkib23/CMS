@@ -11,9 +11,14 @@ class Komentar extends Model
     protected $fillable = [
         'user_id',
         'post_id',
-        'isi'
+        'isi',
+        'parent'
     ];
-
+    public function getCreatedAtAttribute()
+    {
+        return \Carbon\Carbon::parse($this->attributes['created_at'])
+            ->format('d, M Y H:i');
+    }
     public function dataPost()
     {
         return $this->belongsTo(Post::class, 'post_id', 'id');
@@ -21,6 +26,10 @@ class Komentar extends Model
 
     public function dataUser()
     {
-        return $this->belongsTo(User::class, 'post_id', 'id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+    public function dataChilds()
+    {
+        return $this->hasMany(Komentar::class, 'parent');
     }
 }

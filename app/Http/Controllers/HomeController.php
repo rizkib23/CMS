@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\Kategori;
+use App\Models\Komentar;
 use App\Models\Pengumuman;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -17,7 +19,8 @@ class HomeController extends Controller
         return view('home', [
             'title' => "Home",
             'posts' => Post::publish()->latest()->paginate($this->perpage),
-            'notif' => Pengumuman::orderBy('id', 'desc')->get()
+            'notif' => Pengumuman::orderBy('id', 'desc')->get(),
+            'tag' => Tag::all(),
         ]);
     }
 
@@ -58,14 +61,17 @@ class HomeController extends Controller
 
     public function showPostDetail($slug)
     {
+
         $posts = Post::where('slug', $slug)->first();
+        $komen = Komentar::all();
         if (!$posts) {
             return redirect()->route('home');
         }
         // dd($posts->judul);
         return view('post-detail', [
             'posts' => $posts,
-            'title' => $posts->judul
+            'title' => $posts->judul,
+            'komen' => $komen
         ]);
     }
 
