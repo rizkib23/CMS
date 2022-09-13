@@ -33,12 +33,13 @@ class HomeController extends Controller
         ]);
     }
 
-    public function searchPosts(Request $request)
+    public function searchPosts(Request $request, Post $posts)
     {
         if ($request->get('keyword')) {
             return redirect()->route('home');
         }
         return view('search-post', [
+            'title' => $posts->judul,
             'posts' => Post::Publish()->search($request->keyword)
                 // ->paginate($this->perpage)
                 ->appends(['keyword' => $request->keyword])
@@ -49,25 +50,25 @@ class HomeController extends Controller
     {
         $posts = Post::publish()->whereHas('dataKategori', function ($query) use ($slug) {
             return $query->where('slug', $slug);
-        });
+        })->paginate($this->perpage);
 
+        // dd($slug);
         $kategoris = Kategori::where('slug', $slug)->first();
-
-        return view('kategori', [
+        $content = [
             'posts' => $posts,
             'kategoris' => $kategoris,
-        ]);
+            'title' => $kategoris->name
+        ];
+        return view('post-kategori', $content);
     }
 
     public function showPostDetail($slug)
     {
-
-        $posts = Post::where('slug', $slug)->first();
-        $komen = Komentar::all();
+        $posts = Post::with(['dataKategori', 'dataTags'])->where('slug', $slug)->first();
         if (!$posts) {
             return redirect()->route('home');
         }
-        // dd($posts->judul);
+        // dd($posts);
         return view('post-detail', [
             'posts' => $posts,
             'title' => $posts->judul,
@@ -84,10 +85,12 @@ class HomeController extends Controller
         $tag = Tag::where('slug', $slug)->first();
         $tags = Tag::search($tag->name)->get();
 
-        return view('home', [
+        $content = [
+            'title' => $tag->name,
             'posts' => $posts,
             'tag' => $tag,
-            'tags' => $tags
-        ]);
+            'tags' => $tags,
+        ];
+        return view('post-tag', $content);
     }
 }

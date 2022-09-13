@@ -6,7 +6,7 @@
 @section('container')
 <!-- page title -->
 <h2 class="my-3">
-    {{ ['keyword' => request()->get('keyword')] }}
+    {{ $title }}
  </h2>
 
 <!-- Courses Start -->

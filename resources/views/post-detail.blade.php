@@ -16,8 +16,12 @@ Ocoding Bog | {{ $title }}
     <!-- Post Content Column:start -->
     <div class="col-lg-8">
        <!-- thumbnail:start -->
+<<<<<<< HEAD
        <img class="img-thumbnail" style="200x700" src="{{ asset('storage/' . $posts->thumbnail) }}">
        <img class="img-thumbnail" style="200x700" src="{{ asset('storage/..' . $posts->thumbnail) }}">
+=======
+       <img class="img-thumbnail" style="200x700" src="{{ asset('storage/.' . $posts->thumbnail) }}">
+>>>>>>> bd2d7d707d730b4b184077f56ab07e8048df7935
        <!-- thumbnail:end -->
        <hr>
        <!-- Post Content:start -->
@@ -33,13 +37,15 @@ Ocoding Bog | {{ $title }}
        <!-- Categories Widget -->
        <div class="card mb-3">
           <h5 class="card-header">
-             Categories
+             Kategori
           </h5>
           <div class="card-body">
              <!-- category list:start -->
-             <a href="" class="badge badge-primary py-2 px-4">
-                {{ $posts->dataKategori->name }}
-             </a>
+
+                <a href="{{ route('post-kategori', ['slug' => $posts->dataKategori->slug]) }}" class="badge badge-primary py-2 px-4">
+                    {{ $posts->dataKategori->name }}
+                </a>
+             
              <!-- category list:end -->
           </div>
        </div>
@@ -51,6 +57,7 @@ Ocoding Bog | {{ $title }}
           </h5>
           <div class="card-body">
              <!-- tag list:start -->
+             @foreach ($posts->dataTagPost as $tag)
              <a href="" class="badge badge-info py-2 px-4 my-1">
                @foreach ($posts->dataTagPost as $tag)
                {{ $tag->dataTags->name }}
