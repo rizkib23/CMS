@@ -33,7 +33,7 @@ class HomeController extends Controller
     public function searchPosts(Request $request, Post $posts)
     {
         if ($request->get('keyword')) {
-            return redirect()->route('home');
+            $posts->search($request->get('keyword'));
         }
         return view('search-post', [
             'title' => $posts->judul,
