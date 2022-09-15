@@ -4,6 +4,14 @@
     Ocoding Bog | {{ $title }}
 @endsection
 
+@section('meta_description')
+@yield('{!! Meta::tag() !!}')
+@endsection
+
+@section('meta_keywords')
+@yield('{!! Meta::tag() !!}')
+@endsection
+
 @section('container')
     {{-- awal --}}
     <div class="bg-info position-relative overlay-bottom py-5" style="margin-bottom: auto">
@@ -51,6 +59,7 @@
                                         alt="Post">
                                 </div>
                                 <div class="col-lg-6">
+                                    <br>
                                     <h2 class="card-title">{{ $dtpost->judul }}</h2>
                                     <p class="card-text">{{ $dtpost->deskripsi }}</p>
                                     <a href="{{ route('post-detail', ['slug' => $dtpost->slug]) }}" class="btn btn-primary">
@@ -110,4 +119,6 @@
             </div>
         @endif
         <!-- pagination:End -->
+        </div>
+    </div>
     @endsection

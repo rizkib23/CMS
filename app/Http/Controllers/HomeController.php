@@ -74,19 +74,20 @@ class HomeController extends Controller
 
     public function showPostByTag($slug)
     {
-        $posts = Post::publish()->whereHas('dataTags', function($query) use ($slug){
+        $posts = Post::publish()->whereHas('dataTagPost.dataTags', function($query) use ($slug){
             return $query->where('slug',$slug);
         })->paginate($this->perpage);
+        
 
-        $tag = Tag::where('slug',$slug)->first();
-        $tags =Tag::search($tag->name)->get();
-
-        $content = [
-            'title' => $tag->name,
-            'posts' => $posts,
-            'tag' => $tag,
-            'tags' => $tags,
-        ];
+        $dataTags = Tag::where('slug',$slug)->first();
+        // $dataTagPost = TagPost::with($dataTags->name)->get();
+        
+            $content = [
+                'posts' => $posts,
+                'title' => $dataTags->name,
+            ];
+        
+        // dd($dataTagPost);
         return view('post-tag', $content );
     }
 }
