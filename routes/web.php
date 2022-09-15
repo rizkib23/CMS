@@ -43,6 +43,7 @@ Route::get('/kategori/{slug}', [HomeController::class, 'showPostByKategori'])->n
 
 Route::get('/tag/{slug}', [HomeController::class, 'showPostByTag'])->name('post-tag');
 
+
 Route::get('/tai', function () {
     return view('tags/tags_user', [
         "title" => "Tag"

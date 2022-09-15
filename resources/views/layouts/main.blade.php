@@ -26,7 +26,7 @@
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     {{-- end --}}
-    <script src="dist/js/bootstrap.min.js"></script>
+    <script src="{{ asset('dist/js/bootstrap.min.js') }}"></script>
     <title>O-coding</title>
 </head>
 

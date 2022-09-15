@@ -44,7 +44,7 @@
                         </div>
 
                         <div class="float-right">
-                            <a class="btn btn-warning px-4" href="{{ route('kategori.index') }}">Kembali</a>
+                            <a class="btn btn-warning px-4" href="/kategooris">Kembali</a>
                             <button type="submit" class="btn btn-primary px-4">Simpan</button>
                         </div>
                     </form>

@@ -42,7 +42,7 @@ class Post extends Model
     }
     public function dataTags()
     {
-        return $this->belongsTo(Tag::class, 'tag_id', 'id');
+        return $this->hasMany(Tag::class, 'tag_posts', 'tag_id', 'post_id');
     }
 
     public function dataKomen()
@@ -61,6 +61,6 @@ class Post extends Model
 
     public function scopeSearch($query, $judul)
     {
-        return $query->where('judul', 'LIKE', "%{$judul}%");
+        return $query->where('judul', 'LIKE', '%' . $judul . '%');
     }
 }

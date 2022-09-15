@@ -6,7 +6,7 @@ Ocoding Bog | {{ $title }}
 
 @section('container')
        <!-- Title:start -->
-<div class="mt-4 mb-3">     
+<div class="mt-4">     
    <h2 class="text-center mb-3">
     {{ ucwords($posts->judul)  }}
  </h2>
@@ -16,12 +16,7 @@ Ocoding Bog | {{ $title }}
     <!-- Post Content Column:start -->
     <div class="col-lg-8">
        <!-- thumbnail:start -->
-<<<<<<< HEAD
-       <img class="img-thumbnail" style="200x700" src="{{ asset('storage/' . $posts->thumbnail) }}">
-       <img class="img-thumbnail" style="200x700" src="{{ asset('storage/..' . $posts->thumbnail) }}">
-=======
-       <img class="img-thumbnail" style="200x700" src="{{ asset('storage/.' . $posts->thumbnail) }}">
->>>>>>> bd2d7d707d730b4b184077f56ab07e8048df7935
+       <img  src="{{ asset('storage/..' . $posts->thumbnail) }}">
        <!-- thumbnail:end -->
        <hr>
        <!-- Post Content:start -->
@@ -42,7 +37,7 @@ Ocoding Bog | {{ $title }}
           <div class="card-body">
              <!-- category list:start -->
 
-                <a href="{{ route('post-kategori', ['slug' => $posts->dataKategori->slug]) }}" class="badge badge-primary py-2 px-4">
+                <a href="{{ route('post-kategori', ['slug' => $posts->dataKategori->slug]) }}" class="badge badge-primary py-2 px-2">
                     {{ $posts->dataKategori->name }}
                 </a>
              
@@ -58,19 +53,29 @@ Ocoding Bog | {{ $title }}
           <div class="card-body">
              <!-- tag list:start -->
              @foreach ($posts->dataTagPost as $tag)
-             <a href="" class="badge badge-info py-2 px-4 my-1">
-               @foreach ($posts->dataTagPost as $tag)
-               {{ $tag->dataTags->name }}
+             <a href="{{ route('post-tag', ['slug'=> $tag->dataTags->slug]) }}" class="badge badge-info py-2 px-4 my-1">
+               #{{ $tag->dataTags->name }}
+            </a>
            @endforeach
-             </a>
              <!-- tag list:end -->
           </div>
        </div>
        <!-- Side Widget tags:start -->
+       <div class="card mb-3">
+         <h5 class="card-header">
+            Deskripsi
+         </h5>
+         <div class="card-body">
+            <!-- deskripsi list:start -->
+            <p>{{ $posts->deskripsi }}</p>
+            <!-- deskripsi list:end -->
+         </div>
+      </div>
     </div>
     <!-- Sidebar Widgets Column:end -->
  </div>
 </div>
+{{-- komen --}}
 <div class="col-12 d-flex">
    <div class="card flex-fill w-100">
       <div class="card-header">
@@ -81,15 +86,16 @@ Ocoding Bog | {{ $title }}
          <div class="d-flex align-items-start">
             <img src="{{ asset('storage/' . $komentar->dataUser->dataProfil->foto) }}" width="36" height="36" class="rounded-circle me-2" alt="{{ $komentar->dataUser->name }}">
             <div class="flex-grow-1">
-               <small class="float-end">30m ago</small>
+               <small class="float-end">{{ $komentar->updated_at }}</small>
                <strong>{{ $komentar->dataUser->name }}</strong> mengomentari postingan dari <strong>{{ $posts->dataUser->name }}</strong><br />
                <small class="text-muted">{{ $komentar->created_at }}</small>
 
                <div class="border text-sm text-muted p-2 mt-1">
                   {{ $komentar->isi }}
                </div>
-               <button class="btn btn-outline" id="balas">balas</button>
-               <div class="border text-sm text-muted p-2 mt-1 " id="balasan">
+               <button class="btn btn-outline" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ $komentar->id }}" aria-expanded="false" aria-controls="collapseWidthExample" id="balas"><i class="bi bi-reply"></i> Balas</button>
+               {{-- balas komen --}}
+               <div class="collapse collapse-horizontal mt-4" id="collapse{{ $komentar->id }}">
                   <form action="{{ route('komen.store') }}" method="POST">
                      @csrf
                      <div class="form-group">
@@ -103,17 +109,17 @@ Ocoding Bog | {{ $title }}
                             </span>
                             @enderror
                             <div class="mt-2">
-                            <button class="btn btn-outline-success" type="submit">save</button>
+                            <button class="btn btn-sm btn-outline-info" type="submit"><i class="bi bi-send-fill"></i>Kirim</button>
                             </div>
                     </div>
                   </form>
                </div>
-               
+               {{-- balasan komentar --}}
                   @foreach($komentar->dataChilds as $balasan)
                   <div class="d-flex align-items-start">
                      <img src="{{ asset('storage/' . $balasan->dataUser->dataProfil->foto) }}" width="36" height="36" class="rounded-circle me-2" alt="{{ $balasan->dataUser->name }}">
                      <div class="flex-grow-1">
-                        <small class="float-end">30m ago</small>
+                        <small class="float-end">{{ $balasan->updated_at }}</small>
                         <strong>{{ $balasan->dataUser->name }}</strong> membalas komentar dari <strong>{{ $komentar->dataUser->name }}</strong><br />
                         <small class="text-muted">{{ $balasan->created_at }}</small>
 
@@ -125,6 +131,7 @@ Ocoding Bog | {{ $title }}
 
                   <hr />
                   @endforeach
+                  {{-- end --}}
                </div>
             </div>
             @endforeach
@@ -141,7 +148,7 @@ Ocoding Bog | {{ $title }}
                       </span>
                       @enderror
                       <div class="mt-2">
-                      <button class="btn btn-outline-success" type="submit">save</button>
+                      <button class="btn btn-outline-success" type="submit"><i class="bi bi-send-fill"></i> Kirim</button>
                       </div>
               </div>
             </form>

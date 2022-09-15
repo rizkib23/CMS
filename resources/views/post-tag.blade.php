@@ -30,6 +30,7 @@ Ocoding Bog | {{ $title }}
                    </div>
                </div>
            </div>
+        
             @empty
                <!-- empty -->
             <h3 class="text-center">

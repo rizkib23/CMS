@@ -19,6 +19,11 @@ class Komentar extends Model
         return \Carbon\Carbon::parse($this->attributes['created_at'])
             ->format('d, M Y H:i');
     }
+    public function getUpdatedAtAttribute()
+    {
+        return \Carbon\Carbon::parse($this->attributes['updated_at'])
+            ->diffForHumans();
+    }
     public function dataPost()
     {
         return $this->belongsTo(Post::class, 'post_id', 'id');

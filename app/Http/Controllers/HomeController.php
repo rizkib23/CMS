@@ -7,6 +7,7 @@ use App\Models\Kategori;
 use App\Models\Komentar;
 use App\Models\Pengumuman;
 use App\Models\Tag;
+use App\Models\TagPost;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -36,12 +37,12 @@ class HomeController extends Controller
     public function searchPosts(Request $request, Post $posts)
     {
         if ($request->get('keyword')) {
-            return redirect()->route('home');
+            $posts->search($request->get('keyword'));
         }
         return view('search-post', [
             'title' => $posts->judul,
             'posts' => Post::Publish()->search($request->keyword)
-                // ->paginate($this->perpage)
+                ->paginate($this->perpage)
                 ->appends(['keyword' => $request->keyword])
         ]);
     }
@@ -64,6 +65,7 @@ class HomeController extends Controller
 
     public function showPostDetail($slug)
     {
+
         $posts = Post::with(['dataKategori', 'dataTags'])->where('slug', $slug)->first();
         if (!$posts) {
             return redirect()->route('home');
@@ -72,25 +74,27 @@ class HomeController extends Controller
         return view('post-detail', [
             'posts' => $posts,
             'title' => $posts->judul,
-            'komen' => $komen
         ]);
     }
 
     public function showPostByTag($slug)
     {
-        $posts = Post::publish()->whereHas('dataTags', function ($query) use ($slug) {
+
+
+        $posts = Post::publish()->whereHas('dataTagPost.dataTags', function ($query) use ($slug) {
             return $query->where('slug', $slug);
         })->paginate($this->perpage);
 
-        $tag = Tag::where('slug', $slug)->first();
-        $tags = Tag::search($tag->name)->get();
+
+        $dataTags = Tag::where('slug', $slug)->first();
+        // $dataTagPost = TagPost::with($dataTags->name)->get();
 
         $content = [
-            'title' => $tag->name,
             'posts' => $posts,
-            'tag' => $tag,
-            'tags' => $tags,
+            'title' => $dataTags->name,
         ];
+
+        // dd($dataTagPost);
         return view('post-tag', $content);
     }
 }

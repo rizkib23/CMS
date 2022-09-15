@@ -79,7 +79,6 @@
             </div>
         </div>
     </div>
-
     @include('sweetalert::alert')
 @endsection
 @push('javascript-internal')

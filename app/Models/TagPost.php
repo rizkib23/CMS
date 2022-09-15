@@ -16,12 +16,12 @@ class TagPost extends Model
 
     public function scopeSearch($query, $name)
     {
-        return $query->where('name','LIKE', "%{$name}%");
+        return $query->where('name', 'LIKE', '%' . $name . '%');
     }
 
     public function posts()
     {
-        return $this->belongsToMany(Post::class, 'post_id', 'id');
+        return $this->hasMany(Post::class, 'id', 'post_id');
     }
 
     public function dataTags()

@@ -30,7 +30,7 @@
                         <!-- slug -->
                         <div class="form-group">
                             <label for="input_kategori_slug" class="font-weight-bold">
-                                Slug
+                                Thumbnail
                             </label>
                             <div class="input-group">
                                 <div class="input-group-prepend">

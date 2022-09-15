@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('title')
-    Ocoding Bog | {{ $title }}
+    Ocoding Blog | {{ $title }}
 @endsection
 
 @section('container')
@@ -47,18 +47,19 @@
                                 <div class="col-lg-6">
                                     <!-- thumbnail:start -->
                                     <!-- true -->
-                                    <img class="img-fluid rounded" src="{{ asset('storage/.' . $dtpost->thumbnail) }}"
-                                        alt="Post">
+                                    <img class="img-fluid rounded" src="{!! asset('storage/..' . $dtpost->thumbnail) !!}"
+                                        alt="Post"> 
                                 </div>
                                 <div class="col-lg-4">
-                                    <h2 class="card-title">{{ $dtpost->judul }}</h2>
-                                    <p class="card-text">{{ $dtpost->deskripsi }}</p>
+                                    <h2 class="card-title">{{ ucwords( $dtpost->judul )}}</h2>
+                                   <p>{{ str_word_count($dtpost->deskripsi) > 30 ? substr("$dtpost->deskripsi",0,100).".." : $dtpost->deskripsi  }}</p>
+                                    {{-- <p class="card-text">{{ $dtpost->deskripsi }}</p> --}}
                                     <a href="{{ route('post-detail', ['slug' => $dtpost->slug]) }}" class="btn btn-primary">
                                         Selengkapnya
                                     </a>
-                                </div>
-                                <div class="text-center">
-                                    | {{ucwords($dtpost->dataUser->name) }} | {{ $dtpost->created_at }}
+                                    <div class="mt-4">
+                                    di buat Oleh :{{ucwords($dtpost->dataUser->name) }} <br> {{ $dtpost->created_at }}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -90,8 +91,8 @@
                             <div class="col">
                              @forelse ($tag as $dttag)
                                  <!-- true -->
-                                 <a href="{{ route('post-tag', ['slug'=> $dttag->slug]) }}"     
-                                 class="badge badge-info py-3 px-5 my-2">#{{ $dttag->name }}</a>
+                                 <a href="{{ route('post-tag', ['slug'=>$dttag->slug]) }}"
+                                 class="badge badge-info py-3 px-5">#{{ $dttag->name }}</a>
                              @empty
                                  <!-- false -->
                                  <h3 class="text-center">
@@ -131,7 +132,7 @@
                     @foreach ( $notif as $pengumuman)
                     <div class="card border-primary mt-2 mb-1">
                         <div class="card-header text-bg-info">
-                            <button class="btn btn-outline btn-block" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ $pengumuman->id }}" aria-expanded="false" aria-controls="collapseWidthExample">
+                            <button class="btn btn-outline bg-light btn-block" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ $pengumuman->id }}" aria-expanded="false" aria-controls="collapseWidthExample">
                                 {{ $pengumuman->judul }}
                               </button>
                         </div>

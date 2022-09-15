@@ -9,14 +9,14 @@
                 </div>
                 <div class="card-body">
                     <!-- Thumbnail -->
-                    <img class="img-fluid img-thumbnail" width="200px" src="{{ asset('storage/..' . $kategoris->thumbnail) }}"/>
+                    <img class="img-fluid img-thumbnail" width="200px" src="{{ asset('storage/.' . $kategoris->thumbnail) }}"/>
 
                     <!-- title -->
                     <h2 class="my-1">
                         {{ $kategoris->name }}
                     </h2>
                     <div class="float-right">
-                        <a class="btn btn-warning px-4" href="{{ route('kategori.index') }}">Kembali</a>
+                        <a class="btn btn-warning px-4" href="/kategoris">Kembali</a>
                     </div>
                 </div>
             </div>
