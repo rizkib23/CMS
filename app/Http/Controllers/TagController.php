@@ -31,7 +31,9 @@ class TagController extends Controller
      */
     public function create()
     {
-        return view('tags.insert');
+        return view('tags.insert', [
+            'title' => 'Tag',
+        ]);
     }
 
     /**
@@ -68,7 +70,10 @@ class TagController extends Controller
     public function edit($id)
     {
         $tags = Tag::find($id);
-        return view('tags.edit',compact('tags'));
+        return view('tags.edit',[
+            'title' => 'Tag',
+            'tags' => $tags
+        ]);
     }
 
     /**

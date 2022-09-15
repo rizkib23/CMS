@@ -1,15 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <title>@yield('title','Ocoging | Blog')</title>
+        <meta name="keywords" content="@yield('meta_keywords','some default keywords')">
+        <meta name="description" content="@yield('meta_description','default description')">
+        <link rel="canonical" href="{{url()->current()}}"/>
 
-    <title>Ocoding - Dashboard</title>
+    <title>Ocoding | Dashboard - {{ $title }}  </title>
 
     <!-- Custom fonts for this template-->
     <link href="../../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">

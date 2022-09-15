@@ -1,5 +1,7 @@
 @extends('../layouts/dashboard')
-
+@section('title')
+Ocoding | Dashboard - {{ $title }}
+@endsection
 @section('breadcrumbs')
     <h1>Kategori</h1>
     <div class="row">

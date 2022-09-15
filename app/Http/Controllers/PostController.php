@@ -27,6 +27,7 @@ class PostController extends Controller
             $posts->search($request->get('keyword'));
         }
         return view('dashboard.post.index', [
+            'title' => 'Post',
             'posts' => $posts->get(),
             'statuses' => $this->statuses(),
             'statusSelected' =>$statusSelected,
@@ -41,6 +42,7 @@ class PostController extends Controller
     public function create(Request $request, Post $post)
     {
         return view('dashboard.post.create', [
+            'title' => 'Post',
             'kategoris' => Kategori::all(),
             'tags' => Tag::all(),
             'statuses' => $this->statuses(),
@@ -118,7 +120,10 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        return view('dashboard.post.detail', compact('post'));
+        return view('dashboard.post.detail', [
+            'title' => 'Post',
+            'post' => $post
+        ]);
     }
 
     /**

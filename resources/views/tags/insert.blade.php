@@ -1,5 +1,7 @@
 @extends('../layouts/dashboard')
-
+@section('title')
+Ocoding | Dashboard - {{ $title }}
+@endsection
 @section('breadcrumbs')
 
     <div class="card-body py-5">
