@@ -10,27 +10,30 @@ Ocoding Bog | {{ $title }}
    <h2 class="text-center mb-3">
     {{ ucwords($posts->judul)  }}
  </h2>
+            </div>
  <!-- Title:end -->
 
  <div class="row mr-2 ml-2">
     <!-- Post Content Column:start -->
     <div class="col-lg-8">
+       <div class="col-md-12">
        <!-- thumbnail:start -->
        <img  src="{{ asset('storage/..' . $posts->thumbnail) }}">
        <!-- thumbnail:end -->
        <hr>
        <!-- Post Content:start -->
-       <div>
+       <div class="col-md-12">
           {!! $posts->content !!}
        </div>
        <!-- Post Content:end -->
        <hr>
+      </div>
     </div>
 
     <!-- Sidebar Widgets Column:start -->
     <div class="col-md-4">
        <!-- Categories Widget -->
-       <div class="card mb-3">
+       <div class="card mb-5">
           <h5 class="card-header">
              Kategori
           </h5>
@@ -46,7 +49,7 @@ Ocoding Bog | {{ $title }}
        </div>
 
        <!-- Side Widget tags:start -->
-       <div class="card mb-3">
+       <div class="card mb-4">
           <h5 class="card-header">
              Tags
           </h5>
@@ -61,14 +64,16 @@ Ocoding Bog | {{ $title }}
           </div>
        </div>
        <!-- Side Widget tags:start -->
-       <div class="card mb-3">
+       <div class="card mb-4">
          <h5 class="card-header">
             Deskripsi
          </h5>
          <div class="card-body">
-            <!-- deskripsi list:start -->
-            <p>{{ $posts->deskripsi }}</p>
-            <!-- deskripsi list:end -->
+            <!-- tag list:start -->
+            <p>
+              {{ $posts->deskripsi }}
+           </p>
+            <!-- tag list:end -->
          </div>
       </div>
     </div>

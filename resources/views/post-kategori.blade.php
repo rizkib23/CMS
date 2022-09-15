@@ -21,7 +21,7 @@ Ocoding Bog | {{ $title }}
                            <img class="img-fluid rounded" src="{{ asset('storage/.' . $dtpost->thumbnail) }}" alt="Post">
                        </div>
                        <div class="col-lg-6">
-                           <h2 class="card-title">{{ $dtpost->title }}</h2>
+                           <h2 class="card-title">{{ $dtpost->judul }}</h2>
                            <p class="card-text">{{ $dtpost->deskripsi }}</p>
                            <a href="{{ route('post-detail', ['slug' => $dtpost->slug]) }}" class="btn btn-primary">
                                Selengkapnya

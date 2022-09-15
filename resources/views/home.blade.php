@@ -4,6 +4,14 @@
     Ocoding Blog | {{ $title }}
 @endsection
 
+@section('meta_description')
+@yield('{!! Meta::tag() !!}')
+@endsection
+
+@section('meta_keywords')
+@yield('{!! Meta::tag() !!}')
+@endsection
+
 @section('container')
     {{-- awal --}}
     <div class="bg-info position-relative overlay-bottom py-5" style="margin-bottom: auto">
