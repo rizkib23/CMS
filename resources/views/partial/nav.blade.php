@@ -1,4 +1,4 @@
- <nav class="navbar navbar-expand-lg navbar-light bg-light">
+ <nav class="navbar navbar-expand navbar-light bg-light">
     <div class="container-fluid">
       <a href="/" class="navbar-brand ml-lg-3">
         <h1 class="m-0 text-uppercase text-primary"><i class="mr-3"></i>O-Coding</h1>
@@ -8,7 +8,7 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mb-2 mb-lg-0">
-          <li class="nav-item">
+          <li class="nav-item {{ Request::is('home') ? 'active' : '' }}">
             <a class="nav-link navbar-brand" aria-current="page" href="/">Home</a>
           </li>
           <li class="nav-item">
@@ -38,7 +38,7 @@
            
             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                 {{ Auth::user()->name }}
-                <img src="{{ asset('storage/' .Auth::user()->dataProfil->foto) }}" width="36" height="36" class="rounded-circle me-2" alt=" {{ Auth::user()->name }}">
+                <img src="{{ asset('storage/' .Auth::user()->dataProfil->foto) }}" width="30" height="30" class="rounded-circle me-2" alt=" {{ Auth::user()->name }}">
             </a>
 
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">

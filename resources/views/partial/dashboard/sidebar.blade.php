@@ -50,7 +50,7 @@
 
    <li class="nav-item {{ Request::is('tags/admin', 'tags/create', 'tags/edit') ? 'active' : '' }}">
     <a class="nav-link" href="/pengumuman">
-        <i class="bi bi-calendar"></i>
+        <i class="fas fa-fw fa-table"></i>
            <span>Pengumuman</span></a>
    </li>
 
