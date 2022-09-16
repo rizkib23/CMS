@@ -43,7 +43,7 @@ class PostController extends Controller
         if ($request->get('keyword')) {
             $posts->search($request->get('keyword'));
         }
-        return view('dashboard.post.index', [
+        return view('post.admin', [
             'title' => 'Post',
             'posts' => $posts->get(),
             'statuses' => $this->statuses(),
@@ -62,7 +62,7 @@ class PostController extends Controller
      */
     public function create(Request $request, Post $post)
     {
-        return view('dashboard.post.create', [
+        return view('post.create', [
             'title' => 'Post',
             'kategoris' => Kategori::all(),
             'tags' => Tag::all(),
@@ -140,7 +140,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        return view('dashboard.post.detail', [
+        return view('post.detail', [
             'title' => 'Post',
             'post' => $post
         ]);
@@ -157,7 +157,14 @@ class PostController extends Controller
         $kategoris = Kategori::all();
         $tags = Tag::all();
         $statuses = $this->statuses();
-        return view('post.edit', compact('post', 'kategoris', 'tags', 'statuses'));
+        $content = [
+            'kategoris' => $kategoris,
+            'tags' => $tags,
+            'statuses' => $statuses,
+            'title' => 'Post',
+            'post' => $post
+        ];
+        return view('post.edit', $content);
     }
 
     /**

@@ -1,6 +1,8 @@
-@extends('../layouts.main')
-
-@section('container')
+@extends('../layouts/main')
+@section('title')
+Ocoding | Dashboard - {{ $title }}
+@endsection
+@section('content')
 <div class="bg-info position-relative overlay-bottom py-5" style="margin-bottom: auto">
     <div class="text-center">
         <img src="image/Kategori.png" class="img-fluid" alt="Kategori">

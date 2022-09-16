@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends('../layouts.dashboard')
 
 @section('title')
 Ocoding | Dashboard - {{ $title }}
@@ -55,10 +55,15 @@ Ocoding | Dashboard - {{ $title }}
                                 <div class="card-body">
                                     <h5>{{ $post->judul }}</h5>
                                     <p>
-                                        {{ $post->deskripsi }}
+                                        {{ str_word_count($post->deskripsi) > 60 ? substr("$post->deskripsi",0,200).".." : $post->deskripsi  }}
                                     </p>
                                     <div class="float-left">
-                                        | {{ucwords($post->dataUser->name) }} | {{ $post->created_at }}
+                                        dibuat Oleh: {{ucwords($post->dataUser->name) }} <br>
+                                        @if($post->status == ('publish'))
+                                        dipublikasi Pada: {{ $post->updated_at}}
+                                        @else
+                                        dibuat Pada: {{ $post->created_at}}
+                                        @endif
                                     </div>
 
                                     <div class="float-right">

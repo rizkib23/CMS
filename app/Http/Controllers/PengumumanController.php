@@ -28,9 +28,12 @@ class PengumumanController extends Controller
      */
     public function index()
     {
-        return view('pengumuman.index', [
-            'pengumuman' => Pengumuman::all(),
-        ]);
+        $pengumuman = Pengumuman::all();
+        $conten = [
+            'pengumuman' => $pengumuman,
+            'title' => 'Pengumumna'
+        ];
+        return view('pengumuman.index', $conten);
     }
 
     /**

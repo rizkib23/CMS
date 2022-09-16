@@ -31,10 +31,10 @@ class ProfilController extends Controller
     public function index()
     {
 
-
-        return view(
-            "profil.profil"
-        );
+        $conten = [
+            'title' => 'Profil'
+        ];
+        return view("profil.profil", $conten);
     }
     /**
      * Show the form for creatng a new resource.
@@ -95,7 +95,7 @@ class ProfilController extends Controller
         return view(
             'profil.profil',
             [
-
+                'title' => 'Profil',
                 'profile' => $profil,
             ]
         );

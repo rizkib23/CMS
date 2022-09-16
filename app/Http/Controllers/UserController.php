@@ -35,11 +35,14 @@ class UserController extends Controller
         if ($a->hasRole('Super Admin')) {
             return view("user.index", [
                 'user' => User::all()->where('id', '<>', Auth::user()->id),
+                'title' => 'User'
+
 
             ]);
         }
         return view("user.index", [
             'user' => User::role('user')->get()->where('id', '<>', Auth::user()->id),
+            'title' => 'User'
 
         ]);
     }
@@ -53,6 +56,8 @@ class UserController extends Controller
     {
         return view('user.create', [
             'roles' => Role::all(),
+            'title' => 'User'
+
         ]);
     }
 
@@ -97,7 +102,12 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return view('user.detail', compact('user'));
+        $conten = [
+            'title' => 'User',
+            'user' => $user
+
+        ];
+        return view('user.detail', $conten);
     }
 
     /**
@@ -112,6 +122,8 @@ class UserController extends Controller
             'rolesSelect' => $user->roles->first(),
             'user' => $user,
             'roles' => Role::all(),
+            'title' => 'User'
+
         ]);
     }
 

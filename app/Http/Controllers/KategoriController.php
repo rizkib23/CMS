@@ -31,7 +31,7 @@ class KategoriController extends Controller
      */
     public function index()
     {
-        $kategoris = kategori::all();
+        $kategoris = kategori::orderBy('id', 'desc')->get();
         return view('kategori.admin', [
             'title' => 'Kategori',
             'kategoris' => $kategoris

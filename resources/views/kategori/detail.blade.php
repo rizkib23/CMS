@@ -12,7 +12,7 @@ Ocoding | Dashboard | {{ $title }}
                 </div>
                 <div class="card-body">
                     <!-- Thumbnail -->
-                    <img class="img-fluid img-thumbnail" width="200px" src="{{ asset('storage/.' . $kategoris->thumbnail) }}"/>
+                    <img class="img-fluid img-thumbnail" width="200px" src="{{ asset('storage/..' . $kategoris->thumbnail) }}"/>
 
                     <!-- title -->
                     <h2 class="my-1">

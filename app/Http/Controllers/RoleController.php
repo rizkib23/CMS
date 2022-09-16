@@ -27,7 +27,8 @@ class RoleController extends Controller
     public function index()
     {
         return view('role.index', [
-            'roles' => Role::all()->where('name', '<>', 'Super Admin')
+            'roles' => Role::all()->where('name', '<>', 'Super Admin'),
+            'title' => 'Role'
         ]);
     }
 
@@ -41,6 +42,7 @@ class RoleController extends Controller
         return view('role.tambah', [
             'roles' => Role::all(),
             'authorities' => config('permission.authorities'),
+            'title' => 'Role'
             // 'rolePermissions' => $role->permissions->pluck('name')->toArray()
         ]);
     }
@@ -80,7 +82,8 @@ class RoleController extends Controller
         return view('role.detail', [
             'roles' => $role,
             'authorities' => config('permission.authorities'),
-            'rolePermissions' => $role->permissions->pluck('name')->toArray()
+            'rolePermissions' => $role->permissions->pluck('name')->toArray(),
+            'title' => 'Role'
         ]);
     }
 
@@ -95,7 +98,8 @@ class RoleController extends Controller
         return view('role.edit', [
             'role' => $role,
             'authorities' => config('permission.authorities'),
-            'permissionsChecked' => $role->permissions->pluck('name')->toArray()
+            'permissionsChecked' => $role->permissions->pluck('name')->toArray(),
+            'title' => 'Role'
         ]);
     }
 

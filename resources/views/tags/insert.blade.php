@@ -2,9 +2,9 @@
 @section('title')
 Ocoding | Dashboard - {{ $title }}
 @endsection
-@section('conten')
+@section('content')
 
-<div class="container mt-4">
+<div class="container mt-2">
     <div class="row">
        <div class="col-12">
           <div class="card">

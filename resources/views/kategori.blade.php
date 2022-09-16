@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('title')
-Ocoding Bog | {{ $title }}
+Ocoding Blog | {{ $title }}
 @endsection
 
 @section('container')

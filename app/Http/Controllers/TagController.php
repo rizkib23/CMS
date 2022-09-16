@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Tag;
+use Illuminate\Routing\RedirectController;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use illuminate\Support\Str;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -25,10 +27,13 @@ class TagController extends Controller
      */
     public function index()
     {
+        $tag =  Tag::orderBy('id', 'desc')->get();
+        $content = [
+            'title' => 'Tag',
+            'tags' => $tag
 
-        return view('tags/admin', [
-            'tags' => Tag::orderBy('id', 'desc')->get(),
-        ]);
+        ];
+        return view('tags/admin', $content);
     }
 
     /**
@@ -94,10 +99,22 @@ class TagController extends Controller
      */
     public function update(Request $request, $id)
     {
-        Tag::find($id)->update([
-            'name' => $request->name,
-            'slug' => Str::slug($request->name, '-'),
+        $validator = Validator::make($request->all(), [
+            'name' => 'unique:tags'
         ]);
+        if ($validator->fails()) {
+            return response()->json(['error' => false, 'message' => $validator->errors()->first()]);
+        }
+
+        try {
+            Tag::find($id)->update([
+                'name' => $request->name,
+                'slug' => Str::slug($request->name, '-'),
+            ]);
+        } catch (\Throwable $th) {
+            Alert::error('Error', 'Tag Gagal DiUpdate!');
+            return redirect()->back();
+        }
 
         Alert::success('Success', 'Tag Berhasil DiUpdate!');
         return redirect('/tags');
