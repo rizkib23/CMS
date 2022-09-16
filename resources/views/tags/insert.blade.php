@@ -1,6 +1,8 @@
 @extends('../layouts/dashboard')
-
-@section('content')
+@section('title')
+Ocoding | Dashboard - {{ $title }}
+@endsection
+@section('conten')
 
 <div class="container mt-4">
     <div class="row">
