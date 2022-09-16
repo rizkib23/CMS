@@ -63,7 +63,7 @@ class KomentarController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit()
     {
         //
     }
@@ -75,9 +75,14 @@ class KomentarController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Komentar $komentar)
     {
-        //
+        $komentar->update([
+            'isi' => $request->isi,
+            'parent' => $request->parent,
+            'user_id' => $request->user_id,
+            'post_id' => $request->post_id
+        ]);
     }
 
     /**
@@ -86,8 +91,10 @@ class KomentarController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Komentar $komentar)
     {
-        //
+        dd($komentar);
+        $komentar->delete();
+        return redirect()->back();
     }
 }

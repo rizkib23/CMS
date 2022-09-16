@@ -28,7 +28,7 @@
                   <div class="col-lg-6">
                      <!-- thumbnail:start -->
                         <!-- true -->
-                        <img class="img-fluid rounded" src="{{ asset('storage/.' . $dtpost->thumbnail) }}" alt="Post">
+                        <img class="img-fluid rounded" src="{{ asset('storage/..' . $dtpost->thumbnail) }}" alt="Post">
                   </div>
                   <div class="col-lg-6">
                      <h2 class="card-title">{{ $dtpost->judul }}</h2>

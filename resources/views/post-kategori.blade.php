@@ -26,6 +26,9 @@ Ocoding Bog | {{ $title }}
                            <a href="{{ route('post-detail', ['slug' => $dtpost->slug]) }}" class="btn btn-primary">
                                Selengkapnya
                            </a>
+                           <div class="mt-4">
+                                di buat Oleh :{{ucwords($dtpost->dataUser->name) }} <br> {{ $dtpost->created_at }}
+                            </div>
                        </div>
                    </div>
                </div>

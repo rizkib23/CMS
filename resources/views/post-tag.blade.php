@@ -18,7 +18,7 @@ Ocoding Bog | {{ $title }}
                         <div class="row">
                             <div class="col-lg-6">
                                 <!-- tumbnail -->
-                                <img class="img-fluid rounded" src="{{ asset('storage/.' . $dtpost->thumbnail) }}" alt="Post">
+                                <img class="img-fluid rounded" src="{{ asset('storage/..' . $dtpost->thumbnail) }}" alt="Post">
                        </div>
                        <div class="col-lg-6">
                            <h2 class="card-title">{{ $dtpost->judul }}</h2>
@@ -26,6 +26,9 @@ Ocoding Bog | {{ $title }}
                            <a href="{{ route('post-detail', ['slug' => $dtpost->slug]) }}" class="btn btn-primary">
                             Selengkapnya
                         </a>
+                        <div class="mt-4">
+                            di buat Oleh :{{ucwords($dtpost->dataUser->name) }} <br> {{ $dtpost->created_at }}
+                        </div>
                     </div>
                 </div>
             </div>

@@ -4,34 +4,36 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\Kategori;
-use App\Models\Komentar;
 use App\Models\Pengumuman;
 use App\Models\Tag;
-use App\Models\TagPost;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
     private $perpage = 10;
+
     public function home()
     {
-        $posts = Post::all();
-        $pengumuman = Pengumuman::orderBy('created_at', 'desc')->get();
-        return view('home', [
+        $pengumuman = Pengumuman::orderBy('id', 'desc')->get();
+        $tag = Tag::all();
+        $post = Post::publish()->latest()->paginate($this->perpage);
+        $content = [
             'title' => "Home",
-            'posts' => Post::publish()->latest()->paginate($this->perpage),
-            'notif' => Pengumuman::orderBy('id', 'desc')->get(),
-            'tag' => Tag::all(),
-        ]);
+            'posts' => $post,
+            'tag' => $tag,
+            'notif' => $pengumuman
+        ];
+        return view('home', $content);
     }
 
     public function listKategori()
     {
         $kategoris = Kategori::all();
-        return view('kategori', [
+        $content =  [
             'title' => "Kategori",
             'kategoris' => $kategoris
-        ]);
+        ];
+        return view('kategori', $content);
     }
 
     public function searchPosts(Request $request, Post $posts)
@@ -39,12 +41,14 @@ class HomeController extends Controller
         if ($request->get('keyword')) {
             $posts->search($request->get('keyword'));
         }
-        return view('search-post', [
+        $pos = Post::Publish()->search($request->keyword)
+            ->paginate($this->perpage)
+            ->appends(['keyword' => $request->keyword]);
+        $content = [
             'title' => $posts->judul,
-            'posts' => Post::Publish()->search($request->keyword)
-                ->paginate($this->perpage)
-                ->appends(['keyword' => $request->keyword])
-        ]);
+            'posts' => $pos
+        ];
+        return view('search-post', $content);
     }
 
     public function showPostByKategori($slug)
@@ -65,22 +69,19 @@ class HomeController extends Controller
 
     public function showPostDetail($slug)
     {
-
-        $posts = Post::with(['dataKategori', 'dataTags'])->where('slug', $slug)->first();
+        $posts = Post::with(['dataKategori', 'dataTagPost.dataTags'])->where('slug', $slug)->first();
         if (!$posts) {
             return redirect()->route('home');
         }
         // dd($posts);
         return view('post-detail', [
             'posts' => $posts,
-            'title' => $posts->judul,
+            'title' => $posts->judul
         ]);
     }
 
     public function showPostByTag($slug)
     {
-
-
         $posts = Post::publish()->whereHas('dataTagPost.dataTags', function ($query) use ($slug) {
             return $query->where('slug', $slug);
         })->paginate($this->perpage);
@@ -98,3 +99,11 @@ class HomeController extends Controller
         return view('post-tag', $content);
     }
 }
+// Schema::create('komentars', function (Blueprint $table) {
+//     $table->id();
+//     $table->foreignId('user_id')->constrained('users');
+//     $table->foreignId('post_id')->constrained('posts');
+//     $table->text('isi');
+//     $table->string('parent');
+//     $table->timestamps();
+// });

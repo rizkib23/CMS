@@ -108,11 +108,13 @@ class TagController extends Controller
     {
 
 
-        Tag::find($tag->id)->delete();
+        try {
+            Tag::find($tag->id)->delete();
+        } catch (\Throwable $th) {
+            Alert::error('Error', 'Kategori Gagal Dihapus!', ['error' => $th->getMessage()]);
+            return redirect('/tags');
+        }
         return redirect()->route('tags.index')
             ->with('success', 'User deleted successfully');
-        // Tag::destroy($tag->id);
-        // Alert::success('Success', 'Tag Berhasil DiHapus!');
-        // return redirect('/tags');
     }
 }

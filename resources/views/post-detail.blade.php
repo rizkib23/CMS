@@ -98,9 +98,25 @@ Ocoding Bog | {{ $title }}
                <div class="border text-sm text-muted p-2 mt-1">
                   {{ $komentar->isi }}
                </div>
-               <button class="btn btn-outline" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ $komentar->id }}" aria-expanded="false" aria-controls="collapseWidthExample" id="balas"><i class="bi bi-reply"></i> Balas</button>
+               {{-- hapus --}}
+               @if(Auth::check() == true)
+               @if(Auth::user()->id == $komentar->user_id)
+               <form class="d-inline" role="alert" alert-title="Apakah Kamu Yakin?" alert-text="Data akan dihapus" action="{{ route('komen.destroy',['koman'=>$komentar->id] ) }}" method="POST">
+                  @csrf
+                  @method('DELETE')
+                  <button type="submit" class="btn btn-outline">
+                       <i class="fas fa-trash"></i>Hapus
+                  </button>
+              </form>
+              @else
+              @endif
+              @endif
+               {{--  --}}
+               <button class="btn btn-outline" type="button" data-bs-toggle="collapse" data-bs-target="#balas{{ $komentar->id }}" aria-expanded="false" aria-controls="collapseWidthExample" id="balas">
+                  <i class="bi bi-reply"></i> Balas
+               </button>
                {{-- balas komen --}}
-               <div class="collapse collapse-horizontal mt-4" id="collapse{{ $komentar->id }}">
+               <div class="collapse collapse-horizontal mt-4" id="balas{{ $komentar->id }}">
                   <form action="{{ route('komen.store') }}" method="POST">
                      @csrf
                      <div class="form-group">
@@ -161,17 +177,29 @@ Ocoding Bog | {{ $title }}
       </div>
    </div>
 </div>
-
+@include('sweetalert::alert')
 @endsection
-@push('javascript-external')
-  <script src="{{ asset('js/jquery-3.6.1.min.js') }}"></script>
-@endpush
 @push('javascript-internal')
-<script>
-   $(document).ready(function(){
-      $('#balas').click(function(){
-         $('#balasan').toggel('slide');
-      });
-   });
-</script>
+    <script>
+        $(document).ready(function(){
+            $("form[role='alert']").submit(function(event) {
+                event.preventDefault();
+                Swal.fire({
+                    title: "Apakah anda Yakin?",
+                    text: "Data akan dihapus",
+                    icon: 'warning',
+                    allowOutsideClick: false,
+                    showCancelButton: true,
+                    cancelButtonText: "Batalkan",
+                    reverseButtons: true,
+                    confirmButtonText: "Konfirmasi",
+                    }).then((result) => {
+                    if (result.isConfirmed) {
+                        // todo: process of deleting categories
+                        event.target.submit();
+                    }
+                    });
+            });
+        }); 
+    </script>
 @endpush

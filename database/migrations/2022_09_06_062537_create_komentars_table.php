@@ -17,6 +17,8 @@ class CreateKomentarsTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('post_id')->constrained('posts');
+            $table->text('isi');
+            $table->string('parent');
             $table->timestamps();
         });
     }
