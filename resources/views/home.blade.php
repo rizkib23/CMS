@@ -1,4 +1,4 @@
-@extends('layouts.main')
+a@extends('layouts.main')
 
 @section('title')
     Ocoding Bog | {{ $title }}
@@ -87,10 +87,11 @@
 
 
                 <!-- Sidebar Widgets Column:start -->
-                <div class="col-lg-4 col-xl-4  col-md-12  col-sm-12">
+                <div class="col-lg-4 col-xl-4 col-md-8 col-sm-12">
                     <!-- tag Widget -->
                     <div class="card mb-5">
                         <h5 class="card-header">
+                            <img class="img-profile rounded-circle" src="/img/hash.svg">
                             Tag
                         </h5>
                         <div class="card-body">
