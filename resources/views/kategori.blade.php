@@ -14,6 +14,7 @@ Ocoding Bog | {{ $title }}
     <br>
      
      <!-- List category -->
+     <div class="container border py-5">
      <div class="row flex-row">
         @forelse ($kategoris as $dtkategori)
             <!-- true -->
@@ -36,7 +37,6 @@ Ocoding Bog | {{ $title }}
             Belum Ada Data
          </h3>
         @endforelse
-     </div>
-     <!-- List category -->
-     
+     </div>     
+    </div>
 @endsection

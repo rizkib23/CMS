@@ -1,4 +1,4 @@
-a@extends('layouts.main')
+@extends('layouts.main')
 
 @section('title')
     Ocoding Bog | {{ $title }}
@@ -19,7 +19,7 @@ a@extends('layouts.main')
             <h1 class="text-white mt-4 mb-4">Belajar dimana aja</h1>
             <h1 class="text-white display-1 mb-5">Overload Coding</h1>
             <div class="mx-auto mb-5" style="width: 100%; max-width: 600px;">
-
+                {{-- filter:search --}}
                 <form class="input-group my-1" action="{{ route('search-post') }}" method="GET">
                     <input name="keyword" type="search" class="form-control border-light" style="padding: 30px 25px;"
                         placeholder="Cari">
@@ -29,7 +29,6 @@ a@extends('layouts.main')
                         </button>
                     </div>
                 </form>
-
             </div>
         </div>
     </div>
@@ -45,10 +44,11 @@ a@extends('layouts.main')
                 </div>
             </div>
         </div>
+    </div>
         <br>
         <main class="container border py-5">
             <div class="row g-5 ">
-                <div class="col-lg-8 col-xl-8  col-md-12 col-sm-12 ">
+                <div class="col-lg-8 col-xl-8 col-md-12 col-sm-12 ">
                     <div class="row">
                         @forelse ($posts as $dtpost)
                             <div class="col-6">
@@ -59,12 +59,12 @@ a@extends('layouts.main')
                                             <!-- thumbnail:start -->
                                             <!-- true -->
                                             <img class="img-fluid rounded"
-                                                src="{{ asset('storage/.' . $dtpost->thumbnail) }}" alt="Post">
+                                                src="{{ asset('storage/' . $dtpost->thumbnail) }}" alt="Post">
                                         </div>
                                         {{-- <div class="col-lg-6"> --}}
                                         <br>
-                                        <h2 class="card-title md-2">{{ $dtpost->judul }}</h2>
-                                        <p class="card-text">{{ $dtpost->deskripsi }}</p>
+                                        <h2 class="card-title">{{ $dtpost->judul }}</h2>
+                                        <p class="card-text"> {{ str_word_count($dtpost->deskripsi) > 10 ? substr("$dtpost->deskripsi",0,50)." .." : $dtpost->deskripsi  }}</p>
                                         <a href="{{ route('post-detail', ['slug' => $dtpost->slug]) }}"
                                             class="btn btn-primary">
                                             Selengkapnya
@@ -91,7 +91,7 @@ a@extends('layouts.main')
                     <!-- tag Widget -->
                     <div class="card mb-5">
                         <h5 class="card-header">
-                            <img class="img-profile rounded-circle" src="/img/hash.svg">
+                            <img class="img-profile rounded-circle" src="image/tag.png" width="25px">
                             Tag
                         </h5>
                         <div class="card-body">
@@ -110,17 +110,16 @@ a@extends('layouts.main')
                         </div>
                     </div>
                 </div>
+            </div>
 
                 <!-- pagination:start -->
                 @if ($posts->hasPages())
+                <div class="col">
                     <div class="row">
-                        <div class="col">
-                            {{ $posts->links() }}
+                            {{ $posts->links('pagination::bootstrap-4') }}
                         </div>
                     </div>
                 @endif
                 <!-- pagination:End -->
-            </div>
-
         </main>
     @endsection

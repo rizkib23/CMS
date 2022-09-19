@@ -5,10 +5,16 @@ Ocoding Bog | {{ $title }}
 @endsection
 @section('container')
     <!-- Title -->
-    <h2 class="mt-4 mb-3 text-center">
-        {{ $title }}
-    </h2>
-    
+    <div class="bg-info position-relative overlay-bottom py-4" style="margin-bottom: auto">
+        <div class="text-center">
+            <img src="/image/tag.png" class="img-fluid" alt="Tag">
+        </div>
+        <h2 class="text-white mt-4 mb-3 text-center">
+          {{ $title }}
+        </h2>
+    </div>
+    <br>
+    <main class="container border py-5">
     <div class="row">
         <div class="col-lg-12">
             <!-- Post list:start -->
@@ -36,8 +42,16 @@ Ocoding Bog | {{ $title }}
                Tidak Ada Data
            </h3>
             @endforelse
-            
-            
             <!-- Post list:end -->
         </div>
+    </div>
+        <!-- pagination:start -->
+     @if ($posts->hasPages())
+     <div class="row">
+        <div class="col">
+            {{ $posts->links('pagination::bootstrap-4') }}
+        </div>
+     </div>
+     @endif
+    </main>
 @endsection
