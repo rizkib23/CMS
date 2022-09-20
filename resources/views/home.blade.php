@@ -45,81 +45,82 @@
             </div>
         </div>
     </div>
-        <br>
-        <main class="container border py-5">
-            <div class="row g-5 ">
-                <div class="col-lg-8 col-xl-8 col-md-12 col-sm-12 ">
-                    <div class="row">
-                        @forelse ($posts as $dtpost)
-                            <div class="col-6">
-                                <!-- Post list:start -->
-                                <div class="card mb-4 ">
-                                    <div class="card-body">
-                                        <div class="col-lg-6-md-6">
-                                            <!-- thumbnail:start -->
-                                            <!-- true -->
-                                            <img class="img-fluid rounded"
-                                                src="{{ asset('storage/' . $dtpost->thumbnail) }}" alt="Post">
-                                        </div>
-                                        {{-- <div class="col-lg-6"> --}}
-                                        <br>
-                                        <h2 class="card-title">{{ $dtpost->judul }}</h2>
-                                        <p class="card-text"> {{ str_word_count($dtpost->deskripsi) > 10 ? substr("$dtpost->deskripsi",0,50)." .." : $dtpost->deskripsi  }}</p>
-                                        <a href="{{ route('post-detail', ['slug' => $dtpost->slug]) }}"
-                                            class="btn btn-primary">
-                                            Selengkapnya
-                                        </a>
-                                        {{-- </div> --}}
+    <br>
+    <main class="container border py-5">
+        <div class="row">
+            <div class="col-lg-8 col-xl-8 col-md-12 col-sm-12">
+                <div class="row">
+                    @forelse ($posts as $dtpost)
+                        <div class="col-6">
+                            <!-- Post list:start -->
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="col-lg-6-md-6">
+                                        <!-- thumbnail:start -->
+                                        <!-- true -->
+                                        <img class="img-fluid rounded" src="{{ asset('storage/.' . $dtpost->thumbnail) }}"
+                                            alt="Post">
                                     </div>
+                                    {{-- <div class="col-lg-6"> --}}
+                                    <br>
+                                    <h2 class="card-title">{{ $dtpost->judul }}</h2>
+                                    <p class="card-text">
+                                        {{ str_word_count($dtpost->deskripsi) > 10 ? substr("$dtpost->deskripsi", 0, 50) . ' ..' : $dtpost->deskripsi }}
+                                    </p>
+                                    <a href="{{ route('post-detail', ['slug' => $dtpost->slug]) }}" class="btn btn-primary">
+                                        Selengkapnya
+                                    </a>
+                                    {{-- </div> --}}
                                 </div>
-
-                                <!-- Post list:end -->
                             </div>
-                        @empty
-                            <!-- empty -->
-                            <h3 class="text-center">
-                                Belum Ada Data
-                            </h3>
-                        @endforelse
-                    </div>
 
+                            <!-- Post list:end -->
+                        </div>
+                    @empty
+                        <!-- empty -->
+                        <h3 class="text-center">
+                            Belum Ada Data
+                        </h3>
+                    @endforelse
                 </div>
 
+            </div>
 
-                <!-- Sidebar Widgets Column:start -->
-                <div class="col-lg-4 col-xl-4 col-md-8 col-sm-12">
-                    <!-- tag Widget -->
-                    <div class="card mb-5">
-                        <h5 class="card-header">
-                            <img class="img-profile rounded-circle" src="image/tag.png" width="25px">
-                            Tag
-                        </h5>
-                        <div class="card-body">
-                            <!-- tag list:start -->
-                            @forelse ($tag as $dttag)
-                                <!-- true -->
-                                <a href="{{ route('post-tag', ['slug' => $dttag->slug]) }}"
-                                    class="badge badge-info py-3 px-5 my-2">#{{ $dttag->name }}</a>
-                            @empty
-                                <!-- false -->
-                                <h3 class="text-center">
-                                    No data
-                                </h3>
-                            @endforelse
-                            <!-- tag list:end -->
-                        </div>
+
+            <!-- Sidebar Widgets Column:start -->
+            <div class="col-lg-4 col-xl-4 col-md-12 col-sm-12">
+                <!-- tag Widget -->
+                <div class="card mb-5">
+                    <h5 class="card-header">
+                        <img class="img-tag rounded-circle" src="image/tag.png" width="25px">
+                        Tag
+                    </h5>
+                    <div class="card-body">
+                        <!-- tag list:start -->
+                        @forelse ($tag as $dttag)
+                            <!-- true -->
+                            <a href="{{ route('post-tag', ['slug' => $dttag->slug]) }}"
+                                class="badge badge-info py-3 px-5 my-2">#{{ $dttag->name }}</a>
+                        @empty
+                            <!-- false -->
+                            <h3 class="text-center">
+                                No data
+                            </h3>
+                        @endforelse
+                        <!-- tag list:end -->
                     </div>
                 </div>
             </div>
+        </div>
 
-                <!-- pagination:start -->
-                @if ($posts->hasPages())
-                <div class="col">
-                    <div class="row">
-                            {{ $posts->links('pagination::bootstrap-4') }}
-                        </div>
-                    </div>
-                @endif
-                <!-- pagination:End -->
-        </main>
-    @endsection
+        <!-- pagination:start -->
+        @if ($posts->hasPages())
+            <div class="col">
+                <div class="row">
+                    {{ $posts->links('pagination::bootstrap-4') }}
+                </div>
+            </div>
+        @endif
+        <!-- pagination:End -->
+    </main>
+@endsection
