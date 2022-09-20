@@ -89,32 +89,64 @@ Ocoding Blog | {{ $title }}
       <div class="card-body">
          @foreach($posts->dataKomen->where('parent', 0) as $komentar)
          <div class="d-flex align-items-start">
+            @if($komentar->dataUser->dataProfil->foto)
             <img src="{{ asset('storage/' . $komentar->dataUser->dataProfil->foto) }}" width="36" height="36" class="rounded-circle me-2" alt="{{ $komentar->dataUser->name }}">
+            @else
+            <img src="{{ asset('img/profil.jpg') }}" class="rounded-circle me-2" width="36" height="36">
+            @endif     
             <div class="flex-grow-1">
                <small class="float-end">{{ $komentar->updated_at }}</small>
-               <strong>{{ $komentar->dataUser->name }}</strong> mengomentari postingan dari <strong>{{ $posts->dataUser->name }}</strong><br />
+               <strong>{{ ucwords($komentar->dataUser->name)  }}</strong> mengomentari postingan dari <strong>{{ ucwords($posts->dataUser->name) }}</strong><br />
                <small class="text-muted">{{ $komentar->created_at }}</small>
 
                <div class="border text-sm text-muted p-2 mt-1">
                   {{ $komentar->isi }}
                </div>
-               {{-- hapus --}}
+              
                @if(Auth::check() == true)
                @if(Auth::user()->id == $komentar->user_id)
-               <form class="d-inline" role="alert" alert-title="Apakah Kamu Yakin?" alert-text="Data akan dihapus" action="{{ route('komen.destroy',['koman'=>$komentar->id] ) }}" method="POST">
+                {{-- hapus --}}
+                <form class="d-inline" role="alert" alert-title="Apakah Kamu Yakin?" alert-text="Data akan dihapus" action="{{ route('komen.destroy',['koman'=>$komentar->id] ) }}" method="POST">
                   @csrf
                   @method('DELETE')
+                  @can('komentar_delet')
                   <button type="submit" class="btn btn-outline">
                        <i class="fas fa-trash"></i>Hapus
                   </button>
+                  @endcan
               </form>
-              @else
-              @endif
-              @endif
-               {{--  --}}
-               <button class="btn btn-outline" type="button" data-bs-toggle="collapse" data-bs-target="#balas{{ $komentar->id }}" aria-expanded="false" aria-controls="collapseWidthExample" id="balas">
-                  <i class="bi bi-reply"></i> Balas
-               </button>
+              {{-- edit button --}}
+              <button class="btn btn-outline" type="button" data-bs-toggle="collapse" data-bs-target="#edit{{ $komentar->id }}" aria-expanded="false" aria-controls="collapseWidthExample" id="edit">
+               <i class="fa fa-edit"></i>Edit
+             </button>
+             @else
+             @endif
+             @endif 
+             {{-- balas --}}
+             <button class="btn btn-outline inline" type="button" data-bs-toggle="collapse" data-bs-target="#balas{{ $komentar->id }}" aria-expanded="false" aria-controls="collapseWidthExample" id="balas">
+               <i class="bi bi-reply"></i> Balas
+            </button>
+              {{-- edit --}}
+              <div class="collapse collapse-horizontal mt-4" id="edit{{ $komentar->id }}">
+               <form action="{{ route('komen.update', ['koman'=>$komentar->id]) }}" method="POST">
+                  @method('put')
+                        @csrf
+                  <div class="form-group">
+                     <input type="hidden" name="post_id" value="{{ $posts->id }}">
+                     <input type="hidden" name="parent" value="0">
+                     <textarea id="input_post_deskripsi" name="isi" value="{{ old('isi') }}" placeholder="Masukkan komentar" class=" form-control @error('isi') is-invalid @enderror"
+                         rows="1"></textarea>
+                         @error('isi')
+                         <span class="invalid-feedback" role="alert">
+                           <strong>{{ $message }}</strong>
+                         </span>
+                         @enderror
+                         <div class="mt-2">
+                         <button class="btn btn-sm btn-outline-info" type="submit"><i class="bi bi-send-fill"></i>Kirim</button>
+                         </div>
+                 </div>
+               </form>
+            </div>
                {{-- balas komen --}}
                <div class="collapse collapse-horizontal mt-4" id="balas{{ $komentar->id }}">
                   <form action="{{ route('komen.store') }}" method="POST">
@@ -141,12 +173,13 @@ Ocoding Blog | {{ $title }}
                      <img src="{{ asset('storage/' . $balasan->dataUser->dataProfil->foto) }}" width="36" height="36" class="rounded-circle me-2" alt="{{ $balasan->dataUser->name }}">
                      <div class="flex-grow-1">
                         <small class="float-end">{{ $balasan->updated_at }}</small>
-                        <strong>{{ $balasan->dataUser->name }}</strong> membalas komentar dari <strong>{{ $komentar->dataUser->name }}</strong><br />
+                        <strong>{{ ucwords($balasan->dataUser->name)  }}</strong> membalas komentar dari <strong>{{ ucwords($komentar->dataUser->name) }}</strong><br />
                         <small class="text-muted">{{ $balasan->created_at }}</small>
 
                         <div class="border text-sm text-muted p-2 mt-1">
                            {{ $balasan->isi }}
                         </div>
+
                      </div>
                   </div>
 

@@ -21,7 +21,7 @@ Ocoding | Dashboard | {{ $title }}
                                 Nama 
                             </label>
                             <input id="input_kategori_name" name="name" type="text" class="form-control  @error('name') is-invalid @enderror"
-                                placeholder="Masukkan Nama Kategori" value="{{ old('name') }}" required />
+                                placeholder="Masukkan Nama Kategori" value="{{ old('name') }}" required style="text-transform: capitalize;" />
                                 @error('name')
                                 <span class="invalid-feedback" role="alert">
                                   <strong>{{ $message }}</strong>

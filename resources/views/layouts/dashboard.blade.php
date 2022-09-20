@@ -10,7 +10,7 @@
         <meta name="keywords" content="@yield('meta_keywords','some default keywords')">
         <meta name="description" content="@yield('meta_description','default description')">
         <link rel="canonical" href="{{url()->current()}}"/>
-
+        <link rel="icon" href="{{ asset('img/logo2.png') }}">
     <title>Ocoding | Dashboard - {{ $title }}  </title>
 
     <script src="{{ asset('vendor/fontawesome-free/js/all.min.js') }}"></script>
@@ -60,7 +60,7 @@
    <!-- scripts -->
 
    <!-- jquery -->
-   <script src="{{ asset('vendor/jquery/jquery-3.6.0.min.js') }}"></script>
+   <script src="{{ asset('js/jquery-3.6.1.min.js') }}"></script>
    <!-- bootstrap bundle -->
    <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.js') }}"></script>
    <!-- my-dashboard -->
@@ -71,37 +71,13 @@
    @stack('javascript-external')
    {{-- javascript:internal --}}
    @stack('javascript-internal')
-   <script>
-   const berhasil = document.querySelector('.berhasil');
-   berhasil.addEventListener('submit',function(){
-      Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
-         }).then((result) => {
-         if (result.isConfirmed) {
-            Swal.fire(
-               'Deleted!',
-               'Your file has been deleted.',
-               'success'
-            )
-         }
-         })
-         
-   });
-  
-    </script>
      <script>
       $(document).ready( function () {
           $('#myTable').DataTable();
       } );
     </script>
     {{-- data tabel --}}
-    <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script src="{{ asset('js/jquery.dataTables.min.js') }}"></scri>
 </body>
 
 </html>

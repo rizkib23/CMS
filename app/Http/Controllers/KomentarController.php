@@ -9,6 +9,15 @@ use Illuminate\Support\Facades\Auth;
 
 class KomentarController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:komentar_show', ['only' => 'index']);
+        $this->middleware('permission:komentar_create', ['only' => 'create', 'store']);
+        $this->middleware('permission:komentar_update', ['only' => 'edit', 'update']);
+        $this->middleware('permission:komentar_delet', ['only' => 'destroy']);
+        $this->middleware('permission:komentar_detail', ['only' => 'show']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -75,14 +84,16 @@ class KomentarController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Komentar $komentar)
+    public function update(Request $request, Komentar $komentar, $id)
     {
+        $komentar = Komentar::find($id);
         $komentar->update([
+            'user_id' => Auth::user()->id,
             'isi' => $request->isi,
             'parent' => $request->parent,
-            'user_id' => $request->user_id,
             'post_id' => $request->post_id
         ]);
+        return redirect()->back()->with('succses');
     }
 
     /**
@@ -91,10 +102,10 @@ class KomentarController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Komentar $komentar)
+    public function destroy($id)
     {
-        dd($komentar);
-        $komentar->delete();
+        $dataKomen = Komentar::find($id);
+        $dataKomen->delete();
         return redirect()->back();
     }
 }

@@ -85,6 +85,7 @@
                                 Belum Ada Data
                             </h3>
                         @endforelse
+                        
                     </div>
                 </div>
                 <!-- Sidebar Widgets Column:start -->
@@ -111,17 +112,18 @@
                         </div>
                     </div>
                 </div>
-
+                <div class="justify-content-center">
                 <!-- pagination:start -->
                 @if ($posts->hasPages())
+                <div class="col">
                     <div class="row">
-                        <div class="col">
-                            {{ $posts->links() }}
+                            {{ $posts->links('pagination::bootstrap-4') }}
                         </div>
                     </div>
                 @endif
                 <!-- pagination:End -->
-            </div>   
+            </div>
+            </div> 
         </main>
     </div>
             <div class="container-fluid px-0 py-5">

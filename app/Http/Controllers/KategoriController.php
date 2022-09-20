@@ -46,9 +46,10 @@ class KategoriController extends Controller
      */
     public function create()
     {
-        return view('kategori.create', [
+        $conten = [
             'title' => 'Kategori',
-        ]);
+        ];
+        return view('kategori.create', $conten);
     }
 
     /**

@@ -84,10 +84,11 @@ class TagController extends Controller
     public function edit($id)
     {
         $tags = Tag::find($id);
-        return view('tags.edit', [
+        $content = [
             'title' => 'Tag',
             'tags' => $tags
-        ]);
+        ];
+        return view('tags.edit', $content);
     }
 
     /**
@@ -133,7 +134,7 @@ class TagController extends Controller
         try {
             Tag::find($tag->id)->delete();
         } catch (\Throwable $th) {
-            Alert::error('Error', 'Kategori Gagal Dihapus!', ['error' => $th->getMessage()]);
+            Alert::error('Error', 'Tag Gagal Dihapus!', ['error' => $th->getMessage()]);
             return redirect('/tags');
         }
         return redirect()->route('tags.index')
