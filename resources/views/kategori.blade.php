@@ -14,7 +14,8 @@ Ocoding Blog | {{ $title }}
     <br>
      
      <!-- List category -->
-     <div class="row flex-row mt-4 ml-4 mr-4">
+     <div class="container border py-5">
+     <div class="row flex-row">
         @forelse ($kategoris as $dtkategori)
             <!-- true -->
             <div class="col-lg-4 col-md-6 m-auto pb-4">
@@ -36,7 +37,6 @@ Ocoding Blog | {{ $title }}
             Belum Ada Data
          </h3>
         @endforelse
-     </div>
-     <!-- List category -->
-     
+     </div>     
+    </div>
 @endsection
