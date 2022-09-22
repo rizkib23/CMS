@@ -163,6 +163,8 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         Eusonlito\LaravelMeta\MetaServiceProvider::class,
+        Yajra\DataTables\DataTablesServiceProvider::class,
+
 
 
         /*
@@ -236,7 +238,7 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
         'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
         'Meta'    => Eusonlito\LaravelMeta\Facade::class,
-
+        'DataTables' => Yajra\DataTables\Facades\DataTables::class,
     ],
 
 ];

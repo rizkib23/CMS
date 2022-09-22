@@ -20,7 +20,7 @@ Ocoding Blog | {{ $title }}
             <div class="col-lg-8">
                 <div class="col-md-12">
                     <!-- thumbnail:start -->
-                    <img class="img-thumbnail" style="200x700" src="{{ asset('storage/.' . $posts->thumbnail) }}">
+                    <img class="img-thumbnail" style="200x700" src="{{ asset('storage/..' . $posts->thumbnail) }}">
                     <!-- thumbnail:end -->
                     <hr>
                     <!-- Post Content:start -->
@@ -247,4 +247,3 @@ Ocoding Blog | {{ $title }}
                });
            }); 
        </script>
-@endsection

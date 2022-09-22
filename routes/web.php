@@ -59,7 +59,7 @@ Route::get('/tag/{slug}', [HomeController::class, 'showPostByTag'])->name('post-
 // post
 Auth::routes();
 
-
+Route::get('tags/delete/{id}', [TagController::class, 'destroy']);
 Route::group(['middleware' => ['auth',]], function () {
     Route::resource('/dashboard', DashboarController::class);
     Route::resource('/kategoris', KategoriController::class);

@@ -5,7 +5,7 @@ Ocoding | Dashboard - {{ $title }}
 @section('content')
 <div class="container mt-2">
     <div class="row">
-       <div class="col-12">
+        <div class="col-12">
           <div class="card">
                 <div class="card-header text-center">
                     <h1> Buat Pengumuman </h1> 
@@ -13,18 +13,18 @@ Ocoding | Dashboard - {{ $title }}
                 <div class="card-body">
                     <form action="{{ route('pengumuman.store') }}" method="POST">
                         @csrf
-                        <div class="form-group text-center">
-                            <label>Judul</label>
-                            <input type="text" name="judul"  class="form-control  @error('judul') is-invalid @enderror" autofocus>
+                        <div class="form-group">
+                            <label><h4>Judul</h4></label>
+                            <input type="text" name="judul"  class="form-control  @error('judul') is-invalid @enderror" autofocus style="text-transform: capitalize;">
                             @error('judul')
                             <span class="invalid-feedback" role="alert">
                               <strong>{{ $message }}</strong>
                             </span>
                           @enderror
                         </div>
-                        <div class="form-group text-center">
-                            <label><h5>Isi</h5></label>
-                            <textarea type="text" name="isi"  class="form-control  @error('isi') is-invalid @enderror" rows="15" autofocus></textarea>
+                        <div class="form-group">
+                            <label><h4>Isi</h4></label>
+                            <textarea type="text" name="isi" id="inputPengumuman" class="form-control  @error('isi') is-invalid @enderror" rows="15" autofocus></textarea>
                             @error('isi')
                             <span class="invalid-feedback" role="alert">
                               <strong>{{ $message }}</strong>
@@ -42,6 +42,27 @@ Ocoding | Dashboard - {{ $title }}
        </div>
     </div>
 </div>
-
-
-    @endsection
+@endsection
+@push('javascript-external')
+ {{-- Tinymce5 --}}
+ <script src="{{ asset('vendor/tinymce5/jquery.tinymce.min.js') }}"></script>
+ <script src="{{ asset('vendor/tinymce5/tinymce.min.js') }}"></script>
+@endpush
+@push('javascript-internal')
+<script>
+  $(function(){
+    $("#inputPengumuman").tinymce({
+      relative_urls: false,
+      language: "en",
+      plugins: [
+        "advlist autolink lists link image charmap print preview hr anchor pagebreak",
+        "searchreplace wordcount visualblocks visualchars code fullscreen",
+        "insertdatetime media nonbreaking save table directionality",
+        "emoticons template paste textpattern",
+      ],
+      toolbar1: "fullscreen preview",
+      toolbar2: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media",
+    });
+  })
+</script>
+@endpush

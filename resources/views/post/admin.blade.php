@@ -56,7 +56,7 @@ Ocoding | Dashboard - {{ $title }}
                                     <h5>{{ $post->judul }}</h5>
                                     <p>
                                         {{ str_word_count($post->deskripsi) > 60 ? substr("$post->deskripsi",0,200).".." : $post->deskripsi  }}
-                                    </p>
+                                    </p>                            
                                     <div class="float-left">
                                         dibuat Oleh: {{ucwords($post->dataUser->name) }} <br>
                                         @if($post->status == ('publish'))

@@ -58,7 +58,7 @@
                                     <div class="col-lg-6-md-6">
                                         <!-- thumbnail:start -->
                                         <!-- true -->
-                                        <img class="img-fluid rounded" src="{{ asset('storage/.' . $dtpost->thumbnail) }}"
+                                        <img class="img-fluid rounded" src="{{ asset('storage/..' . $dtpost->thumbnail) }}"
                                             alt="Post">
                                     </div>
                                     {{-- <div class="col-lg-6"> --}}
@@ -123,5 +123,39 @@
         @endif
         <!-- pagination:End -->
     </main>
-    
+    <div class="container-fluid px-0 py-5">
+        <div class="row mx-0 justify-content-center pt-5">
+            <div class="col-lg-6">
+                <div class="section-title text-center position-relative mb-4">
+                    <h3 class="display-4">Pengumuman</h3>
+                </div>
+            </div>
+            <main class="container border py-5">
+                <div class="row g-5 ">
+                    <div class="row ml-2 mr-2">
+                        <div class="col">   
+                            @foreach ( $notif as $pengumuman)
+                            <div class="card border-primary mt-3 mb-1">
+                                <div class="card-header text-bg-info">
+                                    <button class="btn btn-outline  btn-block" data-bs-toggle="collapse" data-bs-target="#collapse{{ $pengumuman->id }}" aria-expanded="false" aria-controls="collapseWidthExample">
+                                        {{ $pengumuman->judul }}
+                                    </button>
+                                </div>
+                                <div class="collapse collapse-horizontal" id="collapse{{ $pengumuman->id }}">
+                                <div class="card-body">
+                                    {{ $pengumuman->isi }}
+                                </div>
+                                <div class="card-footer mx-auto text-center bg-info text-white" style="width: 90%;">
+                                {{ $pengumuman->created_at }}
+                                </div> 
+                                </div>                   
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
 @endsection

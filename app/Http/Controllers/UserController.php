@@ -90,8 +90,9 @@ class UserController extends Controller
         $profil =  Profil::create([
             'user_id' =>  $user->id,
         ]);
-        Alert::success('Success', 'Akun Berhasil DiTambahkan!');
-        return redirect('/user');
+        return response()->json([
+            'success' => true
+        ]);
     }
 
     /**
@@ -168,10 +169,12 @@ class UserController extends Controller
             User::destroy($user->id);
             $user->removeRole($user->roles->first());
         } catch (\Throwable $th) {
-            Alert::success('Success', 'Akun Berhasil DiHapus!');
-            return redirect('/user');
+            return response()->json([
+                'success' => false,
+            ]);
         }
-        Alert::success('Success', 'Akun Berhasil DiHapus!');
-        return redirect('/user');
+        return response()->json([
+            'success' => true,
+        ]);
     }
 }

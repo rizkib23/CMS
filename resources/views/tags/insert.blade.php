@@ -1,39 +1,26 @@
-@extends('../layouts/dashboard')
-@section('title')
-Ocoding | Dashboard - {{ $title }}
-@endsection
-@section('content')
-
-<div class="container mt-2">
-    <div class="row">
-       <div class="col-12">
-          <div class="card">
-                <div class="card-header text-center">
-                    <h1> Tambah Tag</h1> 
-                </div>
-                <div class="card-body">
-                    <form action="{{ route('tags.store') }}" method="POST">
+<div class="modal fade" id="modalCreate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalHeading"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+                <div class="modal-body">
+                    <form action="" id="tagForm" method="POST">
                         @csrf
                         <div class="form-group">
                             <label>Nama Tag</label>
-                            <input type="text" name="name" required  class="form-control @error('name') is-invalid @enderror" autofocus value="{{ old('name') }}">
-                            @error('name')
-                            <span class="invalid-feedback" role="alert">
-                              <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
+                            <input type="hidden" name="id" id="id">
+                            <input type="text" style="text-transform: capitalize;" name="name" id="name" placeholder="Masukkan Nama Tag" required  class="form-control" autofocus>
                         </div>
                         <div class="float-right">
-                            <button type="submit" class="btn btn-success px-3 berhasil">SIMPAN</button>
+                            <button type="submit" id="tagSave" class="btn btn-success px-3 berhasil">SIMPAN</button>
                             <button type="reset" class="btn btn-danger px-3">RESET</button>
-                            <a class="btn btn-warning px-3" href="{{ route('tags.index') }}">KEMBALI</a>
                         </div>
                     </form>
                 </div>
-          </div>
-       </div>
+        </div>
     </div>
 </div>
-
-
-    @endsection

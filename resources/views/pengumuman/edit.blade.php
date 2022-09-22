@@ -5,7 +5,7 @@ Ocoding | Dashboard - {{ $title }}
 @section('content')
 <div class="container mt-2">
     <div class="row">
-       <div class="col-12">
+        <div class="col-12">
           <div class="card">
                 <div class="card-header text-center">
                     <h1> Buat Pengumuman </h1> 
@@ -16,7 +16,7 @@ Ocoding | Dashboard - {{ $title }}
                         @csrf
                         <div class="form-group text-center">
                             <label><h5>Judul</h5></label>
-                            <input type="text" name="judul" required class="form-control @error('judul') is-invalid @enderror" value="{{ old('judul', $pengumuman->judul) }}" autofocus >
+                            <input type="text" name="judul" required class="form-control @error('judul') is-invalid @enderror" value="{{ old('judul', $pengumuman->judul) }}" style="text-transform: capitalize;" autofocus >
                             @error('judul')
                             <span class="invalid-feedback" role="alert">
                               <strong>{{ $message }}</strong>
@@ -40,7 +40,7 @@ Ocoding | Dashboard - {{ $title }}
                     </form>
                 </div>
           </div>
-       </div>
+        </div>
     </div>
 </div>
 

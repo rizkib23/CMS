@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use illuminate\Support\Str;
 use RealRashid\SweetAlert\Facades\Alert;
+use Yajra\DataTables\Facades\DataTables;
 
 class TagController extends Controller
 {
@@ -25,13 +26,24 @@ class TagController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $tag =  Tag::orderBy('id', 'desc')->get();
+        if ($request->ajax()) {
+            $allData = DataTables::of($tag)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $btn = '<div class="text-center"><a href="javascript:void(0)" id="editTag" data-toggle="tooltip" data-id=" ' . $row->id . '" data-original-title="Edit" class="edit btn-sm btn btn-primary"><i class="fas fa-pencil-alt"></i></a>';
+                    $btn .= '<a href="javascript:void(0)" id="hapusTag" data-toggle="tooltip" data-original-title="Delete" data-id="' . $row->id . '" class="delete btn-sm btn btn-danger"><i class="fas fa-trash"></i></a></div>';
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+            return $allData;
+        }
         $content = [
             'title' => 'Tag',
-            'tags' => $tag
-
+            'tag' => $tag
         ];
         return view('tags/admin', $content);
     }
@@ -56,12 +68,13 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
-        $tags = Tag::create([
+        Tag::updateOrCreate(['id' => $request->id], [
             'name' => $request->name,
             'slug' => Str::slug($request->name, '-'),
         ]);
-        Alert::success('Success', 'Tag Berhasil DiTambahkan!');
-        return redirect()->route('tags.index');
+        return response()->json([
+            'success' => true,
+        ]);
     }
 
     /**
@@ -84,11 +97,11 @@ class TagController extends Controller
     public function edit($id)
     {
         $tags = Tag::find($id);
-        $content = [
-            'title' => 'Tag',
-            'tags' => $tags
-        ];
-        return view('tags.edit', $content);
+        // $content = [
+        //     'title' => 'Tag',
+        //     'tags' => $tags
+        // ];
+        return response()->json($tags);
     }
 
     /**
@@ -127,17 +140,13 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Tag $tag)
+    public function destroy($id)
     {
-
-
-        try {
-            Tag::find($tag->id)->delete();
-        } catch (\Throwable $th) {
-            Alert::error('Error', 'Tag Gagal Dihapus!', ['error' => $th->getMessage()]);
-            return redirect('/tags');
-        }
-        return redirect()->route('tags.index')
-            ->with('success', 'User deleted successfully');
+        $a = Tag::find($id);
+        $a->delete();
+        return response()->json([
+            'success' => true,
+            'message' => 'Data Post Berhasil Dihapus!.',
+        ]);
     }
 }

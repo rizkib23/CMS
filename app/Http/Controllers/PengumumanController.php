@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use RealRashid\SweetAlert\Facades\Alert;
+use Yajra\DataTables\Facades\DataTables;
 
 class PengumumanController extends Controller
 {
@@ -26,9 +27,14 @@ class PengumumanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $pengumuman = Pengumuman::all();
+        $pengumuman = Pengumuman::orderBy('id', 'desc')->get();
+        if ($request->ajax()) {
+            $allData = DataTables::of($pengumuman);
+            return $allData;
+        }
+
         $conten = [
             'pengumuman' => $pengumuman,
             'title' => 'Pengumumna'
@@ -43,10 +49,14 @@ class PengumumanController extends Controller
      */
     public function create(Request $request, Pengumuman $pengumuman)
     {
-        return view('pengumuman.create', [
+
+        $conten = [
             'pengumuman' => $pengumuman,
             'user' => Auth::user()->id,
-        ]);
+            'title' => "Pengumuman"
+        ];
+
+        return view('pengumuman.create', $conten);
     }
 
     /**
@@ -83,8 +93,11 @@ class PengumumanController extends Controller
      */
     public function show($id)
     {
-        return view('pengumuman.detail', [
-            'pengumuman' => Pengumuman::find($id),
+
+        $pengumunan = Pengumuman::find($id);
+
+        return response()->json([
+            $pengumunan
         ]);
     }
 
@@ -96,9 +109,11 @@ class PengumumanController extends Controller
      */
     public function edit($id)
     {
-        return view('pengumuman.edit', [
+        $conten = [
             'pengumuman' => Pengumuman::find($id),
-        ]);
+            'title' => 'Pengumuman'
+        ];
+        return view('pengumuman.edit', $conten);
     }
 
     /**
@@ -134,7 +149,8 @@ class PengumumanController extends Controller
     public function destroy(Pengumuman $pengumuman)
     {
         $pengumuman->delete($pengumuman->id);
-        Alert::success('Success', 'Pengumuman Berhasil Dihapus!');
-        return redirect('/pengumuman');
+        return response()->json([
+            'success' => true
+        ]);
     }
 }
