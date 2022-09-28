@@ -6,22 +6,22 @@ Ocoding | Dashboard - {{ $title }}
 @section('content')
     <div class="row">
         <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">
+            <div class="card mr-2 ml-2 border-info bg-light">
+                <div class="card-header bg-primary">
                     <div class="row">
                         <div class="col-md-6">
                             <form action="" method="GET" class="form-inline form-row">
                                {{-- filter Post:Status --}}
                                 <div class="col">
                                     <div class="input-group mx-1">
-                                        <label class="font-weight-bold mr-2">Status</label>
+                                        <label class="font-weight-bold mr-2 text-white">Status</label>
                                         <select name="status" class="custom-select">
                                             @foreach ($statuses as $value => $label)
                                                 <option value="{{ $value }}" {{ $statusSelected == $value ? "selected" : null }}>{{ $label }}</option>
                                             @endforeach
                                         </select>
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary" type="submit">Apply</button>
+                                        <div class="input-group-append ">
+                                            <button class="btn btn-info text-white" type="submit">Apply</button>
                                         </div>
                                     </div>
                                 </div>
@@ -31,7 +31,7 @@ Ocoding | Dashboard - {{ $title }}
                                         <input name="keyword" value="{{ request()->get('keyword') }}" type="search" class="form-control"
                                             placeholder="Search for posts">
                                         <div class="input-group-append">
-                                            <button class="btn btn-primary" type="submit">
+                                            <button class="btn btn-info" type="submit">
                                                 <i class="fas fa-search"></i>
                                             </button>
                                         </div>

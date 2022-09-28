@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Tag;
 use App\Models\Post;
 use App\Models\Kategori;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DashboarController extends Controller
 {
@@ -29,11 +31,14 @@ class DashboarController extends Controller
         $posts = Post::count();
         $tags = Tag::count();
         $kategoris = Kategori::count();
+
+        $user = User::role('user')->get()->count();
         return view('dashboard', [
             'title' => 'Dashboard',
             'posts' => $posts,
             'tags' => $tags,
-            'kategoris' => $kategoris
+            'kategoris' => $kategoris,
+            'user' => $user,
         ]);
     }
 }

@@ -1,18 +1,20 @@
 @extends('layouts.main')
-
+@section('title')
+Ocoding Blog |
+@endsection
 @section('container')
-<div class="container mt-5">
+<div class="container mt-3">
     <div class="row">
       <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-8 offset-lg-2 col-xl-8 offset-xl-2">
-        <div class="card card-primary">
-          <div class="card-header text-center"><h4>Register</h4></div>
+        <div class="card card-primary border-info">
+          <div class="card-header text-center bg-light"><h4>Register</h4></div>
 
           <div class="card-body">
             <form method="POST" action="{{ route('register') }}">
                 @csrf
                 <div class="form-group">
                   <label for="name">Name</label>
-                  <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" autofocus value="{{ old('name') }}">
+                  <input id="name" autocomplete="off" type="text" class="form-control @error('name') is-invalid @enderror" name="name" autofocus value="{{ old('name') }}">
                     @error('name')
                       <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -22,7 +24,7 @@
 
               <div class="form-group">
                 <label for="email">Email</label>
-                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}">
+                <input id="email" type="email" autocomplete="off" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}">
                 @error('email')
                   <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>

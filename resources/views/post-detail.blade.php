@@ -9,8 +9,8 @@ Ocoding Blog | {{ $title }}
     <!-- Title:start -->
     <main class="container border py-2">
         <div class="col-md-8">
-            <h2 class="mt-4 mb-3">
-                {{ $posts->judul }}
+            <h2 class="mt-4 mb-3 text-center">
+                {{ ucwords($posts->judul) }}
             </h2>
         </div>
         <!-- Title:end -->
@@ -35,9 +35,9 @@ Ocoding Blog | {{ $title }}
             <!-- Sidebar Widgets Column:start -->
             <div class="col-lg-4 col-xl-4 col-md-12 col-sm-12">
                 <!-- Categories Widget -->
-                <div class="card mb-4">
+                <div class="card mb-4 border-info">
                     <div class="col-md-12">
-                        <h5 class="card-header">
+                        <h5 class="card-header bg-light fw-bold">
                             <img class="img-kategori rounded-circle" src="/image/kategori.png" width="25px">
                             Kategori
                         </h5>
@@ -55,9 +55,9 @@ Ocoding Blog | {{ $title }}
                 </div>
 
                 <!-- Side Widget tags:start -->
-                <div class="card mb-4">
+                <div class="card border-info mb-4">
                     <div class="col-md-12">
-                    <h5 class="card-header">
+                    <h5 class="card-header bg-light fw-bold">
                         <img class="img-tag rounded-circle" src="/image/tag.png" width="25px">
                         Tags
                     </h5>
@@ -74,9 +74,9 @@ Ocoding Blog | {{ $title }}
                     </div>
                 </div>
                 <!-- Side Widget tags:start -->
-                <div class="card mb-4">
+                <div class="card border-info mb-4">
                     <div class="col-md-12">
-                    <h5 class="card-header">
+                    <h5 class="card-header bg-light fw-bold">
                         <img class="img-deskripsi rounded-circle" src="/img/card-text.svg" width="25px">
                         Deskripsi
                     </h5>
@@ -91,159 +91,158 @@ Ocoding Blog | {{ $title }}
                 </div>
             </div>
             <!-- Sidebar Widgets Column:end -->
+        
+        <div class="card-header border-info bg-light">
+            
+            <button class="btn btn-outline-info float-start " type="button" data-bs-toggle="collapse" data-bs-target="#formKomentar" aria-expanded="false" aria-controls="collapseWidthExample" id="edit">
+                <i class="bi bi-chat"></i><span class="">Komentar</span>
+            </button>
         </div>
-    </main>
-    <div class="col-12 d-flex">
-      <div class="card flex-fill w-100">
-         <div class="card-header">
-            <span class="badge bg-info float-end">Komentar</span>
-         </div>
-         <div class="card-body">
-            @foreach($posts->dataKomen->where('parent', 0) as $komentar)
+        <div class="card-body collapse collapse-horizontal" id="formKomentar">
+                @foreach($posts->dataKomen->where('parent', 0) as $komentar)
             <div class="d-flex align-items-start">
-               @if($komentar->dataUser->dataProfil->foto)
-               <img src="{{ asset('storage/' . $komentar->dataUser->dataProfil->foto) }}" width="36" height="36" class="rounded-circle me-2" alt="{{ $komentar->dataUser->name }}">
-               @else
-               <img src="{{ asset('img/profil.jpg') }}" class="rounded-circle me-2" width="36" height="36">
-               @endif     
-               <div class="flex-grow-1">
-                  <small class="float-end">{{ $komentar->updated_at }}</small>
-                  <strong>{{ ucwords($komentar->dataUser->name)  }}</strong> mengomentari postingan dari <strong>{{ ucwords($posts->dataUser->name) }}</strong><br />
-                  <small class="text-muted">{{ $komentar->created_at }}</small>
-   
-                  <div class="border text-sm text-muted p-2 mt-1">
-                     {{ $komentar->isi }}
-                  </div>
-                 
-                  @if(Auth::check() == true)
-                  @if(Auth::user()->id == $komentar->user_id)
-                   {{-- hapus --}}
-                   <form class="d-inline" role="alert" alert-title="Apakah Kamu Yakin?" alert-text="Data akan dihapus" action="{{ route('komen.destroy',['koman'=>$komentar->id] ) }}" method="POST">
-                     @csrf
-                     @method('DELETE')
-                     @can('komentar_delet')
-                     <button type="submit" class="btn btn-outline">
-                          <i class="fas fa-trash"></i>Hapus
-                     </button>
-                     @endcan
-                 </form>
-                 {{-- edit button --}}
-                 <button class="btn btn-outline" type="button" data-bs-toggle="collapse" data-bs-target="#edit{{ $komentar->id }}" aria-expanded="false" aria-controls="collapseWidthExample" id="edit">
-                  <i class="fa fa-edit"></i>Edit
-                </button>
-                @else
-                @endif
-                @endif 
+                    @if($komentar->dataUser->dataProfil->foto)
+                        <img src="{{ asset('storage/' . $komentar->dataUser->dataProfil->foto) }}" width="36" height="36" class="rounded-circle me-2" alt="{{ $komentar->dataUser->name }}">
+                    @else
+                        <img src="{{ asset('img/profil.jpg') }}" class="rounded-circle me-2" width="36" height="36">
+                    @endif     
+                <div class="flex-grow-1">
+                    <small class="float-end">
+                        {{ $komentar->updated_at }}
+                    </small>
+                    <strong>
+                        {{ ucwords($komentar->dataUser->name)  }}
+                    </strong> mengomentari postingan dari <strong>{{ ucwords($posts->dataUser->name) }}</strong><br/>
+                    <small class="text-muted">
+                        {{ $komentar->created_at }}
+                    </small>  
+                    <div class="border text-sm text-muted p-2 mt-1">
+                        {{ $komentar->isi }}
+                    </div>                
+                    @if(Auth::check() == true)
+                        @if(Auth::user()->id == $komentar->user_id)
+                            {{-- hapus --}}
+                            <form class="d-inline" role="alert" alert-title="Apakah Kamu Yakin?" alert-text="Data akan dihapus" action="{{ route('komen.destroy',['koman'=>$komentar->id] ) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                @can('komentar_delet')
+                                    <button type="submit" class="btn btn-outline">
+                                        <i class="fas fa-trash"></i>Hapus
+                                    </button>
+                                @endcan
+                            </form>
+                            {{-- edit button --}}
+                            <button class="btn btn-outline" type="button" data-bs-toggle="collapse" data-bs-target="#edit{{ $komentar->id }}" aria-expanded="false" aria-controls="collapseWidthExample" id="edit">
+                                <i class="fa fa-edit"></i>Edit
+                            </button>
+                        @else
+                        @endif
+                    @endif 
                 {{-- balas --}}
                 <button class="btn btn-outline inline" type="button" data-bs-toggle="collapse" data-bs-target="#balas{{ $komentar->id }}" aria-expanded="false" aria-controls="collapseWidthExample" id="balas">
-                  <i class="bi bi-reply"></i> Balas
-               </button>
-                 {{-- edit --}}
-                 <div class="collapse collapse-horizontal mt-4" id="edit{{ $komentar->id }}">
-                  <form action="{{ route('komen.update', ['koman'=>$komentar->id]) }}" method="POST">
-                     @method('put')
-                           @csrf
-                     <div class="form-group">
-                        <input type="hidden" name="post_id" value="{{ $posts->id }}">
-                        <input type="hidden" name="parent" value="0">
-                        <textarea id="input_post_deskripsi" name="isi" value="{{ old('isi') }}" placeholder="Masukkan komentar" class=" form-control @error('isi') is-invalid @enderror"
-                            rows="1"></textarea>
-                            @error('isi')
-                            <span class="invalid-feedback" role="alert">
-                              <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                            <div class="mt-2">
-                            <button class="btn btn-sm btn-outline-info" type="submit"><i class="bi bi-send-fill"></i>Kirim</button>
+                    <i class="bi bi-reply"></i> Balas
+                </button>
+                {{-- edit --}}
+                <div class="collapse collapse-horizontal mt-4" id="edit{{ $komentar->id }}">
+                    <form action="{{ route('komen.update', ['koman'=>$komentar->id]) }}" method="POST">
+                        @method('put')
+                        @csrf
+                            <div class="form-group">
+                                <input type="hidden" name="post_id" value="{{ $posts->id }}">
+                                <input type="hidden" name="parent" value="0">
+                                <textarea id="input_post_deskripsi" name="isi" placeholder="Masukkan komentar" class=" form-control" required
+                                rows="1"></textarea>
+                                <div class="mt-2">
+                                    <button class="btn btn-sm btn-outline-info" type="submit"><i class="bi bi-send-fill"></i>Kirim</button>
+                                </div>
                             </div>
-                    </div>
-                  </form>
-               </div>
-                  {{-- balas komen --}}
-                  <div class="collapse collapse-horizontal mt-4" id="balas{{ $komentar->id }}">
-                     <form action="{{ route('komen.store') }}" method="POST">
+                    </form>
+                </div>
+                {{-- balas komen --}}
+                <div class="collapse collapse-horizontal mt-4" id="balas{{ $komentar->id }}">
+                    <form action="{{ route('komen.store') }}" method="POST">
                         @csrf
                         <div class="form-group">
-                           <input type="hidden" name="post_id" value="{{ $posts->id }}">
-                           <input type="hidden" name="parent" value="{{ $komentar->id }}">
-                           <textarea id="input_post_deskripsi" name="isi" value="{{ old('isi') }}" placeholder="Masukkan komentar" class=" form-control @error('isi') is-invalid @enderror"
-                               rows="1"></textarea>
-                               @error('isi')
-                               <span class="invalid-feedback" role="alert">
-                                 <strong>{{ $message }}</strong>
-                               </span>
-                               @enderror
-                               <div class="mt-2">
-                               <button class="btn btn-sm btn-outline-info" type="submit"><i class="bi bi-send-fill"></i>Kirim</button>
-                               </div>
-                       </div>
-                     </form>
-                  </div>
-                  {{-- balasan komentar --}}
-                     @foreach($komentar->dataChilds as $balasan)
-                     <div class="d-flex align-items-start">
-                        <img src="{{ asset('storage/' . $balasan->dataUser->dataProfil->foto) }}" width="36" height="36" class="rounded-circle me-2" alt="{{ $balasan->dataUser->name }}">
-                        <div class="flex-grow-1">
-                           <small class="float-end">{{ $balasan->updated_at }}</small>
-                           <strong>{{ ucwords($balasan->dataUser->name)  }}</strong> membalas komentar dari <strong>{{ ucwords($komentar->dataUser->name) }}</strong><br />
-                           <small class="text-muted">{{ $balasan->created_at }}</small>
-   
-                           <div class="border text-sm text-muted p-2 mt-1">
-                              {{ $balasan->isi }}
-                           </div>
-   
+                            <input type="hidden" name="post_id" value="{{ $posts->id }}">
+                            <input type="hidden" name="parent" value="{{ $komentar->id }}">
+                            <textarea id="input_post_deskripsi" name="isi" placeholder="Masukkan komentar" class=" form-control" required
+                                rows="1"></textarea>
+                                <div class="mt-2">
+                                    <button class="btn btn-sm btn-outline-info" type="submit"><i class="bi bi-send-fill"></i>Kirim</button>
+                                </div>
                         </div>
-                     </div>
-   
-                     <hr />
-                     @endforeach
-                     {{-- end --}}
-                  </div>
-               </div>
-               @endforeach
-               <form action="{{ route('komen.store') }}" method="POST">
-                  @csrf
-                  <div class="form-group">
-                     <input type="hidden" name="post_id" value="{{ $posts->id }}">
-                     <input type="hidden" name="parent" value="0">
-                     <textarea id="input_post_deskripsi" name="isi" value="{{ old('isi') }}" placeholder="Masukkan komentar" class=" form-control @error('isi') is-invalid @enderror"
-                         rows="3"></textarea>
-                         @error('isi')
-                         <span class="invalid-feedback" role="alert">
-                           <strong>{{ $message }}</strong>
-                         </span>
-                         @enderror
-                         <div class="mt-2">
-                         <button class="btn btn-outline-success" type="submit"><i class="bi bi-send-fill"></i> Kirim</button>
-                         </div>
-                 </div>
-               </form>
-            </div>      
-         </div>
-      </div>
-   </div>
-   @include('sweetalert::alert')
-   @endsection
-   @push('javascript-internal')
-       <script>
-           $(document).ready(function(){
-               $("form[role='alert']").submit(function(event) {
-                   event.preventDefault();
-                   Swal.fire({
-                       title: "Apakah anda Yakin?",
-                       text: "Data akan dihapus",
-                       icon: 'warning',
-                       allowOutsideClick: false,
-                       showCancelButton: true,
-                       cancelButtonText: "Batalkan",
-                       reverseButtons: true,
-                       confirmButtonText: "Konfirmasi",
-                       }).then((result) => {
-                       if (result.isConfirmed) {
-                           // todo: process of deleting categories
-                           event.target.submit();
-                       }
-                       });
-               });
-           }); 
-       </script>
+                    </form>
+                </div>
+                {{-- balasan komentar --}}
+                    @foreach($komentar->dataChilds as $balasan)
+                        <div class="d-flex align-items-start">
+                            @if($balasan->dataUser->dataProfil->foto)
+                                <img src="{{ asset('storage/' .$balasan->dataUser->dataProfil->foto ) }}" width="36" height="36" class="rounded-circle me-2" alt="{{ $balasan->dataUser->name }}">
+                            @else
+                                <img src="{{ asset('img/profil.jpg') }}" class="rounded-circle me-2" width="36" height="36">
+                            @endif
+                            <div class="flex-grow-1">
+                                <small class="float-end">{{ $balasan->updated_at }}</small>
+                                <strong>{{ ucwords($balasan->dataUser->name)  }}</strong> membalas komentar dari <strong>{{ ucwords($komentar->dataUser->name) }}</strong><br />
+                                <small class="text-muted">{{ $balasan->created_at }}</small>
+                                <div class="border text-sm text-muted p-2 mt-1">
+                                    {{ $balasan->isi }}
+                                </div>
+                                    {{-- hapus --}}
+                                    <form class="d-inline" role="alert" alert-title="Apakah Kamu Yakin?" alert-text="Data akan dihapus" action="{{ route('komen.destroy',['koman'=>$balasan->id] ) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        @can('komentar_delet')
+                                            <button type="submit" class="btn btn-outline">
+                                                <i class="fas fa-trash"></i>Hapus
+                                            </button>
+                                        @endcan
+                                    </form>
+                                    {{-- edit button --}}
+                                @if(Auth::check() == true)
+                                    @if ($balasan->user_id == Auth::user()->id)
+                                        <button class="btn btn-outline" type="button" data-bs-toggle="collapse" data-bs-target="#editBalasan{{ $balasan->id }}" aria-expanded="false" aria-controls="collapseWidthExample" id="edit">
+                                            <i class="fa fa-edit"></i>Edit
+                                        </button>
+                                    @endif
+                                @endif
+                            </div>
+                        </div>
+                        <div class="collapse collapse-horizontal mt-4" id="editBalasan{{ $balasan->id }}">
+                            <form action="{{ route('komen.update', ['koman'=>$balasan->id]) }}" method="POST">
+                                @method('put')
+                                @csrf
+                                    <div class="form-group">
+                                        <input type="hidden" name="post_id" value="{{ $balasan->id }}">
+                                        <input type="hidden" name="parent" value="{{ $balasan->parent }}">
+                                        <textarea id="input_post_deskripsi" name="isi" placeholder="Masukkan komentar" class=" form-control" required
+                                        rows="1"></textarea>
+                                        <div class="mt-2">
+                                            <button class="btn btn-sm btn-outline-info" type="submit"><i class="bi bi-send-fill"></i>Kirim</button>
+                                        </div>
+                                    </div>
+                            </form>
+                        </div>
+                        <hr/>
+                    @endforeach
+                    {{-- end --}}
+                </div>
+            </div>
+            @endforeach
+                <form action="{{ route('komen.store') }}" method="POST">
+                    @csrf
+                    <div class="form-group">
+                        <input type="hidden" name="post_id" value="{{ $posts->id }}">
+                        <input type="hidden" name="parent" value="0">
+                        <textarea id="input_post_deskripsi" name="isi" autofocus placeholder="Masukkan komentar" class=" form-control"
+                            rows="3"></textarea>
+                            <div class="mt-2">
+                                <button class="btn btn-outline-success" type="submit"><i class="bi bi-send-fill"></i> Kirim</button>
+                            </div>
+                    </div>
+                </form>
+            </div>          
+</div>
+</main>
+@include('sweetalert::alert')
+@endsection

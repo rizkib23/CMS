@@ -13,11 +13,11 @@
     <div class="bg-info position-relative overlay-bottom py-4" style="margin-bottom: auto">
         <div class="text-center">
             <img src="/img/grid-fill.svg" width="100px" class="img-fluid" alt="Post">
+            <h1 class="text-white mt-4 mb-4">Post</h1>
         </div>
-        <h1 class="text-white mt-4 mb-4 text-center">Post</h1>
-    </div>
-    <br>
-    <main class="container border py-5">
+        
+    </div>  
+    <main class="container border py-5 mt-5">
         <div class="row">
             <div class="col">
                 <!-- Post list:start -->
@@ -28,7 +28,7 @@
                                 <div class="col-lg-6">
                                     <!-- thumbnail:start -->
                                     <!-- true -->
-                                    <img class="img-fluid rounded" src="{{ asset('storage/.' . $dtpost->thumbnail) }}"
+                                    <img class="img-fluid rounded" src="{{ asset('storage/..' . $dtpost->thumbnail) }}"
                                         alt="Post">
                                 </div>
                                 <div class="col-lg-6 my-2">

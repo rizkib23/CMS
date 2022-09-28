@@ -7,8 +7,8 @@ Ocoding | Dashboard - {{ $title }}
 <div class="container mt-2">
     <div class="row">
       <div class="col-md-12">
-        <div class="card">
-          <div class="card-header text-center">
+        <div class="card border-info bg-light">
+          <div class="card-header text-center bg-primary text-white">
             <h1> Role {{ $roles->name }}</h1>
           </div>
           <div class="card-body">
@@ -36,7 +36,9 @@ Ocoding | Dashboard - {{ $title }}
 
             </div>
               <div class="d-flex justify-content-end">
-                <a href="/roles" class="btn btn-primary">kembali</a>
+                <a class="btn btn-outline-warning px-4" href="/roles">
+                  <i class="bi bi-backspace"></i>Back
+                </a>
               </div>
             </div>
           </div>

@@ -31,7 +31,7 @@ class Post extends Model
     public function getUpdatedAtAttribute()
     {
         return \Carbon\Carbon::parse($this->attributes['updated_at'])
-            ->format('d, M Y H:i');
+            ->format('d, M Y');
     }
     public function dataKategori()
     {

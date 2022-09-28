@@ -6,8 +6,8 @@ Ocoding | Dashboard - {{ $title }}
 <div class="container mt-2">
     <div class="row">
         <div class="col-12">
-          <div class="card">
-                <div class="card-header text-center">
+          <div class="card border-info bg-light">
+                <div class="card-header text-center text-white bg-info">
                     <h1> Buat Pengumuman </h1> 
                 </div>
                 <div class="card-body">
@@ -15,7 +15,7 @@ Ocoding | Dashboard - {{ $title }}
                         @csrf
                         <div class="form-group">
                             <label><h4>Judul</h4></label>
-                            <input type="text" name="judul"  class="form-control  @error('judul') is-invalid @enderror" autofocus style="text-transform: capitalize;">
+                            <input type="text" name="judul" autocomplete="off" class="form-control  @error('judul') is-invalid @enderror" autofocus style="text-transform: capitalize;">
                             @error('judul')
                             <span class="invalid-feedback" role="alert">
                               <strong>{{ $message }}</strong>
@@ -32,9 +32,15 @@ Ocoding | Dashboard - {{ $title }}
                           @enderror
                         </div>
                         <div class="float-right">
-                            <button type="submit" class="btn btn-success px-3 berhasil">SIMPAN</button>
-                            <button type="reset" class="btn btn-danger px-3">RESET</button>
-                            <a class="btn btn-warning px-3" href="/pengumuman">KEMBALI</a>
+                          <a class="btn btn-outline-warning px-4" href="/pengumuman">
+                              <i class="bi bi-backspace"></i>Back
+                          </a>
+                          <button type="reset" class="btn btn-outline-danger px-4">
+                              <i class="bi bi-arrow-counterclockwise"></i>Reset
+                          </button>
+                          <button type="submit" class="btn btn-outline-primary px-4">
+                              <i class="bi bi-save2"></i> Save
+                          </button>
                         </div>
                     </form>
                 </div>

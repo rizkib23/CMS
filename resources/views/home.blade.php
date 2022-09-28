@@ -53,25 +53,34 @@
                     @forelse ($posts as $dtpost)
                         <div class="col-6">
                             <!-- Post list:start -->
-                            <div class="card mb-4">
+                            <div class="card mb-4 border-info" style="height: 31rem;">
                                 <div class="card-body">
                                     <div class="col-lg-6-md-6">
                                         <!-- thumbnail:start -->
                                         <!-- true -->
                                         <img class="img-fluid rounded" src="{{ asset('storage/..' . $dtpost->thumbnail) }}"
                                             alt="Post">
-                                    </div>
-                                    {{-- <div class="col-lg-6"> --}}
-                                    <br>
-                                    <h2 class="card-title">{{ $dtpost->judul }}</h2>
+                                    </div>                                  
+                                    <div class="card-title mt-1">
+                                        <h2>
+                                            {{ $dtpost->judul }}
+                                        </h2>
+                                    </div> 
+                                    <a href="{{ route('post-kategori', ['slug' => $dtpost->dataKategori->slug]) }}" class="badge badge-info ">
+                                        {{ $dtpost->dataKategori->name }}
+                                    </a>
                                     <p class="card-text">
-                                        {{ str_word_count($dtpost->deskripsi) > 10 ? substr("$dtpost->deskripsi", 0, 50) . ' ..' : $dtpost->deskripsi }}
+                                        {{ str_word_count($dtpost->deskripsi) > 20 ? substr("$dtpost->deskripsi", 0, 70) . ' ..' : $dtpost->deskripsi }}
                                     </p>
                                     <a href="{{ route('post-detail', ['slug' => $dtpost->slug]) }}" class="btn btn-primary">
                                         Selengkapnya
                                     </a>
-                                    {{-- </div> --}}
-                                </div>
+                                </div> 
+                                    <div class="card-footer position-absolut bg-light">
+                                        <img src="{{ asset('storage/' .$dtpost->dataUser->dataProfil->foto) }}" width="30" height="30" class="rounded-circle me-2" alt="">
+                                            {{ ucwords($dtpost->dataUser->name) }}
+                                            <p>diPublikasikan {{ $dtpost->updated_at }}</p> 
+                                    </div>
                             </div>
 
                             <!-- Post list:end -->
@@ -90,8 +99,8 @@
             <!-- Sidebar Widgets Column:start -->
             <div class="col-lg-4 col-xl-4 col-md-12 col-sm-12">
                 <!-- tag Widget -->
-                <div class="card mb-5">
-                    <h5 class="card-header">
+                <div class="card mb-5 border-info">
+                    <h5 class="card-header text-dark bg-light">
                         <img class="img-tag rounded-circle" src="image/tag.png" width="25px">
                         Tag
                     </h5>
@@ -100,7 +109,7 @@
                         @forelse ($tag as $dttag)
                             <!-- true -->
                             <a href="{{ route('post-tag', ['slug' => $dttag->slug]) }}"
-                                class="badge badge-info py-3 px-5 my-2">#{{ $dttag->name }}</a>
+                                class="badge badge-info py-3 px-3 my-2">#{{ $dttag->name }}</a>
                         @empty
                             <!-- false -->
                             <h3 class="text-center">
@@ -136,14 +145,14 @@
                         <div class="col">   
                             @foreach ( $notif as $pengumuman)
                             <div class="card border-primary mt-3 mb-1">
-                                <div class="card-header text-bg-info">
-                                    <button class="btn btn-outline  btn-block" data-bs-toggle="collapse" data-bs-target="#collapse{{ $pengumuman->id }}" aria-expanded="false" aria-controls="collapseWidthExample">
+                                <div class="card-header text-bg-info bg-light">
+                                    <button class="btn btn-outline btn-block" data-bs-toggle="collapse" data-bs-target="#collapse{{ $pengumuman->id }}" aria-expanded="false" aria-controls="collapseWidthExample">
                                         {{ $pengumuman->judul }}
                                     </button>
                                 </div>
                                 <div class="collapse collapse-horizontal" id="collapse{{ $pengumuman->id }}">
                                 <div class="card-body">
-                                    {{ $pengumuman->isi }}
+                                    {!! $pengumuman->isi !!}
                                 </div>
                                 <div class="card-footer mx-auto text-center bg-info text-white" style="width: 90%;">
                                 {{ $pengumuman->created_at }}

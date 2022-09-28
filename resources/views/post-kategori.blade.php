@@ -24,7 +24,7 @@ Ocoding Blog | {{ $title }}
                             <div class="row">
                                 <div class="col-lg-6">
                                     <!-- tumbnail -->
-                                    <img class="img-fluid rounded" src="{{ asset('storage/.' . $dtpost->thumbnail) }}"
+                                    <img class="img-fluid rounded" src="{{ asset('storage/..' . $dtpost->thumbnail) }}"
                                         alt="Post">
                                 </div>
                                 <div class="col-lg-6 my-2">

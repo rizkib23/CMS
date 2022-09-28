@@ -1,19 +1,23 @@
 @extends('layouts.main')
 
+@section('title')
+Ocoding Blog |
+@endsection
 @section('container')
 <div class="container mt-5">
-    <div class="container mt-5">
-        <div class="row">
-          <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
-            <div class="card card-primary">
-              <div class="card-header text-center"><h4>Login</h4></div>
+  <div class="row">
+    <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
+      <div class="card border-info">
+        <div class="card-header text-center bg-light">
+          <h4>Login</h4>
+        </div>
 
-              <div class="card-body">
-                <form method="POST" action="{{ route('login') }}">
-                  @csrf
-                  <div class="form-group">
+        <div class="card-body">
+          <form method="POST" action="{{ route('login') }}">
+            @csrf
+              <div class="form-group">
                     <label for="email">Email</label>
-                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" name="email" tabindex="1" required autofocus>
+                    <input id="email" type="email" autocomplete="off" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" name="email" tabindex="1" required autofocus>
                     @error('email')
                       <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -68,12 +72,9 @@
                     </a>                                
                   </div>
                 </div>
-
-              </div>
-            </div>
-          </div>
         </div>
       </div>
-</div>
+    </div>
+  </div>
 </div>
 @endsection

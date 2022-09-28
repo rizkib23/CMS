@@ -7,8 +7,8 @@ Ocoding | Dashboard - {{ $title }}
 <div class="container mt-2">
     <div class="row">
       <div class="col-md-12">
-        <div class="card">
-          <div class="card-header text-center">
+        <div class="card border-info bg-light">
+          <div class="card-header text-center bg-primary text-white">
             <h1> Edit Role </h1>
           </div>
           <div class="card-body">
@@ -22,7 +22,7 @@ Ocoding | Dashboard - {{ $title }}
                 <div class="row">
                 @foreach ($authorities as $manageName => $permissions)
                 
-                    <ul class="list-group mx-1 mt-1">
+                    <ul class="list-group mt-2 mb-2 mr-3 ml-3">
                         <li class="list-group-item">
                           {{ucwords(str_replace("_"," ",$manageName)); }}
                         </li>
@@ -42,10 +42,16 @@ Ocoding | Dashboard - {{ $title }}
                 @endforeach
                 </div>
                 {{-- permisiion --}}
-                <div class="float-right">
-                    <button type="submit" class="btn btn-success px-3 berhasil">SIMPAN</button>
-                    <button type="reset" class="btn btn-danger px-3">RESET</button>
-                    <a class="btn btn-warning px-3" href="/roles">KEMBALI</a>
+                <div class="float-right mt-2">
+                  <a class="btn btn-outline-warning px-4" href="/roles">
+                      <i class="bi bi-backspace"></i>Back
+                  </a>
+                  <button type="reset" class="btn btn-outline-danger px-4">
+                      <i class="bi bi-arrow-counterclockwise"></i>Reset
+                  </button>
+                  <button type="submit" class="btn btn-outline-primary px-4">
+                      <i class="bi bi-save2"></i> Save
+                  </button>
                 </div>
             </form>
           </div>

@@ -6,8 +6,8 @@ Ocoding | Dashboard | {{ $title }}
 @section('content')
 <div class="row">
     <div class="col-md-12">
-            <div class="card">
-                <div class="card-header text-center">
+            <div class="card border-info bg-light mr-3 ml-3" >
+                <div class="card-header text-center bg-info">
                     <h1 class="h3 mb-0 text-gray-800">Detail Kategori</h1>
                 </div>
                 <div class="card-body">
@@ -19,7 +19,9 @@ Ocoding | Dashboard | {{ $title }}
                         {{ $kategoris->name }}
                     </h2>
                     <div class="float-right">
-                        <a class="btn btn-warning px-4" href="/kategoris">Kembali</a>
+                        <a class="btn btn-outline-warning px-4" href="/kategoris">
+                            <i class="bi bi-backspace"></i>Back
+                        </a>
                     </div>
                 </div>
             </div>

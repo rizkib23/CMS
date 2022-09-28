@@ -6,8 +6,8 @@ Ocoding | Dashboard - {{ $title }}
 <div class="container mt-2">
     <div class="row">
         <div class="col-md-12">
-            <div class="card">
-                <div class="card-header text-center">
+            <div class="card bg-light border-info">
+                <div class="card-header text-center bg-primary text-white">
                     <h1> Pengumuman </h1>
                 </div>
                 <div class="card-body">
@@ -78,8 +78,19 @@ Ocoding | Dashboard - {{ $title }}
     </div>
 </div>
 @include('sweetalert::alert')
+@include('pengumuman.modal')
 @endsection
 @push('javascript-internal')
+<script>
+    $('body').on('click', '#showw', function() {
+    var id = $(this).data('id');
+    $.get("{{ route('pengumuman.index') }}"+ id, function(data) {
+        $(".modal-heading").val(data.judul);
+        $("#detailPengumuman").modal('show');
+        $("#modal-body").val(data.name);
+    })
+});
+</script>
     <script>
     $('body').on('click','#hapusPengumuman',function(){
     $.ajaxSetup({

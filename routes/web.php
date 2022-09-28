@@ -63,7 +63,14 @@ Route::get('tags/delete/{id}', [TagController::class, 'destroy']);
 Route::group(['middleware' => ['auth',]], function () {
     Route::resource('/dashboard', DashboarController::class);
     Route::resource('/kategoris', KategoriController::class);
-    Route::resource('/tags', TagController::class);
+    // tags
+    Route::get('/tags', [TagController::class, 'index'])->name('tags.index');
+    Route::get('/tags/create', [TagController::class, 'create'])->name('tags.create');
+    Route::post('/tags', [TagController::class, 'store'])->name('tags.store');
+    Route::get('/tags/{id}/edit', [TagController::class, 'edit'])->name('tags.edit');
+    Route::post('/tags/{id}/update', [TagController::class, 'update'])->name('tags.update');
+    Route::delete('/tags/{id}/delete', [TagController::class, 'destroy'])->name('tags.destroy');
+    // 
     Route::resource('/post', PostController::class);
     Route::resource('/roles', RoleController::class);
     Route::resource('/user', UserController::class);
@@ -71,6 +78,7 @@ Route::group(['middleware' => ['auth',]], function () {
     Route::resource('/pengumuman', PengumumanController::class);
     Route::resource('/komen', KomentarController::class);
 });
+Route::get('lihat', [PengumumanController::class, 'coba'])->name('coba');
 
 Route::group(['prefix' => 'filemanager'], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();

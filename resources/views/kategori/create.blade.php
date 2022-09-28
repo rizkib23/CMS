@@ -8,9 +8,9 @@ Ocoding | Dashboard | {{ $title }}
 <div class="container mt-2">
     <div class="row">
         <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">
-                    <h1 class="h3 mb-2 text-gray-800">Kategori Create</h1>
+            <div class="card border-info">
+                <div class="card-header bg-light">
+                    <h1 class="h3 mb-2 text-gray-800 text-center">Kategori Create</h1>
                 </div>
                 <div class="card-body">
                     <form action="{{ route('kategoris.store') }}" method="POST" enctype="multipart/form-data">
@@ -20,7 +20,7 @@ Ocoding | Dashboard | {{ $title }}
                             <label for="input_kategori_name" class="font-weight-bold">
                                 Nama 
                             </label>
-                            <input id="input_kategori_name" name="name" type="text" class="form-control  @error('name') is-invalid @enderror"
+                            <input id="input_kategori_name" autocomplete="off" name="name" type="text" class="form-control  @error('name') is-invalid @enderror"
                                 placeholder="Masukkan Nama Kategori" value="{{ old('name') }}" style="text-transform: capitalize;" required />
                                 @error('name')
                                 <span class="invalid-feedback" role="alert">
@@ -53,10 +53,15 @@ Ocoding | Dashboard | {{ $title }}
                         </div>
 
                         <div class="float-right">
-
-                            <a class="btn btn-warning px-4" href="/kategoris">Kembali</a>
-                            <button type="submit" class="btn btn-primary px-4">Simpan</button>
-                            <button type="reset" class="btn btn-danger px-4">Reset</button>
+                            <a class="btn btn-outline-warning px-4" href="/kategoris">
+                                <i class="bi bi-backspace"></i>Back
+                            </a>
+                            <button type="reset" class="btn btn-outline-danger px-4">
+                                <i class="bi bi-arrow-counterclockwise"></i>Reset
+                            </button>
+                            <button type="submit" class="btn btn-outline-primary px-4">
+                                <i class="bi bi-save2"></i> Save
+                            </button>
                         </div>
                     </form>
                 </div>

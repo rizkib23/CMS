@@ -4,16 +4,16 @@
 Ocoding | Dashboard - {{ $title }}
 @endsection
 @section('content')
-    <div class="row mr-2 ml-2">
+    <div class="row mr-3 ml-3">
         <div class="col-md-12">
             <form action="{{ route('post.update', ['post' => $post]) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('put')
-                <div class="card">
+                <div class="card border-info">
                     <input id="input_post-judul" name="id" type="hidden" value="{{ old('judul', $post->id) }}"
                         class="form-control" placeholder="Masukkan id Post" />
-                    <div class="card-header">
-                        <h1 class="h3 mb-0 text-gray-800">Edit Post</h1>
+                    <div class="card-header bg-light">
+                        <h1 class="h3 mb-0 text-gray-800 text-center">Edit Post</h1>
                     </div>
                     <div class="card-body">
                         <div class="row d-flex align-items-stretch">
@@ -23,7 +23,7 @@ Ocoding | Dashboard - {{ $title }}
                                     <label for="input_post_judul" class="font-weight-bold">
                                         Judul
                                     </label>
-                                    <input id="input_post_judul" name="judul" type="text"
+                                    <input id="input_post_judul" autocomplete="off" name="judul" type="text"
                                         value="{{ old('judul', $post->judul) }}" class="form-control"
                                         placeholder="Masukkan Judul Post" />
                                 </div>
@@ -136,9 +136,14 @@ Ocoding | Dashboard - {{ $title }}
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="float-right">
-                                    <a class="btn btn-warning px-4" href="{{ route('post.index') }}">Back</a>
-                                    <button type="submit" class="btn btn-primary px-4">
-                                        Save
+                                    <a class="btn btn-outline-warning px-4" href="{{ route('post.index') }}">
+                                        <i class="bi bi-backspace"></i>Back
+                                    </a>
+                                    <button type="reset" class="btn btn-outline-danger px-4">
+                                        <i class="bi bi-arrow-counterclockwise"></i>Reset
+                                    </button>
+                                    <button type="submit" class="btn btn-outline-primary px-4">
+                                        <i class="bi bi-save2"></i> Save
                                     </button>
                                 </div>
                             </div>

@@ -30,9 +30,11 @@ class PengumumanController extends Controller
     public function index(Request $request)
     {
         $pengumuman = Pengumuman::orderBy('id', 'desc')->get();
+
         if ($request->ajax()) {
-            $allData = DataTables::of($pengumuman);
-            return $allData;
+            $notif = Pengumuman::find('id');
+
+            return response()->json($notif);
         }
 
         $conten = [
@@ -94,13 +96,22 @@ class PengumumanController extends Controller
     public function show($id)
     {
 
-        $pengumunan = Pengumuman::find($id);
-
-        return response()->json([
-            $pengumunan
-        ]);
+        $pengumunan = [
+            'pengumuman' => Pengumuman::find($id),
+            'title' => 'Pengumuman'
+        ];
+        return view('pengumuman.detail', $pengumunan);
     }
 
+    public function coba($id)
+    {
+
+        $pengumunan = [
+            'pengumuman' => Pengumuman::find($id),
+            'title' => 'Pengumuman'
+        ];
+        return response()->json($pengumunan);
+    }
     /**
      * Show the form for editing the specified resource.
      *

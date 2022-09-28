@@ -34,14 +34,14 @@ class UserController extends Controller
         $a = Auth::user();
         if ($a->hasRole('Super Admin')) {
             return view("user.index", [
-                'user' => User::all()->where('id', '<>', Auth::user()->id),
+                'user' => User::where('id', '<>', Auth::user()->id)->get(),
                 'title' => 'User'
 
 
             ]);
         }
         return view("user.index", [
-            'user' => User::role('user')->get()->where('id', '<>', Auth::user()->id),
+            'user' => User::role('user')->with('')->where('id', '<>', Auth::user()->id)->get(),
             'title' => 'User'
 
         ]);

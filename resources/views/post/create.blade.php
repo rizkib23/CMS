@@ -5,12 +5,12 @@ Ocoding | Dashboard - {{ $title }}
 @endsection
 @section('content')
     <div class="row">
-        <div class="col-md-12 mr-2 ml-2">
+        <div class="col-md-12 mr-3 ml-3">
             <form action="{{ route('post.store') }}" method="POST">
                 @csrf
-                <div class="card">
+                <div class="card border-info">
                     <div class="card-header">
-                        <h1 class="h3 mb-0 text-gray-800">Create Post</h1>
+                        <h1 class="h3 mb-0 text-gray-800 text-center">Create Post</h1>
                     </div>
                     <div class="card-body">
                         <div class="row d-flex align-items-stretch">
@@ -20,7 +20,7 @@ Ocoding | Dashboard - {{ $title }}
                                     <label for="input_post_judul" class="font-weight-bold">
                                         Judul
                                     </label>
-                                    <input id="input_post_judul" name="judul" type="text" value="{{ old('title') }}" class="form-control @error('judul') is-invalid @enderror" placeholder="Masukkan Judul Post" />
+                                    <input id="input_post_judul" autocomplete="off" name="judul" type="text" value="{{ old('title') }}" class="form-control @error('judul') is-invalid @enderror" placeholder="Masukkan Judul Post" />
                                     @error('judul')
                                     <span class="invalid-feedback" role="alert">
                                       <strong>{{ $message }}</strong>
@@ -140,9 +140,14 @@ Ocoding | Dashboard - {{ $title }}
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="float-right">
-                                    <a class="btn btn-warning px-4" href="{{ route('post.index') }}">Back</a>
-                                    <button type="submit" class="btn btn-primary px-4">
-                                        Save
+                                    <a class="btn btn-outline-warning px-4" href="{{ route('post.index') }}">
+                                        <i class="bi bi-backspace"></i>Back
+                                    </a>
+                                    <button type="reset" class="btn btn-outline-danger px-4">
+                                        <i class="bi bi-arrow-counterclockwise"></i>Reset
+                                    </button>
+                                    <button type="submit" class="btn btn-outline-primary px-4">
+                                        <i class="bi bi-save2"></i> Save
                                     </button>
                                 </div>
                             </div>

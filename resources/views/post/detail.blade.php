@@ -6,9 +6,9 @@ Ocoding | Dashboard - {{ $title }}
 @section('content')
     <div class="row">
         <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">
-                    <h1 class="h3 mb-0 text-gray-800">Detail Post</h1>
+            <div class="card ml-2 mr-2 border-info">
+                <div class="card-header bg-light">
+                    <h1 class="h3 mb-0 text-gray-800 text-center">Detail Post</h1>
                 </div>
                 <div class="card-body">
                     <!-- thumbnail -->

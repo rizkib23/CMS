@@ -20,7 +20,7 @@ Ocoding | Dashboard | {{ $title }}
                                 Nama
                             </label>
                             <input id="input_kategori_name" name="name" type="text"
-                                value="{{ old('name', $kategoris->name) }}" class="form-control style="text-transform: capitalize;" @error('name') is-invalid @enderror" />
+                                value="{{ old('name', $kategoris->name) }}" autocomplete="off" class="form-control style="text-transform: capitalize;" @error('name') is-invalid @enderror" />
                                 @error('name')
                                 <span class="invalid-feedback" role="alert">
                                   <strong>{{ $message }}</strong>

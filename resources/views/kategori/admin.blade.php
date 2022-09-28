@@ -7,8 +7,8 @@ Ocoding | Dashboard - {{ $title }}
 <div class="container mt-2">
     <div class="row">
       <div class="col-md-12">
-        <div class="card">
-          <div class="card-header text-center">
+        <div class="card border-info bg-light">
+          <div class="card-header text-center text-white bg-primary">
             <h1> Kategori </h1>
           </div>
           <div class="card-body">

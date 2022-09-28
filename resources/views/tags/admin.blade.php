@@ -6,8 +6,8 @@ Ocoding | Dashboard - {{ $title }}
 <div class="container mt-2">
     <div class="row">
         <div class="col-md-12">
-            <div class="card">
-                <div class="card-header text-center">
+            <div class="card bg-light border-info ">
+                <div class="card-header text-center bg-primary text-white">
                     <h1> Tags</h1>
                 </div>
                 <div class="card-body">
@@ -99,8 +99,8 @@ $('body').on('click','#hapusTag',function(){
     }).then((result) => {
     if (result.isConfirmed) {
             $.ajax({
-                type: "DELETE",
-                url: `/tags/${id}`,
+                type: 'DELETE',
+                url: `tags/${id}/delete`,
                 success:function(data){
                     var oTable = $('#data-table');
                     oTable.DataTable().ajax.reload();
